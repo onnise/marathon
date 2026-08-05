@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>City Marathon 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span>CITY<strong>RUN</strong></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#last-year">2025 Recap</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#register" class="btn btn-nav">Register Now</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <!-- mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" onclick="closeMenu()">About</a>
+      <a href="#register" onclick="closeMenu()">Register</a>
+      <a href="#how" onclick="closeMenu()">How It Works</a>
+      <a href="#last-year" onclick="closeMenu()">2025 Recap</a>
+      <a href="#faq" onclick="closeMenu()">FAQ</a>
+      <a href="#register" class="btn btn-primary" onclick="closeMenu()">Register Now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <img src="https://placehold.co/1920x1080/1a1a2e/ffffff?text=Marathon+Hero+Photo" alt="Marathon hero" class="hero-img" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Annual City Marathon — 2026</p>
+      <h1 class="hero-title">Push Your<br /><span class="highlight">Limits.</span></h1>
+      <p class="hero-subtitle">October 18, 2026 &nbsp;·&nbsp; City Center, Downtown</p>
+      <div class="hero-distances">
+        <span class="badge">5K</span>
+        <span class="badge">10K</span>
+        <span class="badge">21K</span>
+        <span class="badge badge-gold">42K</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#register" class="btn btn-primary btn-lg">Register Now — It's Free</a>
+        <a href="#last-year" class="btn btn-ghost btn-lg">See Last Year</a>
+      </div>
+      <p class="hero-note">⏳ Early bird closes <strong>September 1st</strong></p>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll down</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="stats-bar">
+    <div class="stat">
+      <span class="stat-num" data-target="4800">0</span>
+      <span class="stat-label">Runners in 2025</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="38">0</span>
+      <span class="stat-label">Countries</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="7">0</span>
+      <span class="stat-label">Years Running</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="96">0</span>
+      <span class="stat-label">% Would Return</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container two-col">
+      <div class="col-text">
+        <p class="section-label">About the Race</p>
+        <h2 class="section-title">More Than Just a Race</h2>
+        <p class="section-body">The City Marathon is an annual running event that brings together athletes and beginners from around the world. Whether you're chasing a personal best or crossing your first finish line — there's a distance for everyone.</p>
+        <p class="section-body">Set through the heart of the city, the course takes you past iconic landmarks, cheering crowds, and live music stations every kilometre.</p>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> Open to all fitness levels</li>
+          <li><span class="check">✓</span> Medical support along the route</li>
+          <li><span class="check">✓</span> Timing chip &amp; official certificate</li>
+          <li><span class="check">✓</span> Finisher medal &amp; race kit</li>
+        </ul>
+      </div>
+      <div class="col-img">
+        <img src="https://placehold.co/600x700/e8f4f8/2d3748?text=About+Photo" alt="About the race" />
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTER -->
+  <section class="section section-dark" id="register">
+    <div class="container">
+      <p class="section-label light">Registration</p>
+      <h2 class="section-title light">Sign Up in Minutes</h2>
+      <p class="section-body light center">Fill out our simple registration form and secure your spot. We'll send you a confirmation email with everything you need.</p>
+
+      <div class="pricing-cards">
+        <div class="price-card">
+          <div class="price-dist">5K</div>
+          <div class="price-desc">Fun Run</div>
+          <div class="price-tag">Free</div>
+          <ul>
+            <li>Race bib</li>
+            <li>Finisher medal</li>
+            <li>Water stations</li>
+          </ul>
+          <a href="https://forms.google.com" target="_blank" class="btn btn-primary">Register 5K</a>
+        </div>
+        <div class="price-card">
+          <div class="price-dist">10K</div>
+          <div class="price-desc">Classic</div>
+          <div class="price-tag">Free</div>
+          <ul>
+            <li>Race bib + chip timing</li>
+            <li>Finisher medal</li>
+            <li>Race kit bag</li>
+          </ul>
+          <a href="https://forms.google.com" target="_blank" class="btn btn-primary">Register 10K</a>
+        </div>
+        <div class="price-card price-card-featured">
+          <div class="price-badge">Most Popular</div>
+          <div class="price-dist">21K</div>
+          <div class="price-desc">Half Marathon</div>
+          <div class="price-tag">Free</div>
+          <ul>
+            <li>Race bib + chip timing</li>
+            <li>Finisher medal</li>
+            <li>Race kit bag</li>
+            <li>Official certificate</li>
+          </ul>
+          <a href="https://forms.google.com" target="_blank" class="btn btn-primary">Register 21K</a>
+        </div>
+        <div class="price-card">
+          <div class="price-dist">42K</div>
+          <div class="price-desc">Full Marathon</div>
+          <div class="price-tag">Free</div>
+          <ul>
+            <li>Race bib + chip timing</li>
+            <li>Finisher medal</li>
+            <li>Race kit bag</li>
+            <li>Official certificate</li>
+          </ul>
+          <a href="https://forms.google.com" target="_blank" class="btn btn-primary">Register 42K</a>
+        </div>
+      </div>
+      <p class="register-note">All registrations go through our Google Form. You'll receive a confirmation email within 24 hours.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <p class="section-label">Simple Process</p>
+      <h2 class="section-title">How to Register</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Choose Your Distance</h3>
+          <p>Pick between 5K, 10K, 21K, or 42K based on your fitness level and goals.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Fill the Form</h3>
+          <p>Complete the Google Form with your details. It takes less than 3 minutes.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Get Confirmed</h3>
+          <p>Receive your confirmation email with your race number and event day info.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>Run &amp; Celebrate</h3>
+          <p>Show up on race day, collect your kit, and cross that finish line!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAST YEAR RECAP -->
+  <section class="section section-light" id="last-year">
+    <div class="container">
+      <p class="section-label">2025 Edition</p>
+      <h2 class="section-title">Last Year Was Incredible</h2>
+      <p class="section-body center">Over 4,800 runners took to the streets. Here are some of our favourite moments from the 2025 City Marathon.</p>
+
+      <div class="gallery">
+        <div class="gallery-item gallery-large">
+          <img src="https://placehold.co/800x500/2d3748/ffffff?text=Start+Line+2025" alt="Start line 2025" />
+          <div class="gallery-caption">The Start Line — 4,800 Runners Ready</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://placehold.co/400x300/4a5568/ffffff?text=Finish+Line" alt="Finish line" />
+          <div class="gallery-caption">Crossing the Finish Line</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://placehold.co/400x300/718096/ffffff?text=Medal+Ceremony" alt="Medal ceremony" />
+          <div class="gallery-caption">Medal Ceremony</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://placehold.co/400x300/e2e8f0/2d3748?text=Kids+Fun+Run" alt="Kids fun run" />
+          <div class="gallery-caption">Kids Fun Run 5K</div>
+        </div>
+        <div class="gallery-item">
+          <img src="https://placehold.co/400x300/bee3f8/2d3748?text=Live+Music" alt="Live music" />
+          <div class="gallery-caption">Live Music Along the Route</div>
+        </div>
+      </div>
+
+      <div class="recap-stats">
+        <div class="recap-stat">
+          <span class="recap-num">2:18:44</span>
+          <span class="recap-desc">Overall Marathon Winner</span>
+        </div>
+        <div class="recap-stat">
+          <span class="recap-num">4,800+</span>
+          <span class="recap-desc">Finishers</span>
+        </div>
+        <div class="recap-stat">
+          <span class="recap-num">38</span>
+          <span class="recap-desc">Countries Represented</span>
+        </div>
+        <div class="recap-stat">
+          <span class="recap-num">€12,000</span>
+          <span class="recap-desc">Raised for Charity</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <p class="section-label">Runners Say</p>
+      <h2 class="section-title">Real Stories</h2>
+      <div class="testimonials">
+        <div class="testimonial">
+          <p class="quote">"My first ever half marathon and I couldn't have asked for a better event. The crowd support was unreal and the organisation was flawless."</p>
+          <div class="author">
+            <img src="https://placehold.co/48x48/e2e8f0/2d3748?text=A" alt="Anna" />
+            <div>
+              <strong>Anna M.</strong>
+              <span>21K Finisher, 2025</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <p class="quote">"I've run marathons in 12 countries and this one stands out for the energy and the incredible route through the city."</p>
+          <div class="author">
+            <img src="https://placehold.co/48x48/e2e8f0/2d3748?text=K" alt="Karl" />
+            <div>
+              <strong>Karl B.</strong>
+              <span>42K Finisher, 2025</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <p class="quote">"Brought my kids for the 5K. We had the best morning. Will definitely be back with more of the family in 2026!"</p>
+          <div class="author">
+            <img src="https://placehold.co/48x48/e2e8f0/2d3748?text=S" alt="Sara" />
+            <div>
+              <strong>Sara T.</strong>
+              <span>5K Finisher, 2025</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-light" id="faq">
+    <div class="container container-narrow">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Common Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Is registration really free? <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! All distances are completely free to enter. We are a community event supported by local sponsors.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            When is the registration deadline? <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Early bird registration closes September 1st. Final registration closes October 10th or when spots are full.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What do I need to bring on race day? <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Bring your confirmation email (digital or printed), a valid ID, and comfortable running gear. We provide water, gels, and medical support.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Is there a minimum age requirement? <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The 5K is open to all ages (under 16 must be with a guardian). The 10K requires age 14+. Half and full marathon require age 18+.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I walk instead of run? <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely! The 5K and 10K are walker-friendly. The half and full marathon have a time limit of 6 hours.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How will I receive my race kit? <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Race kits are collected at the Expo on October 16–17 (the two days before the race) at the City Convention Center.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-bg">
+      <img src="https://placehold.co/1920x600/1a1a2e/ffffff?text=CTA+Banner+Photo" alt="CTA" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="cta-content">
+      <h2>Ready to Run?</h2>
+      <p>October 18, 2026 — Spots are limited. Don't miss out.</p>
+      <a href="#register" class="btn btn-primary btn-lg">Register for Free</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo logo-light">
+          <span class="logo-icon">⚡</span>
+          <span>CITY<strong>RUN</strong></span>
+        </a>
+        <p>The annual city marathon bringing runners together every year. Open to all levels.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#register">Register</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#last-year">2025 Recap</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>📧 hello@citymarathon.com</p>
+        <p>📍 City Center, Downtown</p>
+        <p>📅 October 18, 2026</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="Twitter">TW</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 City Marathon. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
