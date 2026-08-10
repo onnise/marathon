@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bikfaya Race 2026 — Sep 20</title>
   <meta name="description" content="The Bikfaya Race 2026 — 5K competitive race and 2K fun run through the mountains of Bikfaya. Sunday September 20, 2026. LAF approved. Open to all." />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="format-detection" content="telephone=no" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -31,12 +33,12 @@
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#about"    onclick="closeMenu()">About</a>
-      <a href="#schedule" onclick="closeMenu()">Schedule</a>
-      <a href="#prizes"   onclick="closeMenu()">Prizes</a>
-      <a href="#gallery"  onclick="closeMenu()">Last Year</a>
-      <a href="#faq"      onclick="closeMenu()">FAQ</a>
-      <a href="#register" class="btn btn-primary" onclick="closeMenu()">Register Now</a>
+      <a href="#about"    class="menu-link">About</a>
+      <a href="#schedule" class="menu-link">Schedule</a>
+      <a href="#prizes"   class="menu-link">Prizes</a>
+      <a href="#gallery"  class="menu-link">Last Year</a>
+      <a href="#faq"      class="menu-link">FAQ</a>
+      <a href="#register" class="btn btn-primary menu-link">Register Now</a>
     </div>
   </nav>
 
@@ -98,7 +100,6 @@
         <span>Sunday, Sep 20, 2026</span>
       </div>
     </div>
-    <div class="info-divider"></div>
     <div class="info-item">
       <span class="info-icon">📍</span>
       <div>
@@ -106,7 +107,6 @@
         <span>Alfa Store, Bikfaya</span>
       </div>
     </div>
-    <div class="info-divider"></div>
     <div class="info-item">
       <span class="info-icon">🏃</span>
       <div>
@@ -114,7 +114,6 @@
         <span>5K Competitive · 2K Fun Run</span>
       </div>
     </div>
-    <div class="info-divider"></div>
     <div class="info-item">
       <span class="info-icon">✅</span>
       <div>
@@ -439,7 +438,7 @@
 
       <div class="sponsor-cta">
         <p>Interested in sponsoring the Bikfaya Race 2026?</p>
-        <a href="mailto:hello@bikfayarace.com" class="btn btn-primary">Get the Sponsor Pitch</a>
+        <a href="mailto:hello@bikfayarace.com" class="btn btn-primary" rel="noopener noreferrer">Get the Sponsor Pitch</a>
       </div>
     </div>
   </section>
@@ -452,8 +451,8 @@
       <div class="faq-list">
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            When does registration open? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            When does registration open? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>Registration opens on <strong>August 20, 2026</strong> and closes on <strong>September 15, 2026</strong>. Spots are limited so register early.</p>
@@ -461,8 +460,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            How do I pay for registration? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            How do I pay for registration? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>Payment is processed through <strong>OMT</strong>. You can pay online via OMT ePay, or visit the nearest OMT store with your registration reference number.</p>
@@ -470,8 +469,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            What's the difference between the 5K and 2K? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            What's the difference between the 5K and 2K? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>The <strong>5K</strong> is a certified competitive race with chip timing, official results, category rankings and cash prizes. The <strong>2K</strong> is a non-competitive fun run open to all ages, families, and Blind with Vision participants — no pressure, all fun.</p>
@@ -479,8 +478,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            What do I need to bring on race day? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            What do I need to bring on race day? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>Bring your confirmation email or ticket number (digital or printed), a valid ID, and comfortable running gear. Hydration stations will be available along the route.</p>
@@ -488,8 +487,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            Is there an age limit? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            Is there an age limit? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>The 2K fun run is open to all ages (minors must be accompanied by a guardian). The 5K competitive race requires participants to be 16+ years old.</p>
@@ -497,8 +496,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            Is parking available in Bikfaya? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            Is parking available in Bikfaya? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>Yes, parking is available in the Bikfaya area near the start/finish at Alfa Store. Please note there is no organised transport service to the event at this time.</p>
@@ -506,8 +505,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            Is the event eco-friendly? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            Is the event eco-friendly? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>Yes! The Bikfaya Race is committed to being an eco-friendly event ♻️. We minimise single-use plastic and encourage responsible behaviour on the course and in Bikfaya.</p>
@@ -515,8 +514,8 @@
         </div>
 
         <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">
-            Can Blind with Vision participants join? <span class="faq-icon">+</span>
+          <button class="faq-question" aria-expanded="false">
+            Can Blind with Vision participants join? <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
             <p>Absolutely. We warmly welcome Blind with Vision participants in the 2K fun run. Please indicate this during registration so we can provide the right support.</p>

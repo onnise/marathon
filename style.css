@@ -730,6 +730,13 @@ ul   { list-style: none; }
   font-size: 2rem;
   color: rgba(255,255,255,.4);
   padding-bottom: 16px;
+  user-select: none;
+}
+.cd-raceday {
+  color: var(--white);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 /* ===========================
@@ -740,9 +747,8 @@ ul   { list-style: none; }
   border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
-  gap: 0;
   padding: 0 24px;
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
 }
@@ -751,17 +757,22 @@ ul   { list-style: none; }
   align-items: center;
   gap: 12px;
   padding: 20px 32px;
+  position: relative;
+}
+/* CSS-only separator — no extra DOM elements */
+.info-item + .info-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: #e2e8f0;
 }
 .info-item div { display: flex; flex-direction: column; gap: 2px; }
 .info-item strong { font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dark); }
 .info-item span  { font-size: .9rem; color: var(--grey); }
 .info-icon { font-size: 1.5rem; flex-shrink: 0; }
-.info-divider {
-  width: 1px;
-  height: 40px;
-  background: #e2e8f0;
-  flex-shrink: 0;
-}
 
 /* ===========================
    TIMELINE (SCHEDULE)
@@ -1085,10 +1096,10 @@ ul   { list-style: none; }
   .countdown-block { min-width: 60px; padding: 10px 12px; }
   .cd-num { font-size: 2rem; }
 
-  /* Info bar */
-  .info-bar { gap: 0; }
-  .info-item { padding: 16px 20px; }
-  .info-divider { display: none; }
+  /* Info bar — stack to 2 per row */
+  .info-bar { justify-content: flex-start; padding: 0 16px; }
+  .info-item { padding: 16px 20px; flex: 1 1 45%; }
+  .info-item + .info-item::before { display: none; }
 
   /* About */
   .two-col { grid-template-columns: 1fr; gap: 36px; }
@@ -1125,28 +1136,61 @@ ul   { list-style: none; }
   .section { padding: 52px 16px; }
 
   /* Hero */
-  .hero-content  { padding: 88px 16px 56px; }
-  .hero-cta      { flex-direction: column; }
-  .btn-lg        { width: 100%; justify-content: center; }
+  .hero-content     { padding: 88px 16px 56px; }
+  .hero-cta         { flex-direction: column; }
+  .btn-lg           { width: 100%; justify-content: center; }
   .hero-scroll-hint { display: none; }
-  .hero-distances { gap: 8px; }
-  .countdown-sep  { display: none; }
-  .countdown      { gap: 8px; }
+  .hero-distances   { gap: 8px; }
+  /* Hide separators, shrink blocks */
+  .countdown-sep    { display: none; }
+  .countdown        { gap: 8px; }
+  .countdown-block  { min-width: 56px; }
 
-  /* Info bar — 2×2 */
-  .info-bar { display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
-  .info-item { padding: 16px; border-bottom: 1px solid #e2e8f0; }
-  .info-item:nth-child(odd) { border-right: 1px solid #e2e8f0; }
+  /* Info bar — clean 2×2, no pseudo separators */
+  .info-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .info-item {
+    flex: unset;
+    padding: 14px 12px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  /* Right column items get left border */
+  .info-item:nth-child(even) { border-left: 1px solid #e2e8f0; }
+  /* Bottom row items lose bottom border */
+  .info-item:nth-last-child(-n+2) { border-bottom: none; }
+  .info-item + .info-item::before { display: none; }
+  .info-icon { font-size: 1.2rem; }
+  .info-item strong { font-size: .75rem; }
+  .info-item span   { font-size: .82rem; }
 
-  /* Timeline */
-  .timeline::before { left: 0; display: none; }
-  .tl-item { grid-template-columns: 1fr; gap: 6px; padding-bottom: 32px; }
-  .tl-time { text-align: left; color: var(--red); font-size: 1rem; }
-  .tl-dot  { display: none; }
+  /* Timeline — flat list, no grid */
+  .timeline::before { display: none; }
+  .tl-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 28px;
+    border-left: 2px solid rgba(255,255,255,.12);
+    padding-left: 16px;
+    margin-left: 8px;
+  }
+  .tl-time {
+    text-align: left;
+    color: var(--red);
+    font-size: 1rem;
+  }
+  .tl-dot { display: none; }
+
+  /* Section inline styles override for mobile */
+  .section-body.center { max-width: 100% !important; }
 
   /* Race cards */
-  .race-card { padding: 24px 20px; }
-  .race-dist { font-size: 4rem; }
+  .race-card  { padding: 24px 20px; }
+  .race-dist  { font-size: 4rem; }
 
   /* Prizes */
   .podium { gap: 8px; }
@@ -1157,15 +1201,26 @@ ul   { list-style: none; }
   .gallery-item { min-height: 180px; }
 
   /* FAQ */
-  .faq-question { font-size: .95rem; }
+  .faq-question { font-size: .92rem; }
 
   /* CTA */
   .cta-content h2 { font-size: 2.6rem; }
   .cta-content p  { font-size: .95rem; }
 
   /* Footer */
-  .footer { padding: 40px 16px 0; }
+  .footer       { padding: 40px 16px 0; }
   .footer-inner { gap: 28px; }
+}
+
+/* Extra small — 360px and below (budget Android phones) */
+@media (max-width: 360px) {
+  .hero-title  { font-size: 3.2rem; }
+  .countdown-block { min-width: 48px; padding: 8px 8px; }
+  .cd-num      { font-size: 1.6rem; }
+  .race-dist   { font-size: 3.4rem; }
+  .podium-amount { font-size: 1.6rem; }
+  .podium-1st .podium-amount { font-size: 1.8rem; }
+  .info-item   { padding: 12px 8px; }
 }
 
 /* ===========================
