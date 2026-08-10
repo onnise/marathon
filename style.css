@@ -20,7 +20,15 @@
 }
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
-body { font-family: var(--font-body); color: var(--mid); background: var(--white); overflow-x: hidden; }
+body {
+  font-family: var(--font-body);
+  color: var(--mid);
+  background: var(--white);
+  overflow-x: hidden;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+body.menu-open { overflow: hidden; }
 img  { display: block; width: 100%; height: 100%; object-fit: cover; }
 a    { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
 ul   { list-style: none; }
@@ -28,6 +36,21 @@ ul   { list-style: none; }
 /* Ensure all interactive elements meet 44px minimum tap target */
 .btn, .faq-question, .hamburger, .nav-links a, .mobile-menu a {
   min-height: 44px;
+  touch-action: manipulation;
+}
+.btn.is-disabled,
+a.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--grey) !important;
+  border-color: var(--grey) !important;
+}
+.cd-raceday {
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 /* ===========================
@@ -64,6 +87,7 @@ ul   { list-style: none; }
   top: 0; left: 0; right: 0;
   z-index: 1000;
   padding: 0 24px;
+  padding-top: env(safe-area-inset-top);
   transition: background var(--transition), box-shadow var(--transition);
 }
 .navbar.scrolled {
@@ -149,6 +173,7 @@ ul   { list-style: none; }
 .hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -678,6 +703,7 @@ ul   { list-style: none; }
 .footer-bottom {
   text-align: center;
   padding: 20px 0;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
   color: rgba(255,255,255,.25);
   font-size: .82rem;
 }
@@ -1221,6 +1247,17 @@ ul   { list-style: none; }
   .podium-amount { font-size: 1.6rem; }
   .podium-1st .podium-amount { font-size: 1.8rem; }
   .info-item   { padding: 12px 8px; }
+}
+
+/* Short landscape phones (iPhone landscape etc.) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: auto; padding: 80px 0 40px; }
+  .hero-title { font-size: 3rem; }
+  .countdown { margin: 16px 0 12px; }
+  .countdown-block { padding: 8px 12px; min-width: 52px; }
+  .cd-num { font-size: 1.5rem; }
+  .hero-scroll-hint { display: none; }
+  .section { padding: 48px 20px; }
 }
 
 /* ===========================

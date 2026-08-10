@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Bikfaya Race 2026 — Sep 20</title>
   <meta name="description" content="The Bikfaya Race 2026 — 5K competitive race and 2K fun run through the mountains of Bikfaya. Sunday September 20, 2026. LAF approved. Open to all." />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="format-detection" content="telephone=no" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1a2e" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -15,10 +18,10 @@
 <body>
 
   <!-- NAV -->
-  <nav class="navbar" id="navbar">
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main">
     <div class="nav-inner">
-      <a href="#" class="logo">
-        <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race Logo" class="logo-img" />
+      <a href="#home" class="logo">
+        <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race Logo" class="logo-img" width="120" height="40" decoding="async" />
       </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
@@ -28,7 +31,7 @@
         <li><a href="#faq">FAQ</a></li>
       </ul>
       <a href="#register" class="btn btn-nav">Register Now</a>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -45,7 +48,7 @@
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-bg">
-      <img src="https://placehold.co/1920x1080/1a1a2e/ffffff?text=Bikfaya+Race+Hero+Photo" alt="Bikfaya Race" class="hero-img" />
+      <img src="https://placehold.co/1920x1080/1a1a2e/ffffff?text=Bikfaya+Race+Hero+Photo" alt="Bikfaya Race" class="hero-img" width="1920" height="1080" decoding="async" fetchpriority="high" />
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-content">
@@ -140,7 +143,7 @@
         </ul>
       </div>
       <div class="col-img">
-        <img src="https://placehold.co/600x700/e8f4f8/2d3748?text=Bikfaya+Photo" alt="Bikfaya Race" />
+        <img src="https://placehold.co/600x700/e8f4f8/2d3748?text=Bikfaya+Photo" alt="Bikfaya Race" width="600" height="700" loading="lazy" decoding="async" />
       </div>
     </div>
   </section>
@@ -221,7 +224,7 @@
             <li>✓ Post-race breakfast</li>
           </ul>
           <div class="race-card-footer">
-            <a href="#" class="btn btn-primary reg-btn" id="btn5k">Register for 5K</a>
+            <a href="#register" class="btn btn-primary reg-btn" id="btn5k" rel="noopener noreferrer">Register for 5K</a>
             <p class="reg-opens-note" id="note5k"></p>
           </div>
         </div>
@@ -241,7 +244,7 @@
             <li>✓ Post-race breakfast</li>
           </ul>
           <div class="race-card-footer">
-            <a href="#" class="btn btn-primary reg-btn" id="btn2k">Register for 2K</a>
+            <a href="#register" class="btn btn-primary reg-btn" id="btn2k" rel="noopener noreferrer">Register for 2K</a>
             <p class="reg-opens-note" id="note2k"></p>
           </div>
         </div>
@@ -366,23 +369,23 @@
 
       <div class="gallery">
         <div class="gallery-item gallery-large">
-          <img src="https://placehold.co/800x500/2d3748/ffffff?text=Start+Line+Bikfaya+2025" alt="Start line Bikfaya 2025" />
+          <img src="https://placehold.co/800x500/2d3748/ffffff?text=Start+Line+Bikfaya+2025" alt="Start line Bikfaya 2025" width="800" height="500" loading="lazy" decoding="async" />
           <div class="gallery-caption">The Start Line — Alfa Store Bikfaya</div>
         </div>
         <div class="gallery-item">
-          <img src="https://placehold.co/400x300/4a5568/ffffff?text=Finish+Line" alt="Finish line" />
+          <img src="https://placehold.co/400x300/4a5568/ffffff?text=Finish+Line" alt="Finish line" width="400" height="300" loading="lazy" decoding="async" />
           <div class="gallery-caption">Crossing the Finish Line</div>
         </div>
         <div class="gallery-item">
-          <img src="https://placehold.co/400x300/718096/ffffff?text=Awards+Ceremony" alt="Awards ceremony" />
+          <img src="https://placehold.co/400x300/718096/ffffff?text=Awards+Ceremony" alt="Awards ceremony" width="400" height="300" loading="lazy" decoding="async" />
           <div class="gallery-caption">Awards &amp; Prize Ceremony</div>
         </div>
         <div class="gallery-item">
-          <img src="https://placehold.co/400x300/e2e8f0/2d3748?text=2K+Fun+Run" alt="Fun run" />
+          <img src="https://placehold.co/400x300/e2e8f0/2d3748?text=2K+Fun+Run" alt="Fun run" width="400" height="300" loading="lazy" decoding="async" />
           <div class="gallery-caption">2K Fun Run — All Welcome</div>
         </div>
         <div class="gallery-item">
-          <img src="https://placehold.co/400x300/bee3f8/2d3748?text=Post+Race+Breakfast" alt="Post race breakfast" />
+          <img src="https://placehold.co/400x300/bee3f8/2d3748?text=Post+Race+Breakfast" alt="Post race breakfast" width="400" height="300" loading="lazy" decoding="async" />
           <div class="gallery-caption">Post-Race Manakish &amp; Breakfast</div>
         </div>
       </div>
@@ -402,7 +405,7 @@
         <div class="sponsor-tier">
           <div class="sponsor-tier-label title-tier">Title Sponsor</div>
           <div class="sponsor-logo-box sponsor-logo-lg">
-            <img src="https://placehold.co/300x100/1a1a2e/ffffff?text=Title+Sponsor" alt="Title Sponsor" />
+            <img src="https://placehold.co/300x100/1a1a2e/ffffff?text=Title+Sponsor" alt="Title Sponsor" width="300" height="100" loading="lazy" decoding="async" />
           </div>
         </div>
         <div class="sponsor-row">
@@ -410,10 +413,10 @@
             <div class="sponsor-tier-label gold-tier">Gold</div>
             <div class="sponsor-logos-row">
               <div class="sponsor-logo-box">
-                <img src="https://placehold.co/200x80/f6c90e/1a1a2e?text=Gold+Sponsor" alt="Gold Sponsor" />
+                <img src="https://placehold.co/200x80/f6c90e/1a1a2e?text=Gold+Sponsor" alt="Gold Sponsor" width="200" height="80" loading="lazy" decoding="async" />
               </div>
               <div class="sponsor-logo-box">
-                <img src="https://placehold.co/200x80/f6c90e/1a1a2e?text=Gold+Sponsor" alt="Gold Sponsor" />
+                <img src="https://placehold.co/200x80/f6c90e/1a1a2e?text=Gold+Sponsor" alt="Gold Sponsor" width="200" height="80" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -423,13 +426,13 @@
             <div class="sponsor-tier-label silver-tier">Silver</div>
             <div class="sponsor-logos-row">
               <div class="sponsor-logo-box sponsor-logo-sm">
-                <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" />
+                <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" width="160" height="60" loading="lazy" decoding="async" />
               </div>
               <div class="sponsor-logo-box sponsor-logo-sm">
-                <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" />
+                <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" width="160" height="60" loading="lazy" decoding="async" />
               </div>
               <div class="sponsor-logo-box sponsor-logo-sm">
-                <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" />
+                <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" width="160" height="60" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -529,7 +532,7 @@
   <!-- CTA BANNER -->
   <section class="cta-banner">
     <div class="cta-bg">
-      <img src="https://placehold.co/1920x600/1a1a2e/ffffff?text=Bikfaya+CTA+Banner+Photo" alt="CTA" />
+      <img src="https://placehold.co/1920x600/1a1a2e/ffffff?text=Bikfaya+CTA+Banner+Photo" alt="CTA" width="1920" height="600" loading="lazy" decoding="async" />
       <div class="hero-overlay"></div>
     </div>
     <div class="cta-content">
@@ -544,7 +547,7 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <a href="#" class="logo logo-light">
-          <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race" class="logo-img" />
+          <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race" class="logo-img" width="120" height="40" loading="lazy" decoding="async" />
         </a>
         <p>An annual LAF-approved running event through the beautiful mountain town of Bikfaya, Lebanon. Open to all.</p>
         <div class="footer-badges">
@@ -581,6 +584,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
