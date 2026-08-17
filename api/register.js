@@ -1,8 +1,121 @@
 // POST /api/register
-// Validates form data, stores in Supabase, returns registration code.
-// Email sending will be added once email credentials are provided.
+// Validates form data, stores in Supabase, sends confirmation email via Resend.
 
 const { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, sanitise, send } = require('./_lib');
+const { Resend } = require('resend');
+
+function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, payMethod }) {
+  const raceName    = race === '5k' ? '5K Competitive' : '2K Fun Run';
+  const raceNameAr  = race === '5k' ? '5K تنافسي' : '2K مرح';
+  const price       = race === '5k' ? '$25' : '$10';
+  const siteUrl     = process.env.SITE_URL || 'https://bikfayarace.com';
+
+  const omtBlock = `
+    <div style="background:#fff8e1;border:2px solid #f6c90e;border-radius:12px;padding:24px;margin:24px 0;text-align:center;">
+      <p style="margin:0 0 8px;font-size:13px;color:#666;">OMT Payment Code / رمز الدفع</p>
+      <p style="margin:0;font-size:32px;font-weight:800;letter-spacing:4px;color:#1a1a2e;">${omtCode}</p>
+      <p style="margin:12px 0 0;font-size:13px;color:#666;">Pay online at <a href="https://www.omt.com.lb" style="color:#e63946;">omt.com.lb</a> or visit any OMT branch</p>
+      <p style="margin:4px 0 0;font-size:13px;color:#666;">أو توجّه لأقرب فرع OMT</p>
+    </div>`;
+
+  return `<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Registration Confirmed — Bikfaya Race 2026</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f2f5;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:40px 16px;">
+    <tr><td align="center">
+      <table width="100%" style="max-width:580px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
+
+        <!-- HEADER -->
+        <tr>
+          <td style="background:#1a1a2e;padding:32px 40px;text-align:center;">
+            <p style="margin:0;color:#f6c90e;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Bikfaya 5K Eco Race 2026</p>
+            <h1 style="margin:8px 0 0;color:#fff;font-size:28px;font-weight:800;">Registration Confirmed ✅</h1>
+            <p style="margin:8px 0 0;color:rgba(255,255,255,.6);font-size:14px;">تم تأكيد التسجيل</p>
+          </td>
+        </tr>
+
+        <!-- BODY -->
+        <tr>
+          <td style="padding:36px 40px;">
+
+            <p style="margin:0 0 20px;font-size:16px;color:#2d3748;">
+              Hi <strong>${firstName} ${lastName}</strong> 👋<br/>
+              <span style="font-size:14px;color:#718096;">مرحباً بك في سباق بكفيا 2026!</span>
+            </p>
+
+            <!-- Registration code -->
+            <div style="background:#f7f9fc;border-radius:12px;padding:20px;margin:0 0 24px;text-align:center;border:1.5px solid #e2e8f0;">
+              <p style="margin:0 0 6px;font-size:13px;color:#718096;">Your Registration Code / رقم تسجيلك</p>
+              <p style="margin:0;font-size:28px;font-weight:800;letter-spacing:3px;color:#e63946;">${regCode}</p>
+              <p style="margin:8px 0 0;font-size:12px;color:#a0aec0;">Keep this code — you'll need it on race day</p>
+            </div>
+
+            <!-- Race details -->
+            <table width="100%" style="border-collapse:collapse;margin:0 0 24px;">
+              <tr>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#718096;width:40%;">Race / السباق</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#2d3748;">${raceName} — ${raceNameAr}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#718096;">Date / التاريخ</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#2d3748;">Sunday, September 20, 2026</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#718096;">Location / الموقع</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#2d3748;">Alfa Store, Bikfaya</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#718096;">Assembly / التجمّع</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#2d3748;">7:00 AM</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;font-size:13px;color:#718096;">Fee / الرسوم</td>
+                <td style="padding:10px 0;font-size:14px;font-weight:600;color:#2d3748;">${price}</td>
+              </tr>
+            </table>
+
+            <!-- OMT Payment -->
+            <div style="background:#fff3f3;border-left:4px solid #e63946;padding:16px 20px;border-radius:0 8px 8px 0;margin:0 0 8px;">
+              <p style="margin:0;font-size:14px;font-weight:700;color:#e63946;">⚠️ Payment Required — الدفع مطلوب</p>
+              <p style="margin:6px 0 0;font-size:13px;color:#666;">Your spot is reserved for <strong>72 hours</strong>. Please complete your OMT payment using the code below.</p>
+              <p style="margin:4px 0 0;font-size:13px;color:#666;">مكانك محجوز لمدة <strong>72 ساعة</strong>. أكمل الدفع عبر OMT باستخدام الرمز أدناه.</p>
+            </div>
+
+            ${omtBlock}
+
+            <!-- Race day checklist -->
+            <div style="background:#f0fff4;border-radius:12px;padding:20px;margin:24px 0 0;">
+              <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#276749;">📋 Race Day Checklist / ما تحضره يوم السباق</p>
+              <ul style="margin:0;padding:0 0 0 20px;font-size:13px;color:#2d3748;line-height:1.8;">
+                <li>This email or your registration code <span style="color:#718096">/ هذا الإيميل أو رقم تسجيلك</span></li>
+                <li>Valid ID / هوية سارية</li>
+                <li>Comfortable running gear / ملابس رياضية مريحة</li>
+                <li>Arrive by <strong>7:00 AM</strong> for kit collection / احضر قبل الساعة 7</li>
+              </ul>
+            </div>
+
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="background:#f7f9fc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
+            <p style="margin:0;font-size:12px;color:#a0aec0;">Questions? Email us at <a href="mailto:bickfaya5krun@gmail.com" style="color:#e63946;">bickfaya5krun@gmail.com</a></p>
+            <p style="margin:6px 0 0;font-size:12px;color:#a0aec0;">© 2026 Bikfaya 5K Eco Race · <a href="${siteUrl}" style="color:#a0aec0;">bikfayarace.com</a></p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
 
 const PRICES     = { '5k': 25, '2k': 10 };
 const MAX_CAP    = 500;
@@ -154,10 +267,34 @@ module.exports = async function handler(req, res) {
     return send(res, 500, { error: 'Could not save registration. Please try again.' });
   }
 
-  // ── TODO: Send confirmation emails ───────────────────
-  // Email 1: registration confirmation + regCode (needs email service credentials)
-  // Email 2: OMT payment code + instructions
-  // These will be wired in once RESEND_API_KEY is provided.
+  // ── Send confirmation email ───────────────────────────
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const resend    = new Resend(process.env.RESEND_API_KEY);
+      const fromAddr  = process.env.EMAIL_FROM || 'Bikfaya Race <noreply@bikfayarace.com>';
+      const html      = buildConfirmationEmail({
+        firstName: record.first_name,
+        lastName:  record.last_name,
+        regCode:   inserted.registration_code,
+        omtCode:   inserted.omt_payment_code,
+        race:      record.race,
+        payMethod: record.pay_method,
+      });
+      const { error: emailErr } = await resend.emails.send({
+        from:    fromAddr,
+        to:      record.email,
+        subject: `✅ Registration Confirmed — Bikfaya Race 2026 | ${inserted.registration_code}`,
+        html,
+      });
+      if (emailErr) console.error('Email send error:', emailErr.message);
+      else console.log('Confirmation email sent to', record.email);
+    } catch (e) {
+      console.error('Email exception:', e.message);
+      // Non-fatal — registration already saved, just log and continue
+    }
+  } else {
+    console.warn('RESEND_API_KEY not set — skipping confirmation email');
+  }
 
   return send(res, 201, {
     success:          true,
