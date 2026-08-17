@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Register — Bikfaya 5K Eco Race 2026</title>
+  <meta name="description" content="Register for the Bikfaya 5K Eco Race 2026. Sunday September 20, 2026." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="register.css" />
+</head>
+<body class="reg-page">
+
+  <!-- NAV (simplified) -->
+  <nav class="navbar scrolled" role="navigation" aria-label="Main">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race Logo" class="logo-img" width="120" height="40" decoding="async" />
+      </a>
+      <a href="index.html" class="back-link">← Back to website</a>
+    </div>
+  </nav>
+
+  <main class="reg-main">
+    <div class="reg-container">
+
+      <!-- HEADER -->
+      <div class="reg-header">
+        <h1>Bikfaya 5K Eco Race 2026</h1>
+        <p>Sunday, September 20, 2026 &nbsp;·&nbsp; Alfa Store, Bikfaya</p>
+      </div>
+
+      <!-- REGISTRATION CLOSED / NOT OPEN BANNER -->
+      <div class="reg-status-banner" id="regStatusBanner" style="display:none"></div>
+
+      <!-- STEP PROGRESS -->
+      <div class="step-progress" id="stepProgress" aria-label="Registration progress">
+        <div class="step-dot active" data-step="1">
+          <span class="step-dot-num">1</span>
+          <span class="step-dot-label">Race</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="2">
+          <span class="step-dot-num">2</span>
+          <span class="step-dot-label">Details</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="3">
+          <span class="step-dot-num">3</span>
+          <span class="step-dot-label">Declaration</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="4">
+          <span class="step-dot-num">4</span>
+          <span class="step-dot-label">Payment</span>
+        </div>
+      </div>
+
+      <form id="regForm" novalidate autocomplete="on">
+
+        <!-- ═══════════════════════════════
+             STEP 1 — Race Selection
+        ═══════════════════════════════ -->
+        <div class="form-step active" id="step1">
+          <h2 class="step-title">Choose Your Race</h2>
+          <p class="step-subtitle">Select the distance you want to run on September 20, 2026.</p>
+
+          <div class="race-select-cards">
+            <label class="race-select-card" id="card5k">
+              <input type="radio" name="race" value="5k" required />
+              <div class="rsc-inner">
+                <div class="rsc-left">
+                  <div class="rsc-badge">Competitive</div>
+                  <div class="rsc-dist">5K</div>
+                  <div class="rsc-price">$25</div>
+                </div>
+                <ul class="rsc-perks">
+                  <li>Chip timing &amp; official results</li>
+                  <li>Race bib &amp; finisher medal</li>
+                  <li>Age category ranking</li>
+                  <li>Cash prizes for top finishers</li>
+                  <li>Post-race breakfast</li>
+                </ul>
+                <span class="rsc-check" aria-hidden="true">✓</span>
+              </div>
+            </label>
+
+            <label class="race-select-card" id="card2k">
+              <input type="radio" name="race" value="2k" required />
+              <div class="rsc-inner">
+                <div class="rsc-left">
+                  <div class="rsc-badge rsc-badge-fun">Fun Run</div>
+                  <div class="rsc-dist">2K</div>
+                  <div class="rsc-price">$10</div>
+                </div>
+                <ul class="rsc-perks">
+                  <li>Race bib &amp; finisher medal</li>
+                  <li>Open to all ages</li>
+                  <li>Families &amp; beginners welcome</li>
+                  <li>Blind with Vision welcome 🤝</li>
+                  <li>Post-race breakfast</li>
+                </ul>
+                <span class="rsc-check" aria-hidden="true">✓</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="step-nav">
+            <div></div>
+            <button type="button" class="btn btn-primary" id="step1Next">Continue →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════
+             STEP 2 — Personal Details
+        ═══════════════════════════════ -->
+        <div class="form-step" id="step2">
+          <h2 class="step-title">Your Details</h2>
+          <p class="step-subtitle">All fields marked <span class="req-star">*</span> are required.</p>
+
+          <div class="form-grid">
+
+            <!-- First Name -->
+            <div class="field">
+              <label for="firstName">First Name <span class="req-star">*</span></label>
+              <input type="text" id="firstName" name="firstName" autocomplete="given-name" required maxlength="60" placeholder="e.g. Georges" />
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Last Name -->
+            <div class="field">
+              <label for="lastName">Last Name <span class="req-star">*</span></label>
+              <input type="text" id="lastName" name="lastName" autocomplete="family-name" required maxlength="60" placeholder="e.g. Khoury" />
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="field">
+              <label for="dob">Date of Birth <span class="req-star">*</span></label>
+              <input type="date" id="dob" name="dob" autocomplete="bday" required max="" />
+              <span class="field-hint" id="dobHint"></span>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="field">
+              <label for="gender">Gender <span class="req-star">*</span></label>
+              <select id="gender" name="gender" required autocomplete="sex">
+                <option value="">— Select —</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="field field-full">
+              <label for="email">Email Address <span class="req-star">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" required maxlength="120" placeholder="your@email.com" />
+              <span class="field-hint">All confirmations and your OMT payment code will be sent here.</span>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Country -->
+            <div class="field field-full">
+              <label for="country">Country of Residence <span class="req-star">*</span></label>
+              <select id="country" name="country" required autocomplete="country">
+                <option value="">— Select country —</option>
+              </select>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Blood Type (5K only) -->
+            <div class="field field-5k-only">
+              <label for="bloodType">Blood Type <span class="req-star">*</span></label>
+              <select id="bloodType" name="bloodType">
+                <option value="">— Select —</option>
+                <option>A+</option><option>A-</option>
+                <option>B+</option><option>B-</option>
+                <option>AB+</option><option>AB-</option>
+                <option>O+</option><option>O-</option>
+              </select>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Club / Team (5K only) -->
+            <div class="field field-5k-only">
+              <label for="club">Club / Team</label>
+              <select id="club" name="club">
+                <option value="independent">Independent</option>
+                <option value="other">Other (specify)</option>
+              </select>
+              <input type="text" id="clubName" name="clubName" placeholder="Enter team name" maxlength="80" style="display:none;margin-top:8px" />
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Upload ID (5K only) -->
+            <div class="field field-full field-5k-only">
+              <label for="idUpload">Upload ID / Passport <span class="req-star">*</span></label>
+              <div class="file-upload-area" id="fileUploadArea">
+                <input type="file" id="idUpload" name="idUpload" accept=".jpg,.jpeg,.png,.pdf" />
+                <div class="file-upload-ui">
+                  <span class="file-icon">📎</span>
+                  <span class="file-text">Click or drag to upload</span>
+                  <span class="file-hint">JPG, PNG or PDF — max 2 MB</span>
+                </div>
+                <div class="file-preview" id="filePreview" style="display:none"></div>
+              </div>
+              <span class="field-err" role="alert" id="idUploadErr"></span>
+            </div>
+
+            <!-- Elite Status (5K only) -->
+            <div class="field field-5k-only">
+              <label for="eliteStatus">Elite / Sub-Elite? <span class="req-star">*</span></label>
+              <select id="eliteStatus" name="eliteStatus">
+                <option value="">— Select —</option>
+                <option value="elite">Elite</option>
+                <option value="sub-elite">Sub-Elite</option>
+                <option value="neither">Neither</option>
+              </select>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Best 5K Time (optional, both) -->
+            <div class="field">
+              <label for="best5k">Best 5K Time (last 2 years)</label>
+              <input type="text" id="best5k" name="best5k" placeholder="mm:ss (e.g. 22:30)" maxlength="5" pattern="[0-9]{2}:[0-5][0-9]" />
+              <span class="field-hint">Optional — helps with seeding</span>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Expected Finish Time (5K only) -->
+            <div class="field field-5k-only">
+              <label for="expectedTime">Expected Finish Time <span class="req-star">*</span></label>
+              <input type="text" id="expectedTime" name="expectedTime" placeholder="mm:ss (e.g. 28:00)" maxlength="5" pattern="[0-9]{2}:[0-5][0-9]" />
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- First Race Ever -->
+            <div class="field">
+              <label for="firstRace">First Race Ever? <span class="req-star">*</span></label>
+              <select id="firstRace" name="firstRace" required>
+                <option value="">— Select —</option>
+                <option value="yes">Yes, this is my first race!</option>
+                <option value="no">No, I've raced before</option>
+              </select>
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Emergency Contact Name -->
+            <div class="field">
+              <label for="emergencyName">Emergency Contact Name <span class="req-star">*</span></label>
+              <input type="text" id="emergencyName" name="emergencyName" required maxlength="80" autocomplete="off" placeholder="Full name" />
+              <span class="field-err" role="alert"></span>
+            </div>
+
+            <!-- Emergency Contact Number -->
+            <div class="field">
+              <label for="emergencyPhone">Emergency Contact Number <span class="req-star">*</span></label>
+              <input type="tel" id="emergencyPhone" name="emergencyPhone" required maxlength="20" autocomplete="off" placeholder="+961 xx xxx xxx" />
+              <span class="field-err" role="alert"></span>
+            </div>
+
+          </div><!-- /form-grid -->
+
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost-dark" id="step2Back">← Back</button>
+            <button type="button" class="btn btn-primary" id="step2Next">Continue →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════
+             STEP 3 — Medical Declaration
+        ═══════════════════════════════ -->
+        <div class="form-step" id="step3">
+          <h2 class="step-title">Medical &amp; Liability Declaration</h2>
+          <p class="step-subtitle">Please read the full declaration before proceeding.</p>
+
+          <div class="declaration-box">
+            <p>By registering for this event, I hereby confirm that I am physically fit, medically able, and adequately trained to participate in the distance for which I have registered. I declare that I have undertaken all necessary medical examinations, tests, and consultations prior to the event and that I am in good health with no condition that could endanger myself or others during participation.</p>
+            <p>I fully understand and acknowledge that running events involve inherent risks, including but not limited to injury, illness, permanent disability, or death. I voluntarily assume full responsibility for any risk, injury, health complication, or incident that may occur before, during, or after the event.</p>
+            <p>I agree that the event organizers, sponsors, partners, volunteers, medical teams, and all affiliated parties shall not be held liable or responsible for any injury, illness, medical emergency, or death arising from my participation.</p>
+            <p>By completing my registration, I knowingly and willingly waive any claims against the organizers and accept full personal responsibility for my participation.</p>
+          </div>
+
+          <label class="declaration-check">
+            <input type="checkbox" id="declarationAgree" name="declarationAgree" required />
+            <span>I have read and agree to the Medical &amp; Liability Declaration <span class="req-star">*</span></span>
+          </label>
+          <span class="field-err" id="declarationErr" role="alert"></span>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost-dark" id="step3Back">← Back</button>
+            <button type="button" class="btn btn-primary" id="step3Next">Continue →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════
+             STEP 4 — Payment
+        ═══════════════════════════════ -->
+        <div class="form-step" id="step4">
+          <h2 class="step-title">Payment</h2>
+          <p class="step-subtitle">Review your order and choose how to pay.</p>
+
+          <!-- Order Summary -->
+          <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="order-row">
+              <span id="summaryRaceName">—</span>
+              <span id="summaryPrice">—</span>
+            </div>
+            <div class="order-row order-total">
+              <span>Total</span>
+              <span id="summaryTotal">—</span>
+            </div>
+          </div>
+
+          <!-- Runner Summary -->
+          <div class="runner-summary" id="runnerSummary"></div>
+
+          <!-- Payment Method -->
+          <div class="payment-methods">
+            <h3>Payment Method</h3>
+            <p class="pay-note">⏳ Registration fees must be confirmed before launch. Prices shown are provisional.</p>
+
+            <div class="pay-options">
+              <label class="pay-option active" id="payOptOMT">
+                <input type="radio" name="payMethod" value="omt" checked required />
+                <div class="pay-opt-inner">
+                  <span class="pay-logo">🏦 OMT</span>
+                  <div>
+                    <strong>Pay at OMT Branch</strong>
+                    <span>Receive a payment code by email. Pay at any OMT branch in Lebanon.</span>
+                  </div>
+                  <span class="pay-check" aria-hidden="true">✓</span>
+                </div>
+              </label>
+
+              <label class="pay-option pay-option-soon" id="payOptCard">
+                <input type="radio" name="payMethod" value="card" disabled />
+                <div class="pay-opt-inner">
+                  <span class="pay-logo">💳 Card</span>
+                  <div>
+                    <strong>Visa / Mastercard</strong>
+                    <span>Online payment via Stripe — coming soon.</span>
+                  </div>
+                  <span class="pay-badge-soon">Soon</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost-dark" id="step4Back">← Back</button>
+            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+              <span class="btn-text">Complete Registration</span>
+              <span class="btn-spinner" style="display:none">⏳</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- ═══════════════════════════════
+           CONFIRMATION VIEW
+      ═══════════════════════════════ -->
+      <div class="confirmation" id="confirmation" style="display:none">
+        <div class="conf-icon">✅</div>
+        <h2>You're Registered!</h2>
+        <p class="conf-sub">Registration received for <strong id="confName"></strong></p>
+        <div class="conf-details" id="confDetails"></div>
+        <div class="conf-next">
+          <h3>What Happens Next</h3>
+          <ol>
+            <li><strong>Email 1:</strong> Registration confirmation + your registration code — arriving in a few minutes.</li>
+            <li><strong>Email 2:</strong> Your OMT payment code — sent to <span id="confEmail"></span>.</li>
+            <li>Visit any OMT branch and pay using the code.</li>
+            <li><strong>Email 3:</strong> Final confirmation with bib number and full race day details once payment is confirmed.</li>
+          </ol>
+        </div>
+        <a href="index.html" class="btn btn-primary" style="margin-top:32px">Back to Website</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="reg-footer">
+    <p>© 2026 Bikfaya 5K Eco Race &nbsp;·&nbsp; <a href="mailto:bickfaya5krun@gmail.com">bickfaya5krun@gmail.com</a> &nbsp;·&nbsp; bikfayarace.com</p>
+  </footer>
+
+  <script src="register.js" defer></script>
+</body>
+</html>
