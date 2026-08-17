@@ -87,6 +87,13 @@ WHERE payment_status != 'cancelled';
 -- View all registrations:
 --   SELECT * FROM registrations ORDER BY created_at DESC;
 --
+-- ─── PERMISSIONS ────────────────────────────────────────────────────────────
+-- Run once after creating the table if the service_role gets permission denied:
+--   GRANT ALL PRIVILEGES ON TABLE public.registrations TO service_role;
+--   GRANT ALL PRIVILEGES ON TABLE public.registrations TO authenticated;
+--   GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO service_role;
+-- ─────────────────────────────────────────────────────────────────────────────
+
 -- Check capacity:
 --   SELECT * FROM capacity;
 --
