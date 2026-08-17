@@ -13,3 +13,4 @@ Thumbs.db
 # Dependencies (when backend is added)
 node_modules/
 .vercel/
+.vercel
