@@ -458,27 +458,33 @@ form.addEventListener('submit', async (e) => {
   if (best5k) payload.best5k = best5k;
 
   try {
-    // TODO: Replace with real API endpoint
-    // const res = await fetch('/api/register', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(payload),
-    // });
-    // if (!res.ok) throw new Error(await res.text());
+    const res  = await fetch('/api/register', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
 
-    // Simulate success until backend is ready
-    await new Promise((r) => setTimeout(r, 1200));
+    const data = await res.json().catch(() => ({}));
 
-    showConfirmation(payload);
+    if (!res.ok) {
+      // Waitlist case
+      if (res.status === 409 && data.waitlist) {
+        showWaitlist(payload.email);
+        return;
+      }
+      throw new Error(data.error || `Server error (${res.status})`);
+    }
+
+    showConfirmation(payload, data);
   } catch (err) {
     submitBtn.disabled = false;
     submitBtn.querySelector('.btn-text').textContent = 'Complete Registration';
     submitBtn.querySelector('.btn-spinner').style.display = 'none';
-    showToast('Something went wrong. Please try again or contact bickfaya5krun@gmail.com');
+    showToast(err.message || 'Something went wrong. Please try again or contact bickfaya5krun@gmail.com');
   }
 });
 
-function showConfirmation(data) {
+function showConfirmation(formData, apiResponse) {
   form.style.display = 'none';
   document.getElementById('stepProgress').style.display = 'none';
 
@@ -486,21 +492,50 @@ function showConfirmation(data) {
   conf.style.display = 'block';
 
   document.getElementById('confName').textContent =
-    `${data.firstName} ${data.lastName} — ${RACE_LABELS[data.race]}`;
+    `${formData.firstName} ${formData.lastName} — ${RACE_LABELS[formData.race]}`;
 
   const detailsEl = document.getElementById('confDetails');
-  detailsEl.innerHTML = [
-    `<span><strong>Race</strong>${RACE_LABELS[data.race]}</span>`,
-    `<span><strong>Amount</strong>$${PRICES[data.race]}</span>`,
-    `<span><strong>Name</strong>${escHtml(data.firstName)} ${escHtml(data.lastName)}</span>`,
-    `<span><strong>Email</strong>${escHtml(data.email)}</span>`,
-    `<span><strong>Payment</strong>OMT Branch</span>`,
-    `<span><strong>Status</strong>Pending payment</span>`,
-  ].join('');
+  const rows = [
+    ['Race',              RACE_LABELS[formData.race]],
+    ['Amount',           `$${PRICES[formData.race]}`],
+    ['Registration Code', apiResponse.registrationCode || '—'],
+    ['OMT Payment Code',  apiResponse.omtPaymentCode   || '—'],
+    ['Name',             `${escHtml(formData.firstName)} ${escHtml(formData.lastName)}`],
+    ['Email',             escHtml(formData.email)],
+    ['Payment',          'OMT Branch'],
+    ['Status',           'Pending payment'],
+  ];
+  if (apiResponse.ageCategory) {
+    rows.push(['Age Category', apiResponse.ageCategory]);
+  }
+  detailsEl.innerHTML = rows
+    .map(([k, v]) => `<span><strong>${k}</strong>${v}</span>`)
+    .join('');
 
-  document.getElementById('confEmail').textContent = data.email;
-
+  document.getElementById('confEmail').textContent = formData.email;
   conf.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showWaitlist(email) {
+  form.style.display = 'none';
+  document.getElementById('stepProgress').style.display = 'none';
+
+  const conf = document.getElementById('confirmation');
+  conf.style.display = 'block';
+  conf.innerHTML = `
+    <div class="conf-icon">⏳</div>
+    <h2>You're on the Waitlist</h2>
+    <p class="conf-sub">The race is currently full. We've added <strong>${escHtml(email)}</strong> to the waitlist.</p>
+    <div class="conf-next">
+      <h3>What Happens Next</h3>
+      <ol>
+        <li>If a spot opens up, you'll receive an email at <strong>${escHtml(email)}</strong>.</li>
+        <li>You'll have 24 hours to complete registration.</li>
+        <li>Questions? Email us at <a href="mailto:bickfaya5krun@gmail.com">bickfaya5krun@gmail.com</a></li>
+      </ol>
+    </div>
+    <a href="index.html" class="btn btn-primary" style="margin-top:32px">Back to Website</a>
+  `;
 }
 
 /* ===========================

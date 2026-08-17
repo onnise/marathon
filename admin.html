@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Bikfaya Race 2026</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo">🏃 Bikfaya Race</div>
+      <h1>Admin Panel</h1>
+      <p>Enter your admin password to continue.</p>
+      <form id="loginForm">
+        <input type="password" id="loginPassword" placeholder="Admin password" autocomplete="current-password" required />
+        <span class="login-err" id="loginErr"></span>
+        <button type="submit" class="btn-login">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard" style="display:none">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-logo">🏃 Bikfaya Race 2026</span>
+        <span class="topbar-sub">Admin Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <span class="live-dot" title="Live"></span>
+        <span id="lastRefresh" class="last-refresh"></span>
+        <button class="btn-icon" id="refreshBtn" title="Refresh data">↻</button>
+        <button class="btn-logout" id="logoutBtn">Sign Out</button>
+      </div>
+    </header>
+
+    <main class="dash-main">
+
+      <!-- STAT CARDS -->
+      <section class="stats-row" id="statsRow">
+        <div class="stat-card">
+          <div class="sc-icon sc-blue">👥</div>
+          <div class="sc-body">
+            <div class="sc-num" id="statTotal">—</div>
+            <div class="sc-label">Total Registered</div>
+            <div class="sc-sub" id="statCap"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon sc-green">✅</div>
+          <div class="sc-body">
+            <div class="sc-num" id="statConfirmed">—</div>
+            <div class="sc-label">Confirmed</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon sc-yellow">⏳</div>
+          <div class="sc-body">
+            <div class="sc-num" id="statPending">—</div>
+            <div class="sc-label">Pending Payment</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon sc-red">❌</div>
+          <div class="sc-body">
+            <div class="sc-num" id="statCancelled">—</div>
+            <div class="sc-label">Cancelled</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon sc-purple">🏃</div>
+          <div class="sc-body">
+            <div class="sc-num" id="stat5k">—</div>
+            <div class="sc-label">5K Runners</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-icon sc-teal">🎉</div>
+          <div class="sc-body">
+            <div class="sc-num" id="stat2k">—</div>
+            <div class="sc-label">2K Fun Run</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAPACITY BAR -->
+      <div class="capacity-bar-wrap">
+        <div class="capacity-label">
+          <span>Capacity</span>
+          <span id="capLabel">— / 500</span>
+        </div>
+        <div class="capacity-bar">
+          <div class="capacity-fill" id="capFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- FILTERS + ACTIONS -->
+      <div class="toolbar">
+        <div class="filters">
+          <input type="search" id="searchInput" placeholder="Search name, email, code…" />
+
+          <select id="filterRace">
+            <option value="all">All Races</option>
+            <option value="5k">5K Competitive</option>
+            <option value="2k">2K Fun Run</option>
+          </select>
+
+          <select id="filterStatus">
+            <option value="all">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+
+          <select id="filterGender">
+            <option value="all">All Genders</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button class="btn-export" id="exportBtn">⬇ Export CSV</button>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table class="reg-table" id="regTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Race</th>
+              <th>Gender</th>
+              <th>Country</th>
+              <th>Email</th>
+              <th>Registered</th>
+              <th>Status</th>
+              <th>Bib</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="regTableBody">
+            <tr><td colspan="11" class="table-empty">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <span id="tableCount"></span>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Registration Details</h2>
+        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <div class="modal-status-actions" id="modalStatusActions"></div>
+        <div class="modal-bib">
+          <label for="bibInput">Assign Bib #</label>
+          <input type="number" id="bibInput" min="1" max="9999" placeholder="Bib number" />
+          <button class="btn-assign-bib" id="assignBibBtn">Save Bib</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast" style="display:none"></div>
+
+  <script src="admin.js" defer></script>
+</body>
+</html>
