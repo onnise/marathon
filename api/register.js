@@ -59,7 +59,10 @@ module.exports = async function handler(req, res) {
     .select('id', { count: 'exact', head: true })
     .neq('payment_status', 'cancelled');
 
-  if (countErr) return send(res, 500, { error: 'Database error. Please try again.' });
+  if (countErr) {
+    console.error('Supabase capacity check error:', JSON.stringify(countErr));
+    return send(res, 500, { error: 'Database error. Please try again.', detail: countErr.message });
+  }
   if (count >= MAX_CAP) return send(res, 409, { error: 'Sorry, the event is now full. You have been added to the waitlist.', waitlist: true });
 
   // ── Duplicate email check ─────────────────────────────
