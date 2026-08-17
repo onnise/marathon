@@ -196,12 +196,47 @@ function openModal(id) {
     ...(r.notes ? [['Notes', r.notes, true]] : []),
   ];
 
-  document.getElementById('modalBody').innerHTML = fields.map(([label, val, full]) =>
+  let bodyHtml = fields.map(([label, val, full]) =>
     `<div class="detail-row${full ? ' detail-full' : ''}">
        <strong>${escHtml(label)}</strong>
        <span>${escHtml(String(val ?? '—'))}</span>
      </div>`
   ).join('');
+
+  // ID upload download button
+  if (r.id_upload_url) {
+    bodyHtml += `<div class="detail-row detail-full">
+      <strong>ID Document</strong>
+      <span><button class="btn-view-id" data-path="${escHtml(r.id_upload_url)}">📎 Download / View ID</button></span>
+    </div>`;
+  }
+
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+
+  // Wire up the ID download button
+  const idBtn = document.querySelector('.btn-view-id');
+  if (idBtn) {
+    idBtn.addEventListener('click', async () => {
+      idBtn.textContent = '⏳ Generating link…';
+      idBtn.disabled = true;
+      try {
+        const res = await fetch(`/api/admin/getfile?path=${encodeURIComponent(idBtn.dataset.path)}`, {
+          headers: { 'Authorization': `Bearer ${authToken}` },
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.open(data.url, '_blank', 'noopener');
+        } else {
+          alert('Could not generate download link: ' + (data.error || 'Unknown error'));
+        }
+      } catch {
+        alert('Network error generating link.');
+      } finally {
+        idBtn.textContent = '📎 Download / View ID';
+        idBtn.disabled = false;
+      }
+    });
+  }
 
   // Status action buttons
   const statusBtns = document.getElementById('modalStatusActions');

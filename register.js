@@ -420,6 +420,16 @@ document.querySelectorAll('input[name="payMethod"]').forEach((input) => {
 const form      = document.getElementById('regForm');
 const submitBtn = document.getElementById('submitBtn');
 
+// Prevent Enter key from accidentally submitting the form mid-steps
+form.addEventListener('keydown', function (e) {
+  if (e.key !== 'Enter') return;
+  const tag  = e.target.tagName;
+  const type = (e.target.type || '').toLowerCase();
+  // Allow Enter on buttons and textareas; block everything else
+  if (tag === 'BUTTON' || tag === 'TEXTAREA' || type === 'submit') return;
+  e.preventDefault();
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -452,6 +462,21 @@ form.addEventListener('submit', async (e) => {
     payload.clubName     = sanitise(document.getElementById('clubName').value);
     payload.eliteStatus  = document.getElementById('eliteStatus').value;
     payload.expectedTime = document.getElementById('expectedTime').value;
+
+    // Encode ID file as base64 for upload
+    const idFile = document.getElementById('idUpload').files[0];
+    if (idFile) {
+      payload.idFile = {
+        name: idFile.name,
+        type: idFile.type,
+        data: await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload  = (e) => resolve(e.target.result.split(',')[1]); // strip data: prefix
+          reader.onerror = reject;
+          reader.readAsDataURL(idFile);
+        }),
+      };
+    }
   }
 
   const best5k = document.getElementById('best5k').value;

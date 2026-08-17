@@ -117,7 +117,25 @@ module.exports = async function handler(req, res) {
     record.elite_status  = b.eliteStatus  || null;
     record.best_5k_time  = b.best5k       || null;
     record.expected_time = b.expectedTime || null;
-    record.id_upload_url = b.idUploadUrl  || null;
+
+    // Upload ID file to Supabase Storage
+    if (b.idFile && b.idFile.data && b.idFile.name) {
+      try {
+        const ext      = b.idFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '');
+        const path     = `${regCode}.${ext}`;
+        const buffer   = Buffer.from(b.idFile.data, 'base64');
+        const { error: uploadErr } = await supabase.storage
+          .from('id-documents')
+          .upload(path, buffer, { contentType: b.idFile.type, upsert: false });
+        if (!uploadErr) {
+          record.id_upload_url = path;
+        } else {
+          console.error('Storage upload error:', uploadErr.message);
+        }
+      } catch (fileErr) {
+        console.error('File processing error:', fileErr.message);
+      }
+    }
   }
 
   // ── Insert ────────────────────────────────────────────
