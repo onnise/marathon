@@ -60,8 +60,9 @@ module.exports = async function handler(req, res) {
     .neq('payment_status', 'cancelled');
 
   if (countErr) {
-    console.error('Supabase capacity check error:', JSON.stringify(countErr));
-    return send(res, 500, { error: 'Database error. Please try again.', detail: countErr.message });
+    console.error('Supabase error full:', JSON.stringify({ message: countErr.message, code: countErr.code, details: countErr.details, hint: countErr.hint, status: countErr.status }));
+    console.error('SUPABASE_URL set:', !!process.env.SUPABASE_URL, '| URL prefix:', (process.env.SUPABASE_URL || '').slice(0, 30));
+    return send(res, 500, { error: 'Database error. Please try again.', detail: countErr.message, code: countErr.code });
   }
   if (count >= MAX_CAP) return send(res, 409, { error: 'Sorry, the event is now full. You have been added to the waitlist.', waitlist: true });
 
