@@ -120,6 +120,7 @@ module.exports = async function handler(req, res) {
 
     // Upload ID file to Supabase Storage
     if (b.idFile && b.idFile.data && b.idFile.name) {
+      console.log('ID file received:', b.idFile.name, 'size ~', Math.round(b.idFile.data.length * 0.75 / 1024), 'KB');
       try {
         const ext      = b.idFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '');
         const path     = `${regCode}.${ext}`;
@@ -129,12 +130,15 @@ module.exports = async function handler(req, res) {
           .upload(path, buffer, { contentType: b.idFile.type, upsert: false });
         if (!uploadErr) {
           record.id_upload_url = path;
+          console.log('ID uploaded to storage:', path);
         } else {
-          console.error('Storage upload error:', uploadErr.message);
+          console.error('Storage upload error:', uploadErr.message, '| code:', uploadErr.statusCode);
         }
       } catch (fileErr) {
         console.error('File processing error:', fileErr.message);
       }
+    } else {
+      console.log('No ID file in payload. idFile present:', !!b.idFile);
     }
   }
 

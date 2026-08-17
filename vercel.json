@@ -39,5 +39,8 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "functions": {
+    "api/register.js": { "maxDuration": 30 }
+  }
 }
