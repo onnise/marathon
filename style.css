@@ -80,6 +80,79 @@ a.is-disabled {
 .btn-lg      { padding: 16px 36px; font-size: 1.05rem; }
 
 /* ===========================
+   LANGUAGE TOGGLE
+=========================== */
+.lang-toggle {
+  display: flex;
+  gap: 2px;
+  background: rgba(255,255,255,.12);
+  border-radius: 20px;
+  padding: 3px;
+}
+.lang-btn {
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,.7);
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  min-height: 28px;
+}
+.lang-btn.active {
+  background: var(--red);
+  color: #fff;
+}
+.lang-btn:hover:not(.active) { color: #fff; background: rgba(255,255,255,.15); }
+.lang-toggle-mobile {
+  margin: 12px 20px;
+  background: rgba(0,0,0,.08);
+}
+.lang-toggle-mobile .lang-btn { color: var(--mid); }
+.lang-toggle-mobile .lang-btn.active { background: var(--red); color: #fff; }
+
+/* ===========================
+   RTL SUPPORT (Arabic)
+=========================== */
+body.rtl {
+  font-family: 'Segoe UI', Tahoma, 'Arial Unicode MS', sans-serif;
+}
+body.rtl .hero-title,
+body.rtl .section-title,
+body.rtl .cta-content h2,
+body.rtl .section-label,
+body.rtl .hero-eyebrow {
+  font-family: 'Segoe UI', Tahoma, 'Arial Unicode MS', sans-serif;
+  letter-spacing: 0;
+}
+body.rtl .timeline { direction: rtl; }
+body.rtl .tl-body { text-align: right; }
+body.rtl .feature-list { padding-right: 0; }
+body.rtl .hero-content { text-align: right; }
+body.rtl .hero-distances,
+body.rtl .hero-cta { justify-content: flex-end; }
+body.rtl .faq-question { text-align: right; }
+body.rtl .faq-question .faq-icon { margin-left: 0; margin-right: auto; float: left; }
+body.rtl .cat-prize { direction: rtl; }
+body.rtl .podium-place { direction: rtl; }
+body.rtl .step-arrow { transform: scaleX(-1); }
+body.rtl .footer-inner { direction: rtl; }
+body.rtl .footer-brand p { text-align: right; }
+body.rtl .info-bar { direction: rtl; }
+body.rtl .info-item { direction: rtl; }
+body.rtl .contact-simple { direction: rtl; }
+body.rtl .contact-row { direction: rtl; }
+body.rtl .contact-row-label { text-align: right; }
+body.rtl .nav-links { direction: rtl; }
+body.rtl .postrace-banner { direction: rtl; text-align: right; }
+body.rtl .steps { direction: rtl; }
+body.rtl .step { text-align: right; }
+body.rtl .race-card { direction: rtl; text-align: right; }
+body.rtl .sponsor-cta { direction: rtl; text-align: center; }
+
+/* ===========================
    NAVBAR
 =========================== */
 .navbar {
@@ -120,6 +193,7 @@ a.is-disabled {
   gap: 28px;
   margin-left: auto;
 }
+.nav-inner .lang-toggle { flex-shrink: 0; }
 .nav-links a {
   color: rgba(255,255,255,.85);
   font-size: .92rem;
@@ -1118,6 +1192,7 @@ a.is-disabled {
 @media (max-width: 768px) {
   /* Nav */
   .nav-links, .btn-nav { display: none; }
+  .nav-inner .lang-toggle { display: none; } /* shown in mobile menu instead */
   .hamburger { display: flex; }
 
   /* Sections */
@@ -1310,12 +1385,40 @@ a.is-disabled {
   font-weight: 600;
 }
 .contact-row-link:hover { text-decoration: underline; }
+.contact-row-sub {
+  font-size: .82rem;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 4px;
+}
 
+.contact-social-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
 .contact-social-row {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 4px;
 }
+.contact-sponsor-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-top: none;
+  background: rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 8px;
+}
+.contact-sponsor-row .contact-row-label {
+  flex: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.9);
+}
+.contact-sponsor-btn { margin-top: 4px; }
 
 .contact-social-link {
   color: rgba(255,255,255,.9);

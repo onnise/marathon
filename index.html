@@ -24,26 +24,34 @@
         <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race Logo" class="logo-img" width="120" height="40" decoding="async" />
       </a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#schedule">Schedule</a></li>
-        <li><a href="#prizes">Prizes</a></li>
-        <li><a href="#gallery">Last Year</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#about"    data-i18n="nav.about">About</a></li>
+        <li><a href="#schedule" data-i18n="nav.schedule">Schedule</a></li>
+        <li><a href="#prizes"   data-i18n="nav.prizes">Prizes</a></li>
+        <li><a href="#gallery"  data-i18n="nav.gallery">Last Year</a></li>
+        <li><a href="#faq"      data-i18n="nav.faq">FAQ</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
       </ul>
-      <a href="register.html" class="btn btn-nav">Register Now</a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" onclick="window.i18n.setLang('en')">EN</button>
+        <button class="lang-btn"        data-lang="ar" onclick="window.i18n.setLang('ar')">عر</button>
+      </div>
+      <a href="register.html" class="btn btn-nav" data-i18n="nav.register">Register Now</a>
       <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#about"    class="menu-link">About</a>
-      <a href="#schedule" class="menu-link">Schedule</a>
-      <a href="#prizes"   class="menu-link">Prizes</a>
-      <a href="#gallery"  class="menu-link">Last Year</a>
-      <a href="#faq"      class="menu-link">FAQ</a>
-      <a href="contact.html" class="menu-link">Contact</a>
-      <a href="register.html" class="btn btn-primary menu-link">Register Now</a>
+      <a href="#about"    class="menu-link" data-i18n="nav.about">About</a>
+      <a href="#schedule" class="menu-link" data-i18n="nav.schedule">Schedule</a>
+      <a href="#prizes"   class="menu-link" data-i18n="nav.prizes">Prizes</a>
+      <a href="#gallery"  class="menu-link" data-i18n="nav.gallery">Last Year</a>
+      <a href="#faq"      class="menu-link" data-i18n="nav.faq">FAQ</a>
+      <a href="contact.html" class="menu-link" data-i18n="nav.contact">Contact</a>
+      <div class="lang-toggle lang-toggle-mobile">
+        <button class="lang-btn active" data-lang="en" onclick="window.i18n.setLang('en')">EN</button>
+        <button class="lang-btn"        data-lang="ar" onclick="window.i18n.setLang('ar')">عر</button>
+      </div>
+      <a href="register.html" class="btn btn-primary menu-link" data-i18n="nav.register">Register Now</a>
     </div>
   </nav>
 
@@ -54,41 +62,41 @@
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Bikfaya · Lebanon · LAF Approved ✓ · Eco Race ♻️</p>
-      <h1 class="hero-title">Bikfaya 5K<br /><span class="highlight">Eco Race 2026</span></h1>
-      <p class="hero-subtitle">Sunday, September 20, 2026 &nbsp;·&nbsp; Alfa Store Bikfaya</p>
+      <p class="hero-eyebrow" data-i18n="hero.eyebrow">Bikfaya · Lebanon · LAF Approved ✓ · Eco Race ♻️</p>
+      <h1 class="hero-title" data-i18n="hero.title">Bikfaya 5K<br /><span class="highlight">Eco Race 2026</span></h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">Sunday, September 20, 2026 &nbsp;·&nbsp; Alfa Store Bikfaya</p>
       <div class="hero-distances">
-        <span class="badge badge-gold">5K Competitive</span>
-        <span class="badge">2K Fun Run</span>
+        <span class="badge badge-gold" data-i18n="hero.badge1">5K Competitive</span>
+        <span class="badge" data-i18n="hero.badge2">2K Fun Run</span>
       </div>
       <div class="hero-cta">
-        <a href="register.html" class="btn btn-primary btn-lg">Register Now</a>
-        <a href="#schedule" class="btn btn-ghost btn-lg">Race Schedule</a>
+        <a href="register.html" class="btn btn-primary btn-lg" data-i18n="hero.cta1">Register Now</a>
+        <a href="#schedule" class="btn btn-ghost btn-lg" data-i18n="hero.cta2">Race Schedule</a>
       </div>
 
       <!-- Countdown -->
       <div class="countdown" id="countdown">
         <div class="countdown-block">
           <span class="cd-num" id="cd-days">--</span>
-          <span class="cd-label">Days</span>
+          <span class="cd-label" data-i18n="cd.days">Days</span>
         </div>
         <div class="countdown-sep">:</div>
         <div class="countdown-block">
           <span class="cd-num" id="cd-hours">--</span>
-          <span class="cd-label">Hours</span>
+          <span class="cd-label" data-i18n="cd.hours">Hours</span>
         </div>
         <div class="countdown-sep">:</div>
         <div class="countdown-block">
           <span class="cd-num" id="cd-mins">--</span>
-          <span class="cd-label">Mins</span>
+          <span class="cd-label" data-i18n="cd.mins">Mins</span>
         </div>
         <div class="countdown-sep">:</div>
         <div class="countdown-block">
           <span class="cd-num" id="cd-secs">--</span>
-          <span class="cd-label">Secs</span>
+          <span class="cd-label" data-i18n="cd.secs">Secs</span>
         </div>
       </div>
-      <p class="hero-note">📋 Registration opens <strong>August 20</strong> — closes <strong>September 15</strong></p>
+      <p class="hero-note" data-i18n="hero.note">📋 Registration opens <strong>August 20</strong> — closes <strong>September 15</strong></p>
     </div>
     <div class="hero-scroll-hint">
       <span>Scroll</span>
@@ -101,29 +109,29 @@
     <div class="info-item">
       <span class="info-icon">📅</span>
       <div>
-        <strong>Race Day</strong>
-        <span>Sunday, Sep 20, 2026</span>
+        <strong data-i18n="info.raceday">Race Day</strong>
+        <span data-i18n="info.racedate">Sunday, Sep 20, 2026</span>
       </div>
     </div>
     <div class="info-item">
       <span class="info-icon">📍</span>
       <div>
-        <strong>Location</strong>
-        <span>Alfa Store, Bikfaya</span>
+        <strong data-i18n="info.location">Location</strong>
+        <span data-i18n="info.locval">Alfa Store, Bikfaya</span>
       </div>
     </div>
     <div class="info-item">
       <span class="info-icon">🏃</span>
       <div>
-        <strong>Distances</strong>
-        <span>5K Competitive · 2K Fun Run</span>
+        <strong data-i18n="info.dist">Distances</strong>
+        <span data-i18n="info.distval">5K Competitive · 2K Fun Run</span>
       </div>
     </div>
     <div class="info-item">
       <span class="info-icon">✅</span>
       <div>
-        <strong>Certified</strong>
-        <span>LAF Approved</span>
+        <strong data-i18n="info.cert">Certified</strong>
+        <span data-i18n="info.certval">LAF Approved</span>
       </div>
     </div>
   </div>
@@ -132,16 +140,16 @@
   <section class="section" id="about">
     <div class="container two-col">
       <div class="col-text">
-        <p class="section-label">About the Race</p>
-        <h2 class="section-title">More Than Just a Race</h2>
-        <p class="section-body">The Bikfaya 5K Eco Race is a LAF-certified, eco-friendly running event set against the stunning mountain scenery of Bikfaya. Whether you're a competitive runner chasing a personal best or a family out for a fun morning together — there's a race for everyone.</p>
-        <p class="section-body">Starting and finishing at Alfa Store Bikfaya, the course winds through the scenic streets of this beautiful mountain town, with spectators cheering every step of the way.</p>
+        <p class="section-label" data-i18n="about.label">About the Race</p>
+        <h2 class="section-title" data-i18n="about.title">More Than Just a Race</h2>
+        <p class="section-body" data-i18n="about.body1">The Bikfaya 5K Eco Race is a LAF-certified, eco-friendly running event set against the stunning mountain scenery of Bikfaya. Whether you're a competitive runner chasing a personal best or a family out for a fun morning together — there's a race for everyone.</p>
+        <p class="section-body" data-i18n="about.body2">Starting and finishing at Alfa Store Bikfaya, the course winds through the scenic streets of this beautiful mountain town, with spectators cheering every step of the way.</p>
         <ul class="feature-list">
-          <li><span class="check">✓</span> LAF certified &amp; approved</li>
-          <li><span class="check">✓</span> Eco-friendly event ♻️</li>
-          <li><span class="check">✓</span> Blind with Vision participants welcome</li>
-          <li><span class="check">✓</span> Cash prizes + trophies &amp; medals</li>
-          <li><span class="check">✓</span> Post-race breakfast for all finishers</li>
+          <li><span class="check">✓</span> <span data-i18n="about.feat1">LAF certified &amp; approved</span></li>
+          <li><span class="check">✓</span> <span data-i18n="about.feat2">Eco-friendly event ♻️</span></li>
+          <li><span class="check">✓</span> <span data-i18n="about.feat3">Blind with Vision participants welcome</span></li>
+          <li><span class="check">✓</span> <span data-i18n="about.feat4">Cash prizes + trophies &amp; medals</span></li>
+          <li><span class="check">✓</span> <span data-i18n="about.feat5">Post-race breakfast for all finishers</span></li>
         </ul>
       </div>
       <div class="col-img">
@@ -153,49 +161,49 @@
   <!-- RACE SCHEDULE -->
   <section class="section section-dark" id="schedule">
     <div class="container">
-      <p class="section-label light">Race Day</p>
-      <h2 class="section-title light">Sunday, September 20, 2026</h2>
-      <p class="section-body light" style="max-width:520px">All events start and finish at Alfa Store Bikfaya. Timings are tentative and subject to minor change.</p>
+      <p class="section-label light" data-i18n="sched.label">Race Day</p>
+      <h2 class="section-title light" data-i18n="sched.title">Sunday, September 20, 2026</h2>
+      <p class="section-body light" style="max-width:520px" data-i18n="sched.subtitle">All events start and finish at Alfa Store Bikfaya. Timings are tentative and subject to minor change.</p>
 
       <div class="timeline">
         <div class="tl-item">
-          <div class="tl-time">7:00 AM</div>
+          <div class="tl-time" data-i18n="sched.t1">7:00 AM</div>
           <div class="tl-dot"></div>
           <div class="tl-body">
-            <h3>Assembly</h3>
-            <p>Arrive at Alfa Store Bikfaya, collect your race kit, warm up, and get ready.</p>
+            <h3 data-i18n="sched.h1">Assembly</h3>
+            <p data-i18n="sched.p1">Arrive at Alfa Store Bikfaya, collect your race kit, warm up, and get ready.</p>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-time">8:00 AM</div>
+          <div class="tl-time" data-i18n="sched.t2">8:00 AM</div>
           <div class="tl-dot tl-dot-red"></div>
           <div class="tl-body">
-            <h3>5K Competitive Race 🏁</h3>
-            <p>Official LAF-certified 5K race. Chip-timed with category rankings for men and women.</p>
+            <h3 data-i18n="sched.h2">5K Competitive Race 🏁</h3>
+            <p data-i18n="sched.p2">Official LAF-certified 5K race. Chip-timed with category rankings for men and women.</p>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-time">9:00 AM</div>
+          <div class="tl-time" data-i18n="sched.t3">9:00 AM</div>
           <div class="tl-dot"></div>
           <div class="tl-body">
-            <h3>2K Fun Run 🎉</h3>
-            <p>Open to everyone — all ages, families, beginners, and Blind with Vision participants. No competition, all fun.</p>
+            <h3 data-i18n="sched.h3">2K Fun Run 🎉</h3>
+            <p data-i18n="sched.p3">Open to everyone — all ages, families, beginners, and Blind with Vision participants. No competition, all fun.</p>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-time">10:00 AM</div>
+          <div class="tl-time" data-i18n="sched.t4">10:00 AM</div>
           <div class="tl-dot"></div>
           <div class="tl-body">
-            <h3>Race Closes</h3>
-            <p>All participants should have crossed the finish line. Medical and support teams on standby throughout.</p>
+            <h3 data-i18n="sched.h4">Race Closes</h3>
+            <p data-i18n="sched.p4">All participants should have crossed the finish line. Medical and support teams on standby throughout.</p>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-time">11:00 AM</div>
+          <div class="tl-time" data-i18n="sched.t5">11:00 AM</div>
           <div class="tl-dot tl-dot-gold"></div>
           <div class="tl-body">
-            <h3>Awards &amp; Breakfast 🥐</h3>
-            <p>Prize ceremony for category and overall winners. Followed by manakish, fresh fruits, hot &amp; cold beverages for all.</p>
+            <h3 data-i18n="sched.h5">Awards &amp; Breakfast 🥐</h3>
+            <p data-i18n="sched.p5">Prize ceremony for category and overall winners. Followed by manakish, fresh fruits, hot &amp; cold beverages for all.</p>
           </div>
         </div>
       </div>
@@ -205,48 +213,48 @@
   <!-- REGISTER -->
   <section class="section" id="register">
     <div class="container">
-      <p class="section-label">Registration</p>
-      <h2 class="section-title">Pick Your Race</h2>
-      <p class="section-body center" style="max-width:560px;margin:0 auto 48px">Registration opens <strong>August 20, 2026</strong> and closes September 15. Max 500 spots. Payment via OMT.</p>
+      <p class="section-label" data-i18n="reg.label">Registration</p>
+      <h2 class="section-title" data-i18n="reg.title">Pick Your Race</h2>
+      <p class="section-body center" style="max-width:560px;margin:0 auto 48px" data-i18n="reg.body">Registration opens <strong>August 20, 2026</strong> and closes September 15. Max 500 spots. Payment via OMT.</p>
 
       <div class="race-cards">
 
         <div class="race-card race-card-featured">
           <div class="race-card-top">
-            <div class="race-badge-label">Competitive</div>
+            <div class="race-badge-label" data-i18n="reg.comp">Competitive</div>
             <div class="race-dist">5K</div>
             <div class="race-price">$25</div>
             <p class="race-card-desc">Official LAF-certified race with chip timing, age category rankings, and cash prizes for top finishers.</p>
           </div>
           <ul class="race-includes">
-            <li>✓ Chip timing &amp; official results</li>
-            <li>✓ Race bib &amp; finisher medal</li>
-            <li>✓ Age category rankings (M &amp; F)</li>
-            <li>✓ Cash prizes for overall winners</li>
-            <li>✓ Post-race breakfast</li>
+            <li>✓ <span data-i18n="reg.feat1a">Chip timing &amp; official results</span></li>
+            <li>✓ <span data-i18n="reg.feat2a">Race bib &amp; finisher medal</span></li>
+            <li>✓ <span data-i18n="reg.feat3a">Age category rankings (M &amp; F)</span></li>
+            <li>✓ <span data-i18n="reg.feat4a">Cash prizes for overall winners</span></li>
+            <li>✓ <span data-i18n="reg.feat5a">Post-race breakfast</span></li>
           </ul>
           <div class="race-card-footer">
-            <a href="register.html?race=5k" class="btn btn-primary reg-btn" id="btn5k">Register for 5K — $25</a>
+            <a href="register.html?race=5k" class="btn btn-primary reg-btn" id="btn5k" data-i18n="reg.btn5k">Register for 5K — $25</a>
             <p class="reg-opens-note" id="note5k"></p>
           </div>
         </div>
 
         <div class="race-card">
           <div class="race-card-top">
-            <div class="race-badge-label">Fun Run</div>
+            <div class="race-badge-label" data-i18n="reg.fun">Fun Run</div>
             <div class="race-dist">2K</div>
             <div class="race-price">$10</div>
             <p class="race-card-desc">Open to all — families, beginners, kids, and Blind with Vision participants. Come as you are and enjoy the morning.</p>
           </div>
           <ul class="race-includes">
-            <li>✓ Race bib &amp; finisher medal</li>
-            <li>✓ Open to all ages</li>
-            <li>✓ Blind with Vision welcome 🤝</li>
-            <li>✓ Eco-friendly event ♻️</li>
-            <li>✓ Post-race breakfast</li>
+            <li>✓ <span data-i18n="reg.feat1b">Race bib &amp; finisher medal</span></li>
+            <li>✓ <span data-i18n="reg.feat2b">Open to all ages</span></li>
+            <li>✓ <span data-i18n="reg.feat3b">Blind with Vision welcome 🤝</span></li>
+            <li>✓ <span data-i18n="reg.feat4b">Eco-friendly event ♻️</span></li>
+            <li>✓ <span data-i18n="reg.feat5b">Post-race breakfast</span></li>
           </ul>
           <div class="race-card-footer">
-            <a href="register.html?race=2k" class="btn btn-primary reg-btn" id="btn2k">Register for 2K — $10</a>
+            <a href="register.html?race=2k" class="btn btn-primary reg-btn" id="btn2k" data-i18n="reg.btn2k">Register for 2K — $10</a>
             <p class="reg-opens-note" id="note2k"></p>
           </div>
         </div>
@@ -255,30 +263,30 @@
 
       <!-- How to Register Steps -->
       <div class="how-register">
-        <p class="section-label" style="text-align:center;margin-bottom:32px">How It Works</p>
+        <p class="section-label" style="text-align:center;margin-bottom:32px" data-i18n="how.label">How It Works</p>
         <div class="steps">
           <div class="step">
             <div class="step-num">01</div>
-            <h3>Choose Your Race</h3>
-            <p>Pick the 5K competitive race or the 2K fun run.</p>
+            <h3 data-i18n="how.s1t">Choose Your Race</h3>
+            <p data-i18n="how.s1b">Pick the 5K competitive race or the 2K fun run.</p>
           </div>
           <div class="step-arrow">→</div>
           <div class="step">
             <div class="step-num">02</div>
-            <h3>Fill the Form</h3>
-            <p>Enter your details in the registration form. Takes under 3 minutes.</p>
+            <h3 data-i18n="how.s2t">Fill the Form</h3>
+            <p data-i18n="how.s2b">Enter your details in the registration form. Takes under 3 minutes.</p>
           </div>
           <div class="step-arrow">→</div>
           <div class="step">
             <div class="step-num">03</div>
-            <h3>Pay via OMT</h3>
-            <p>Complete payment online (ePay) or visit the nearest OMT store.</p>
+            <h3 data-i18n="how.s3t">Pay via OMT</h3>
+            <p data-i18n="how.s3b">Complete payment online (ePay) or visit the nearest OMT store.</p>
           </div>
           <div class="step-arrow">→</div>
           <div class="step">
             <div class="step-num">04</div>
-            <h3>Get Your Ticket</h3>
-            <p>Receive your confirmation email with ticket number and race day details.</p>
+            <h3 data-i18n="how.s4t">Get Your Ticket</h3>
+            <p data-i18n="how.s4b">Receive your confirmation email with ticket number and race day details.</p>
           </div>
         </div>
       </div>
@@ -288,64 +296,64 @@
   <!-- PRIZES -->
   <section class="section section-light" id="prizes">
     <div class="container">
-      <p class="section-label">Awards</p>
-      <h2 class="section-title">Race Prizes</h2>
-      <p class="section-body center" style="max-width:520px;margin:0 auto 56px">Top finishers in the 5K competitive race will be rewarded. Category winners take home trophies and medals.</p>
+      <p class="section-label" data-i18n="prizes.label">Awards</p>
+      <h2 class="section-title" data-i18n="prizes.title">Race Prizes</h2>
+      <p class="section-body center" style="max-width:520px;margin:0 auto 56px" data-i18n="prizes.body">Top finishers in the 5K competitive race will be rewarded. Category winners take home trophies and medals.</p>
 
       <div class="prizes-grid">
         <!-- Cash prizes -->
         <div class="prizes-block">
-          <h3 class="prizes-block-title">Overall Winners — Men &amp; Women</h3>
+          <h3 class="prizes-block-title" data-i18n="prizes.block1">Overall Winners — Men &amp; Women</h3>
           <div class="podium">
             <div class="podium-place podium-2nd">
               <div class="podium-medal">🥈</div>
               <div class="podium-amount">$200</div>
-              <div class="podium-rank">2nd Place</div>
+              <div class="podium-rank" data-i18n="prizes.2nd">2nd Place</div>
             </div>
             <div class="podium-place podium-1st">
               <div class="podium-medal">🥇</div>
               <div class="podium-amount">$300</div>
-              <div class="podium-rank">1st Place</div>
-              <p class="podium-note">+ Sponsor shopping coupons 🎁</p>
+              <div class="podium-rank" data-i18n="prizes.1st">1st Place</div>
+              <p class="podium-note" data-i18n="prizes.coupon">+ Sponsor shopping coupons 🎁</p>
             </div>
             <div class="podium-place podium-3rd">
               <div class="podium-medal">🥉</div>
               <div class="podium-amount">$100</div>
-              <div class="podium-rank">3rd Place</div>
+              <div class="podium-rank" data-i18n="prizes.3rd">3rd Place</div>
             </div>
           </div>
         </div>
 
         <!-- Category prizes -->
         <div class="prizes-block prizes-category">
-          <h3 class="prizes-block-title">Category Winners</h3>
+          <h3 class="prizes-block-title" data-i18n="prizes.block2">Category Winners</h3>
           <div class="category-prizes">
             <div class="cat-prize">
               <span class="cat-icon">🏆</span>
               <div>
-                <strong>Trophies</strong>
-                <span>1st place per age category</span>
+                <strong data-i18n="prizes.cat1t">Trophies</strong>
+                <span data-i18n="prizes.cat1b">1st place per age category</span>
               </div>
             </div>
             <div class="cat-prize">
               <span class="cat-icon">🥇</span>
               <div>
-                <strong>Medals</strong>
-                <span>Top 3 per age category</span>
+                <strong data-i18n="prizes.cat2t">Medals</strong>
+                <span data-i18n="prizes.cat2b">Top 3 per age category</span>
               </div>
             </div>
             <div class="cat-prize">
               <span class="cat-icon">🎁</span>
               <div>
-                <strong>Sponsor Coupons</strong>
-                <span>Overall winners</span>
+                <strong data-i18n="prizes.cat3t">Sponsor Coupons</strong>
+                <span data-i18n="prizes.cat3b">Overall winners</span>
               </div>
             </div>
             <div class="cat-prize">
               <span class="cat-icon">🎽</span>
               <div>
-                <strong>Finisher Medal</strong>
-                <span>Every finisher, both races</span>
+                <strong data-i18n="prizes.cat4t">Finisher Medal</strong>
+                <span data-i18n="prizes.cat4b">Every finisher, both races</span>
               </div>
             </div>
           </div>
@@ -355,8 +363,8 @@
       <div class="postrace-banner">
         <span class="postrace-icon">🥐</span>
         <div>
-          <strong>Post-Race Breakfast for Everyone</strong>
-          <p>Manakish · Fresh Fruits · Hot &amp; Cold Beverages — served at the finish area from 9:00 AM</p>
+          <strong data-i18n="prizes.post">Post-Race Breakfast for Everyone</strong>
+          <p data-i18n="prizes.postd">Manakish · Fresh Fruits · Hot &amp; Cold Beverages — served at the finish area from 9:00 AM</p>
         </div>
       </div>
     </div>
@@ -365,54 +373,54 @@
   <!-- GALLERY / LAST YEAR -->
   <section class="section" id="gallery">
     <div class="container">
-      <p class="section-label">Last Year</p>
-      <h2 class="section-title">2025 Highlights</h2>
-      <p class="section-body center" style="max-width:520px;margin:0 auto 48px">A glimpse of what last year looked like through the streets of Bikfaya.</p>
+      <p class="section-label" data-i18n="gallery.label">Last Year</p>
+      <h2 class="section-title" data-i18n="gallery.title">2025 Highlights</h2>
+      <p class="section-body center" style="max-width:520px;margin:0 auto 48px" data-i18n="gallery.body">A glimpse of what last year looked like through the streets of Bikfaya.</p>
 
       <div class="gallery">
         <div class="gallery-item gallery-large">
           <img src="https://placehold.co/800x500/2d3748/ffffff?text=Start+Line+Bikfaya+2025" alt="Start line Bikfaya 2025" width="800" height="500" loading="lazy" decoding="async" />
-          <div class="gallery-caption">The Start Line — Alfa Store Bikfaya</div>
+          <div class="gallery-caption" data-i18n="gallery.cap1">The Start Line — Alfa Store Bikfaya</div>
         </div>
         <div class="gallery-item">
           <img src="https://placehold.co/400x300/4a5568/ffffff?text=Finish+Line" alt="Finish line" width="400" height="300" loading="lazy" decoding="async" />
-          <div class="gallery-caption">Crossing the Finish Line</div>
+          <div class="gallery-caption" data-i18n="gallery.cap2">Crossing the Finish Line</div>
         </div>
         <div class="gallery-item">
           <img src="https://placehold.co/400x300/718096/ffffff?text=Awards+Ceremony" alt="Awards ceremony" width="400" height="300" loading="lazy" decoding="async" />
-          <div class="gallery-caption">Awards &amp; Prize Ceremony</div>
+          <div class="gallery-caption" data-i18n="gallery.cap3">Awards &amp; Prize Ceremony</div>
         </div>
         <div class="gallery-item">
           <img src="https://placehold.co/400x300/e2e8f0/2d3748?text=2K+Fun+Run" alt="Fun run" width="400" height="300" loading="lazy" decoding="async" />
-          <div class="gallery-caption">2K Fun Run — All Welcome</div>
+          <div class="gallery-caption" data-i18n="gallery.cap4">2K Fun Run — All Welcome</div>
         </div>
         <div class="gallery-item">
           <img src="https://placehold.co/400x300/bee3f8/2d3748?text=Post+Race+Breakfast" alt="Post race breakfast" width="400" height="300" loading="lazy" decoding="async" />
-          <div class="gallery-caption">Post-Race Manakish &amp; Breakfast</div>
+          <div class="gallery-caption" data-i18n="gallery.cap5">Post-Race Manakish &amp; Breakfast</div>
         </div>
       </div>
 
-      <p class="gallery-note">📸 Photos &amp; drone footage from 2025 coming soon. New drone coverage planned for 2026! 🎥</p>
+      <p class="gallery-note" data-i18n="gallery.note">📸 Photos &amp; drone footage from 2025 coming soon. New drone coverage planned for 2026! 🎥</p>
     </div>
   </section>
 
   <!-- SPONSORS -->
   <section class="section section-light" id="sponsors">
     <div class="container">
-      <p class="section-label">Partners</p>
-      <h2 class="section-title">Our Sponsors</h2>
-      <p class="section-body center" style="max-width:500px;margin:0 auto 48px">The Bikfaya Race is made possible by the generous support of our sponsors. Join us as a partner for 2026.</p>
+      <p class="section-label" data-i18n="sponsors.label">Partners</p>
+      <h2 class="section-title" data-i18n="sponsors.title">Our Sponsors</h2>
+      <p class="section-body center" style="max-width:500px;margin:0 auto 48px" data-i18n="sponsors.body">The Bikfaya Race is made possible by the generous support of our sponsors. Join us as a partner for 2026.</p>
 
       <div class="sponsor-tiers">
         <div class="sponsor-tier">
-          <div class="sponsor-tier-label title-tier">Title Sponsor</div>
+          <div class="sponsor-tier-label title-tier" data-i18n="sponsors.tier1">Title Sponsor</div>
           <div class="sponsor-logo-box sponsor-logo-lg">
             <img src="https://placehold.co/300x100/1a1a2e/ffffff?text=Title+Sponsor" alt="Title Sponsor" width="300" height="100" loading="lazy" decoding="async" />
           </div>
         </div>
         <div class="sponsor-row">
           <div class="sponsor-tier">
-            <div class="sponsor-tier-label gold-tier">Gold</div>
+            <div class="sponsor-tier-label gold-tier" data-i18n="sponsors.tier2">Gold</div>
             <div class="sponsor-logos-row">
               <div class="sponsor-logo-box">
                 <img src="https://placehold.co/200x80/f6c90e/1a1a2e?text=Gold+Sponsor" alt="Gold Sponsor" width="200" height="80" loading="lazy" decoding="async" />
@@ -425,7 +433,7 @@
         </div>
         <div class="sponsor-row">
           <div class="sponsor-tier">
-            <div class="sponsor-tier-label silver-tier">Silver</div>
+            <div class="sponsor-tier-label silver-tier" data-i18n="sponsors.tier3">Silver</div>
             <div class="sponsor-logos-row">
               <div class="sponsor-logo-box sponsor-logo-sm">
                 <img src="https://placehold.co/160x60/e2e8f0/2d3748?text=Silver" alt="Silver Sponsor" width="160" height="60" loading="lazy" decoding="async" />
@@ -442,8 +450,8 @@
       </div>
 
       <div class="sponsor-cta">
-        <p>Interested in sponsoring the Bikfaya Race 2026?</p>
-        <a href="mailto:bickfaya5krun@gmail.com" class="btn btn-primary" rel="noopener noreferrer">Get the Sponsor Pitch</a>
+        <p data-i18n="sponsors.cta">Interested in sponsoring the Bikfaya Race 2026?</p>
+        <a href="mailto:bickfaya5krun@gmail.com" class="btn btn-primary" rel="noopener noreferrer" data-i18n="sponsors.ctabtn">Get the Sponsor Pitch</a>
       </div>
     </div>
   </section>
@@ -451,79 +459,79 @@
   <!-- FAQ -->
   <section class="section" id="faq">
     <div class="container container-narrow">
-      <p class="section-label">FAQ</p>
-      <h2 class="section-title">Common Questions</h2>
+      <p class="section-label" data-i18n="faq.label">FAQ</p>
+      <h2 class="section-title" data-i18n="faq.title">Common Questions</h2>
       <div class="faq-list">
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            When does registration open? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q1">When does registration open?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>Registration opens on <strong>August 20, 2026</strong> and closes on <strong>September 15, 2026</strong>. Spots are limited so register early.</p>
+            <p data-i18n="faq.a1">Registration opens on <strong>August 20, 2026</strong> and closes on <strong>September 15, 2026</strong>. Spots are limited so register early.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            How do I pay for registration? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q2">How do I pay for registration?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>Payment is processed through <strong>OMT</strong>. You can pay online via OMT ePay, or visit the nearest OMT store with your registration reference number.</p>
+            <p data-i18n="faq.a2">Payment is processed through <strong>OMT</strong>. You can pay online via OMT ePay, or visit the nearest OMT store with your registration reference number.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            What's the difference between the 5K and 2K? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q3">What's the difference between the 5K and 2K?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>The <strong>5K</strong> is a certified competitive race with chip timing, official results, category rankings and cash prizes. The <strong>2K</strong> is a non-competitive fun run open to all ages, families, and Blind with Vision participants — no pressure, all fun.</p>
+            <p data-i18n="faq.a3">The <strong>5K</strong> is a certified competitive race with chip timing, official results, category rankings and cash prizes. The <strong>2K</strong> is a non-competitive fun run open to all ages, families, and Blind with Vision participants — no pressure, all fun.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            What do I need to bring on race day? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q4">What do I need to bring on race day?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>Bring your confirmation email or ticket number (digital or printed), a valid ID, and comfortable running gear. Hydration stations will be available along the route.</p>
+            <p data-i18n="faq.a4">Bring your confirmation email or ticket number (digital or printed), a valid ID, and comfortable running gear. Hydration stations will be available along the route.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            Is there an age limit? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q5">Is there an age limit?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>The 2K fun run is open to all ages (minors must be accompanied by a guardian). The 5K competitive race requires participants to be 16+ years old.</p>
+            <p data-i18n="faq.a5">The 2K fun run is open to all ages (minors must be accompanied by a guardian). The 5K competitive race requires participants to be 16+ years old.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            Is parking available in Bikfaya? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q6">Is parking available in Bikfaya?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>Yes, parking is available in the Bikfaya area near the start/finish at Alfa Store. Please note there is no organised transport service to the event at this time.</p>
+            <p data-i18n="faq.a6">Yes, parking is available in the Bikfaya area near the start/finish at Alfa Store. Please note there is no organised transport service to the event at this time.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            Is the event eco-friendly? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q7">Is the event eco-friendly?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>Yes! The Bikfaya Race is committed to being an eco-friendly event ♻️. We minimise single-use plastic and encourage responsible behaviour on the course and in Bikfaya.</p>
+            <p data-i18n="faq.a7">Yes! The Bikfaya Race is committed to being an eco-friendly event ♻️. We minimise single-use plastic and encourage responsible behaviour on the course and in Bikfaya.</p>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            Can Blind with Vision participants join? <span class="faq-icon" aria-hidden="true">+</span>
+            <span data-i18n="faq.q8">Can Blind with Vision participants join?</span> <span class="faq-icon" aria-hidden="true">+</span>
           </button>
           <div class="faq-answer">
-            <p>Absolutely. We warmly welcome Blind with Vision participants in the 2K fun run. Please indicate this during registration so we can provide the right support.</p>
+            <p data-i18n="faq.a8">Absolutely. We warmly welcome Blind with Vision participants in the 2K fun run. Please indicate this during registration so we can provide the right support.</p>
           </div>
         </div>
 
@@ -538,9 +546,9 @@
       <div class="hero-overlay"></div>
     </div>
     <div class="cta-content">
-      <h2>Ready to Run?</h2>
-      <p>September 20, 2026 — Alfa Store, Bikfaya. Register before September 15.</p>
-      <a href="register.html" class="btn btn-primary btn-lg">Secure Your Spot</a>
+      <h2 data-i18n="cta.title">Ready to Run?</h2>
+      <p data-i18n="cta.body">September 20, 2026 — Alfa Store, Bikfaya. Register before September 15.</p>
+      <a href="register.html" class="btn btn-primary btn-lg" data-i18n="cta.btn">Secure Your Spot</a>
     </div>
   </section>
 
@@ -551,7 +559,7 @@
         <a href="#" class="logo logo-light">
           <img src="https://placehold.co/120x40/ffffff/1a1a2e?text=BIKFAYA+RACE" alt="Bikfaya Race" class="logo-img" width="120" height="40" loading="lazy" decoding="async" />
         </a>
-        <p>An annual LAF-approved running event through the beautiful mountain town of Bikfaya, Lebanon. Open to all.</p>
+        <p data-i18n="footer.about">An annual LAF-approved running event through the beautiful mountain town of Bikfaya, Lebanon. Open to all.</p>
         <div class="footer-badges">
           <span>✅ LAF Approved</span>
           <span>♻️ Eco Friendly</span>
@@ -559,7 +567,7 @@
         </div>
       </div>
       <div class="footer-links">
-        <h4>Quick Links</h4>
+        <h4 data-i18n="footer.links">Quick Links</h4>
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#schedule">Race Schedule</a></li>
@@ -571,7 +579,7 @@
         </ul>
       </div>
       <div class="footer-contact">
-        <h4>Contact</h4>
+        <h4 data-i18n="footer.contact">Contact</h4>
         <p>📧 bickfaya5krun@gmail.com</p>
         <p>📍 Alfa Store, Bikfaya, Lebanon</p>
         <p>📅 Sunday, September 20, 2026</p>
@@ -587,6 +595,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=2" defer></script>
+  <script src="translations.js" defer></script>
+  <script src="script.js?v=3" defer></script>
 </body>
 </html>

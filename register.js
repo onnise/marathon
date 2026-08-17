@@ -37,6 +37,93 @@ const RACE_LABELS = { '5k': '5K Competitive Race', '2k': '2K Fun Run' };
 /* ===========================
    COUNTRY LIST
 =========================== */
+/* ===========================
+   PHONE COUNTRY CODES
+=========================== */
+const PHONE_CODES = [
+  { code: '+961', name: 'Lebanon 🇱🇧',          digits: 8 },
+  { code: '+971', name: 'UAE 🇦🇪',               digits: 9 },
+  { code: '+966', name: 'Saudi Arabia 🇸🇦',      digits: 9 },
+  { code: '+965', name: 'Kuwait 🇰🇼',            digits: 8 },
+  { code: '+974', name: 'Qatar 🇶🇦',             digits: 8 },
+  { code: '+973', name: 'Bahrain 🇧🇭',           digits: 8 },
+  { code: '+968', name: 'Oman 🇴🇲',              digits: 8 },
+  { code: '+962', name: 'Jordan 🇯🇴',            digits: 9 },
+  { code: '+964', name: 'Iraq 🇮🇶',              digits: 10 },
+  { code: '+963', name: 'Syria 🇸🇾',             digits: 9 },
+  { code: '+20',  name: 'Egypt 🇪🇬',             digits: 10 },
+  { code: '+218', name: 'Libya 🇱🇾',             digits: 9  },
+  { code: '+216', name: 'Tunisia 🇹🇳',           digits: 8  },
+  { code: '+213', name: 'Algeria 🇩🇿',           digits: 9  },
+  { code: '+212', name: 'Morocco 🇲🇦',           digits: 9  },
+  { code: '+249', name: 'Sudan 🇸🇩',             digits: 9  },
+  { code: '+970', name: 'Palestine 🇵🇸',         digits: 9  },
+  { code: '+1',   name: 'USA 🇺🇸',               digits: 10 },
+  { code: '+1',   name: 'Canada 🇨🇦',            digits: 10 },
+  { code: '+44',  name: 'UK 🇬🇧',                digits: 10 },
+  { code: '+33',  name: 'France 🇫🇷',            digits: 9  },
+  { code: '+49',  name: 'Germany 🇩🇪',           digits: 11 },
+  { code: '+39',  name: 'Italy 🇮🇹',             digits: 10 },
+  { code: '+34',  name: 'Spain 🇪🇸',             digits: 9  },
+  { code: '+351', name: 'Portugal 🇵🇹',          digits: 9  },
+  { code: '+31',  name: 'Netherlands 🇳🇱',       digits: 9  },
+  { code: '+32',  name: 'Belgium 🇧🇪',           digits: 9  },
+  { code: '+41',  name: 'Switzerland 🇨🇭',       digits: 9  },
+  { code: '+43',  name: 'Austria 🇦🇹',           digits: 10 },
+  { code: '+30',  name: 'Greece 🇬🇷',            digits: 10 },
+  { code: '+90',  name: 'Turkey 🇹🇷',            digits: 10 },
+  { code: '+7',   name: 'Russia 🇷🇺',            digits: 10 },
+  { code: '+380', name: 'Ukraine 🇺🇦',           digits: 9  },
+  { code: '+48',  name: 'Poland 🇵🇱',            digits: 9  },
+  { code: '+40',  name: 'Romania 🇷🇴',           digits: 9  },
+  { code: '+36',  name: 'Hungary 🇭🇺',           digits: 9  },
+  { code: '+420', name: 'Czech Republic 🇨🇿',    digits: 9  },
+  { code: '+46',  name: 'Sweden 🇸🇪',            digits: 9  },
+  { code: '+47',  name: 'Norway 🇳🇴',            digits: 8  },
+  { code: '+45',  name: 'Denmark 🇩🇰',           digits: 8  },
+  { code: '+358', name: 'Finland 🇫🇮',           digits: 9  },
+  { code: '+61',  name: 'Australia 🇦🇺',         digits: 9  },
+  { code: '+64',  name: 'New Zealand 🇳🇿',       digits: 9  },
+  { code: '+81',  name: 'Japan 🇯🇵',             digits: 10 },
+  { code: '+82',  name: 'South Korea 🇰🇷',       digits: 10 },
+  { code: '+86',  name: 'China 🇨🇳',             digits: 11 },
+  { code: '+91',  name: 'India 🇮🇳',             digits: 10 },
+  { code: '+92',  name: 'Pakistan 🇵🇰',          digits: 10 },
+  { code: '+880', name: 'Bangladesh 🇧🇩',        digits: 10 },
+  { code: '+94',  name: 'Sri Lanka 🇱🇰',         digits: 9  },
+  { code: '+95',  name: 'Myanmar 🇲🇲',           digits: 9  },
+  { code: '+62',  name: 'Indonesia 🇮🇩',         digits: 11 },
+  { code: '+63',  name: 'Philippines 🇵🇭',       digits: 10 },
+  { code: '+60',  name: 'Malaysia 🇲🇾',          digits: 9  },
+  { code: '+65',  name: 'Singapore 🇸🇬',         digits: 8  },
+  { code: '+66',  name: 'Thailand 🇹🇭',          digits: 9  },
+  { code: '+84',  name: 'Vietnam 🇻🇳',           digits: 9  },
+  { code: '+55',  name: 'Brazil 🇧🇷',            digits: 11 },
+  { code: '+54',  name: 'Argentina 🇦🇷',         digits: 10 },
+  { code: '+52',  name: 'Mexico 🇲🇽',            digits: 10 },
+  { code: '+56',  name: 'Chile 🇨🇱',             digits: 9  },
+  { code: '+57',  name: 'Colombia 🇨🇴',          digits: 10 },
+  { code: '+51',  name: 'Peru 🇵🇪',              digits: 9  },
+  { code: '+27',  name: 'South Africa 🇿🇦',      digits: 9  },
+  { code: '+234', name: 'Nigeria 🇳🇬',           digits: 10 },
+  { code: '+254', name: 'Kenya 🇰🇪',             digits: 9  },
+  { code: '+233', name: 'Ghana 🇬🇭',             digits: 9  },
+  { code: '+251', name: 'Ethiopia 🇪🇹',          digits: 9  },
+  { code: '+237', name: 'Cameroon 🇨🇲',          digits: 9  },
+];
+
+(function populatePhonePrefix() {
+  const sel = document.getElementById('emergencyPhonePrefix');
+  if (!sel) return;
+  PHONE_CODES.forEach((c, i) => {
+    const opt = document.createElement('option');
+    opt.value = c.code + '|' + c.digits;
+    opt.textContent = `${c.code} ${c.name}`;
+    if (i === 0) opt.selected = true; // Default: Lebanon
+    sel.appendChild(opt);
+  });
+})();
+
 const COUNTRIES = [
   'Lebanon','United Arab Emirates','Saudi Arabia','Kuwait','Qatar','Bahrain','Oman','Jordan','Iraq','Syria',
   'Egypt','Libya','Tunisia','Algeria','Morocco','Sudan','Yemen','Palestine','Afghanistan','Albania',
@@ -284,8 +371,23 @@ function validateStep2() {
     { id: 'country',   msg: 'Please select your country.' },
     { id: 'firstRace', msg: 'Please answer this question.' },
     { id: 'emergencyName',  msg: 'Emergency contact name is required.' },
-    { id: 'emergencyPhone', msg: 'Emergency contact phone is required.' },
   ];
+
+  // Phone validation — prefix + digits
+  const phonePrefix = document.getElementById('emergencyPhonePrefix');
+  const phoneInput  = document.getElementById('emergencyPhone');
+  const phoneDigits = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+  const prefixData  = phonePrefix ? phonePrefix.value.split('|') : ['+961', 8];
+  const maxDigits   = parseInt(prefixData[1], 10) || 15;
+  if (!phoneDigits || phoneDigits.length < 5) {
+    setFieldError(phoneInput, 'Emergency contact phone is required.');
+    valid = false;
+  } else if (phoneDigits.length > maxDigits) {
+    setFieldError(phoneInput, `Too many digits for this country (max ${maxDigits}).`);
+    valid = false;
+  } else {
+    setFieldError(phoneInput, '');
+  }
 
   if (race === '5k') {
     rules.push(
@@ -452,7 +554,11 @@ form.addEventListener('submit', async (e) => {
     country:        document.getElementById('country').value,
     firstRace:      document.getElementById('firstRace').value,
     emergencyName:  sanitise(document.getElementById('emergencyName').value),
-    emergencyPhone: sanitise(document.getElementById('emergencyPhone').value),
+    emergencyPhone: (function() {
+      const prefix = (document.getElementById('emergencyPhonePrefix')?.value || '+961|8').split('|')[0];
+      const digits = document.getElementById('emergencyPhone').value.replace(/\D/g, '');
+      return prefix + ' ' + digits;
+    })(),
     payMethod:      document.querySelector('input[name="payMethod"]:checked')?.value || 'omt',
   };
 

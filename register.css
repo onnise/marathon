@@ -551,6 +551,50 @@
 .conf-next li { font-size: .9rem; color: var(--mid); line-height: 1.6; }
 
 /* ===========================
+   PHONE INPUT
+=========================== */
+.phone-input-wrap {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid #d1d5db;
+  border-radius: var(--radius-field);
+  overflow: hidden;
+  background: #fff;
+  transition: border-color .2s;
+}
+.phone-input-wrap:focus-within {
+  border-color: var(--dark);
+  box-shadow: 0 0 0 3px rgba(26,26,46,.08);
+}
+.phone-prefix {
+  flex: 0 0 auto;
+  border: none;
+  background: #f3f4f6;
+  padding: 0 8px;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  outline: none;
+  border-right: 1.5px solid #d1d5db;
+  min-width: 80px;
+  max-width: 110px;
+}
+.phone-input-wrap input[type="tel"] {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  font-size: .95rem;
+  outline: none;
+  box-shadow: none;
+}
+.phone-input-wrap input[type="tel"]:focus {
+  box-shadow: none;
+  border: none;
+}
+
+/* ===========================
    FOOTER
 =========================== */
 .reg-footer {
