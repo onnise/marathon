@@ -126,7 +126,8 @@ a.is-disabled {
   font-weight: 500;
   transition: color var(--transition);
 }
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover,
+.nav-links a.active { color: var(--white); font-weight: 700; }
 .hamburger {
   display: none;
   flex-direction: column;
@@ -1268,8 +1269,12 @@ a.is-disabled {
 }
 
 /* ===========================
-   CONTACT SECTION
+   CONTACT PAGE
 =========================== */
+.contact-page-section {
+  min-height: calc(100vh - 72px);
+  padding-top: 100px;
+}
 .contact-simple {
   margin-top: 48px;
   border-top: 1px solid rgba(255,255,255,.12);
