@@ -235,11 +235,22 @@ window.i18n = (function () {
   function getLang()      { return current; }
   function init()         { applyLang(current); }
 
+  // Wire up language buttons via event delegation (no inline onclick needed)
+  function bindButtons() {
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.lang-btn');
+      if (!btn) return;
+      const lang = btn.dataset.lang;
+      if (lang) applyLang(lang);
+    });
+  }
+
   // Auto-init after DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function() { init(); bindButtons(); });
   } else {
     init();
+    bindButtons();
   }
 
   return { setLang, getLang, init };
