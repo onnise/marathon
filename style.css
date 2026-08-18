@@ -4,14 +4,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --red:      #e63946;
-  --dark:     #1a1a2e;
-  --dark2:    #16213e;
+  --red:      #1B5EA8;   /* Logo primary blue — used for all CTAs & accents */
+  --red-hover:#144B8A;   /* Darker blue for hover states */
+  --green:    #2BAD6E;   /* Logo eco green — used for badges & highlights */
+  --dark:     #0D2B5A;   /* Dark navy derived from logo blue */
+  --dark2:    #091E42;
   --mid:      #2d3748;
   --grey:     #718096;
   --light:    #f7f9fc;
   --white:    #ffffff;
-  --gold:     #f6c90e;
+  --gold:     #2BAD6E;   /* Eco green replaces gold for eco-theme badges */
   --font-head: 'Bebas Neue', sans-serif;
   --font-body: 'Inter', sans-serif;
   --radius:   12px;
@@ -72,11 +74,11 @@ a.is-disabled {
   white-space: nowrap;
 }
 .btn-primary { background: var(--red); color: var(--white); border-color: var(--red); }
-.btn-primary:hover { background: #c1121f; border-color: #c1121f; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(230,57,70,.35); }
+.btn-primary:hover { background: #144B8A; border-color: #144B8A; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,94,168,.35); }
 .btn-ghost   { background: transparent; color: var(--white); border-color: rgba(255,255,255,.5); }
 .btn-ghost:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
 .btn-nav     { background: var(--red); color: var(--white); padding: 10px 22px; font-size: .88rem; }
-.btn-nav:hover { background: #c1121f; }
+.btn-nav:hover { background: #144B8A; }
 .btn-lg      { padding: 16px 36px; font-size: 1.05rem; }
 
 /* ===========================
@@ -185,6 +187,9 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
   color: var(--white);
   letter-spacing: 1px;
   flex-shrink: 0;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px 10px;
 }
 .logo-icon { font-size: 1.4rem; }
 .logo strong { color: var(--red); }
@@ -309,7 +314,7 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
   font-size: .9rem;
   backdrop-filter: blur(4px);
 }
-.badge-gold { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+.badge-gold { background: var(--green); color: #fff; border-color: var(--green); }
 .hero-cta {
   display: flex;
   gap: 16px;
@@ -393,7 +398,7 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
   color: var(--red);
   margin-bottom: 12px;
 }
-.section-label.light { color: rgba(230,57,70,.8); }
+.section-label.light { color: rgba(27,94,168,.8); }
 .section-title {
   font-family: var(--font-head);
   font-size: clamp(2.4rem, 5vw, 3.6rem);
@@ -471,7 +476,7 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
 }
 .price-card:hover { border-color: var(--red); transform: translateY(-4px); }
 .price-card-featured {
-  background: rgba(230,57,70,.12);
+  background: rgba(27,94,168,.12);
   border-color: var(--red);
 }
 .price-badge {
@@ -788,7 +793,8 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
 =========================== */
 .logo-img {
   width: auto;
-  height: 36px;
+  height: 44px;
+  max-width: 180px;
   object-fit: contain;
 }
 
@@ -922,7 +928,7 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
   z-index: 1;
   flex-shrink: 0;
 }
-.tl-dot-red  { background: var(--red); border-color: var(--red); box-shadow: 0 0 0 4px rgba(230,57,70,.25); }
+.tl-dot-red  { background: var(--red); border-color: var(--red); box-shadow: 0 0 0 4px rgba(27,94,168,.25); }
 .tl-dot-gold { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 0 4px rgba(246,201,14,.2); }
 .tl-body h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 6px; }
 .tl-body p  { color: rgba(255,255,255,.55); font-size: .92rem; line-height: 1.6; max-width: 560px; }
@@ -947,7 +953,7 @@ body.rtl .sponsor-cta { direction: rtl; text-align: center; }
   transition: var(--transition);
   background: var(--white);
 }
-.race-card:hover { border-color: var(--red); box-shadow: 0 8px 32px rgba(230,57,70,.1); }
+.race-card:hover { border-color: var(--red); box-shadow: 0 8px 32px rgba(27,94,168,.1); }
 .race-card-featured {
   border-color: var(--red);
   background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);

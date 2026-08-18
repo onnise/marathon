@@ -11,10 +11,10 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
   const siteUrl     = process.env.SITE_URL || 'https://bikfayarace.com';
 
   const omtBlock = `
-    <div style="background:#fff8e1;border:2px solid #f6c90e;border-radius:12px;padding:24px;margin:24px 0;text-align:center;">
+    <div style="background:#fff8e1;border:2px solid #2BAD6E;border-radius:12px;padding:24px;margin:24px 0;text-align:center;">
       <p style="margin:0 0 8px;font-size:13px;color:#666;">OMT Payment Code / رمز الدفع</p>
-      <p style="margin:0;font-size:32px;font-weight:800;letter-spacing:4px;color:#1a1a2e;">${omtCode}</p>
-      <p style="margin:12px 0 0;font-size:13px;color:#666;">Pay online at <a href="https://www.omt.com.lb" style="color:#e63946;">omt.com.lb</a> or visit any OMT branch</p>
+      <p style="margin:0;font-size:32px;font-weight:800;letter-spacing:4px;color:#0D2B5A;">${omtCode}</p>
+      <p style="margin:12px 0 0;font-size:13px;color:#666;">Pay online at <a href="https://www.omt.com.lb" style="color:#1B5EA8;">omt.com.lb</a> or visit any OMT branch</p>
       <p style="margin:4px 0 0;font-size:13px;color:#666;">أو توجّه لأقرب فرع OMT</p>
     </div>`;
 
@@ -32,8 +32,8 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
 
         <!-- HEADER -->
         <tr>
-          <td style="background:#1a1a2e;padding:32px 40px;text-align:center;">
-            <p style="margin:0;color:#f6c90e;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Bikfaya 5K Eco Race 2026</p>
+          <td style="background:#0D2B5A;padding:32px 40px;text-align:center;">
+            <p style="margin:0;color:#2BAD6E;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Bikfaya 5K Eco Race 2026</p>
             <h1 style="margin:8px 0 0;color:#fff;font-size:28px;font-weight:800;">Registration Confirmed ✅</h1>
             <p style="margin:8px 0 0;color:rgba(255,255,255,.6);font-size:14px;">تم تأكيد التسجيل</p>
           </td>
@@ -51,7 +51,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
             <!-- Registration code -->
             <div style="background:#f7f9fc;border-radius:12px;padding:20px;margin:0 0 24px;text-align:center;border:1.5px solid #e2e8f0;">
               <p style="margin:0 0 6px;font-size:13px;color:#718096;">Your Registration Code / رقم تسجيلك</p>
-              <p style="margin:0;font-size:28px;font-weight:800;letter-spacing:3px;color:#e63946;">${regCode}</p>
+              <p style="margin:0;font-size:28px;font-weight:800;letter-spacing:3px;color:#1B5EA8;">${regCode}</p>
               <p style="margin:8px 0 0;font-size:12px;color:#a0aec0;">Keep this code — you'll need it on race day</p>
             </div>
 
@@ -80,8 +80,8 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
             </table>
 
             <!-- OMT Payment -->
-            <div style="background:#fff3f3;border-left:4px solid #e63946;padding:16px 20px;border-radius:0 8px 8px 0;margin:0 0 8px;">
-              <p style="margin:0;font-size:14px;font-weight:700;color:#e63946;">⚠️ Payment Required — الدفع مطلوب</p>
+            <div style="background:#fff3f3;border-left:4px solid #1B5EA8;padding:16px 20px;border-radius:0 8px 8px 0;margin:0 0 8px;">
+              <p style="margin:0;font-size:14px;font-weight:700;color:#1B5EA8;">⚠️ Payment Required — الدفع مطلوب</p>
               <p style="margin:6px 0 0;font-size:13px;color:#666;">Your spot is reserved for <strong>72 hours</strong>. Please complete your OMT payment using the code below.</p>
               <p style="margin:4px 0 0;font-size:13px;color:#666;">مكانك محجوز لمدة <strong>72 ساعة</strong>. أكمل الدفع عبر OMT باستخدام الرمز أدناه.</p>
             </div>
@@ -105,7 +105,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
         <!-- FOOTER -->
         <tr>
           <td style="background:#f7f9fc;padding:24px 40px;text-align:center;border-top:1px solid #e2e8f0;">
-            <p style="margin:0;font-size:12px;color:#a0aec0;">Questions? Email us at <a href="mailto:bickfaya5krun@gmail.com" style="color:#e63946;">bickfaya5krun@gmail.com</a></p>
+            <p style="margin:0;font-size:12px;color:#a0aec0;">Questions? Email us at <a href="mailto:bickfaya5krun@gmail.com" style="color:#1B5EA8;">bickfaya5krun@gmail.com</a></p>
             <p style="margin:6px 0 0;font-size:12px;color:#a0aec0;">© 2026 Bikfaya 5K Eco Race · <a href="${siteUrl}" style="color:#a0aec0;">bikfayarace.com</a></p>
           </td>
         </tr>

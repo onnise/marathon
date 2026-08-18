@@ -168,7 +168,7 @@
 .race-select-card:hover .rsc-inner { border-color: #a0aec0; }
 .race-select-card input:checked ~ .rsc-inner {
   border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(230,57,70,.12);
+  box-shadow: 0 0 0 3px rgba(27,94,168,.12);
 }
 .rsc-left { flex-shrink: 0; text-align: center; min-width: 72px; }
 .rsc-badge {
@@ -272,7 +272,7 @@
 .field input:focus,
 .field select:focus {
   border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(230,57,70,.1);
+  box-shadow: 0 0 0 3px rgba(27,94,168,.1);
 }
 .field input.has-error,
 .field select.has-error {
@@ -458,7 +458,7 @@
   position: relative;
 }
 .pay-option.active .pay-opt-inner { border-color: var(--red); }
-.pay-option input:checked ~ .pay-opt-inner { border-color: var(--red); box-shadow: 0 0 0 3px rgba(230,57,70,.1); }
+.pay-option input:checked ~ .pay-opt-inner { border-color: var(--red); box-shadow: 0 0 0 3px rgba(27,94,168,.1); }
 .pay-option-soon { opacity: .6; cursor: not-allowed; }
 .pay-option-soon .pay-opt-inner { background: var(--light); }
 .pay-logo { font-size: 1.4rem; flex-shrink: 0; }
