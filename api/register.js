@@ -119,7 +119,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
 
 const PRICES     = { '5k': 25, '2k': 10 };
 const MAX_CAP    = 500;
-const REG_OPEN   = new Date('2026-08-17T00:00:00+03:00'); // TESTING — change back to Aug 20
+const REG_OPEN   = new Date('2026-08-20T00:00:00+03:00'); // TESTING — change back to Aug 20
 const REG_CLOSE  = new Date('2026-09-15T23:59:59+03:00');
 
 module.exports = async function handler(req, res) {
