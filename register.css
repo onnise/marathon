@@ -570,15 +570,15 @@
   flex: 0 0 auto;
   border: none;
   background: #f3f4f6;
-  padding: 0 8px;
+  padding: 0 10px;
   font-size: .88rem;
   font-weight: 600;
   color: var(--dark);
   cursor: pointer;
   outline: none;
   border-right: 1.5px solid #d1d5db;
-  min-width: 80px;
-  max-width: 110px;
+  min-width: 120px;
+  max-width: 170px;
 }
 .phone-input-wrap input[type="tel"] {
   flex: 1;

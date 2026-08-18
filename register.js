@@ -41,79 +41,92 @@ const RACE_LABELS = { '5k': '5K Competitive Race', '2k': '2K Fun Run' };
    PHONE COUNTRY CODES
 =========================== */
 const PHONE_CODES = [
-  { code: '+961', name: 'Lebanon 🇱🇧',          digits: 8 },
-  { code: '+971', name: 'UAE 🇦🇪',               digits: 9 },
-  { code: '+966', name: 'Saudi Arabia 🇸🇦',      digits: 9 },
-  { code: '+965', name: 'Kuwait 🇰🇼',            digits: 8 },
-  { code: '+974', name: 'Qatar 🇶🇦',             digits: 8 },
-  { code: '+973', name: 'Bahrain 🇧🇭',           digits: 8 },
-  { code: '+968', name: 'Oman 🇴🇲',              digits: 8 },
-  { code: '+962', name: 'Jordan 🇯🇴',            digits: 9 },
-  { code: '+964', name: 'Iraq 🇮🇶',              digits: 10 },
-  { code: '+963', name: 'Syria 🇸🇾',             digits: 9 },
-  { code: '+20',  name: 'Egypt 🇪🇬',             digits: 10 },
-  { code: '+218', name: 'Libya 🇱🇾',             digits: 9  },
-  { code: '+216', name: 'Tunisia 🇹🇳',           digits: 8  },
-  { code: '+213', name: 'Algeria 🇩🇿',           digits: 9  },
-  { code: '+212', name: 'Morocco 🇲🇦',           digits: 9  },
-  { code: '+249', name: 'Sudan 🇸🇩',             digits: 9  },
-  { code: '+970', name: 'Palestine 🇵🇸',         digits: 9  },
-  { code: '+1',   name: 'USA 🇺🇸',               digits: 10 },
-  { code: '+1',   name: 'Canada 🇨🇦',            digits: 10 },
-  { code: '+44',  name: 'UK 🇬🇧',                digits: 10 },
-  { code: '+33',  name: 'France 🇫🇷',            digits: 9  },
-  { code: '+49',  name: 'Germany 🇩🇪',           digits: 11 },
-  { code: '+39',  name: 'Italy 🇮🇹',             digits: 10 },
-  { code: '+34',  name: 'Spain 🇪🇸',             digits: 9  },
-  { code: '+351', name: 'Portugal 🇵🇹',          digits: 9  },
-  { code: '+31',  name: 'Netherlands 🇳🇱',       digits: 9  },
-  { code: '+32',  name: 'Belgium 🇧🇪',           digits: 9  },
-  { code: '+41',  name: 'Switzerland 🇨🇭',       digits: 9  },
-  { code: '+43',  name: 'Austria 🇦🇹',           digits: 10 },
-  { code: '+30',  name: 'Greece 🇬🇷',            digits: 10 },
-  { code: '+90',  name: 'Turkey 🇹🇷',            digits: 10 },
-  { code: '+7',   name: 'Russia 🇷🇺',            digits: 10 },
-  { code: '+380', name: 'Ukraine 🇺🇦',           digits: 9  },
-  { code: '+48',  name: 'Poland 🇵🇱',            digits: 9  },
-  { code: '+40',  name: 'Romania 🇷🇴',           digits: 9  },
-  { code: '+36',  name: 'Hungary 🇭🇺',           digits: 9  },
-  { code: '+420', name: 'Czech Republic 🇨🇿',    digits: 9  },
-  { code: '+46',  name: 'Sweden 🇸🇪',            digits: 9  },
-  { code: '+47',  name: 'Norway 🇳🇴',            digits: 8  },
-  { code: '+45',  name: 'Denmark 🇩🇰',           digits: 8  },
-  { code: '+358', name: 'Finland 🇫🇮',           digits: 9  },
-  { code: '+61',  name: 'Australia 🇦🇺',         digits: 9  },
-  { code: '+64',  name: 'New Zealand 🇳🇿',       digits: 9  },
-  { code: '+81',  name: 'Japan 🇯🇵',             digits: 10 },
-  { code: '+82',  name: 'South Korea 🇰🇷',       digits: 10 },
-  { code: '+86',  name: 'China 🇨🇳',             digits: 11 },
-  { code: '+91',  name: 'India 🇮🇳',             digits: 10 },
-  { code: '+92',  name: 'Pakistan 🇵🇰',          digits: 10 },
-  { code: '+880', name: 'Bangladesh 🇧🇩',        digits: 10 },
-  { code: '+94',  name: 'Sri Lanka 🇱🇰',         digits: 9  },
-  { code: '+95',  name: 'Myanmar 🇲🇲',           digits: 9  },
-  { code: '+62',  name: 'Indonesia 🇮🇩',         digits: 11 },
-  { code: '+63',  name: 'Philippines 🇵🇭',       digits: 10 },
-  { code: '+60',  name: 'Malaysia 🇲🇾',          digits: 9  },
-  { code: '+65',  name: 'Singapore 🇸🇬',         digits: 8  },
-  { code: '+66',  name: 'Thailand 🇹🇭',          digits: 9  },
-  { code: '+84',  name: 'Vietnam 🇻🇳',           digits: 9  },
-  { code: '+55',  name: 'Brazil 🇧🇷',            digits: 11 },
-  { code: '+54',  name: 'Argentina 🇦🇷',         digits: 10 },
-  { code: '+52',  name: 'Mexico 🇲🇽',            digits: 10 },
-  { code: '+56',  name: 'Chile 🇨🇱',             digits: 9  },
-  { code: '+57',  name: 'Colombia 🇨🇴',          digits: 10 },
-  { code: '+51',  name: 'Peru 🇵🇪',              digits: 9  },
-  { code: '+27',  name: 'South Africa 🇿🇦',      digits: 9  },
-  { code: '+234', name: 'Nigeria 🇳🇬',           digits: 10 },
-  { code: '+254', name: 'Kenya 🇰🇪',             digits: 9  },
-  { code: '+233', name: 'Ghana 🇬🇭',             digits: 9  },
-  { code: '+251', name: 'Ethiopia 🇪🇹',          digits: 9  },
-  { code: '+237', name: 'Cameroon 🇨🇲',          digits: 9  },
+  { code: '+961', name: 'Lebanon 🇱🇧',          digits: 8,  example: '76 123 456'   },
+  { code: '+971', name: 'UAE 🇦🇪',               digits: 9,  example: '50 123 4567'  },
+  { code: '+966', name: 'Saudi Arabia 🇸🇦',      digits: 9,  example: '51 234 5678'  },
+  { code: '+965', name: 'Kuwait 🇰🇼',            digits: 8,  example: '5012 3456'    },
+  { code: '+974', name: 'Qatar 🇶🇦',             digits: 8,  example: '3312 3456'    },
+  { code: '+973', name: 'Bahrain 🇧🇭',           digits: 8,  example: '3600 1234'    },
+  { code: '+968', name: 'Oman 🇴🇲',              digits: 8,  example: '9212 3456'    },
+  { code: '+962', name: 'Jordan 🇯🇴',            digits: 9,  example: '79 123 4567'  },
+  { code: '+964', name: 'Iraq 🇮🇶',              digits: 10, example: '771 234 5678' },
+  { code: '+963', name: 'Syria 🇸🇾',             digits: 9,  example: '944 567 890'  },
+  { code: '+20',  name: 'Egypt 🇪🇬',             digits: 10, example: '100 123 4567' },
+  { code: '+218', name: 'Libya 🇱🇾',             digits: 9,  example: '91 234 5678'  },
+  { code: '+216', name: 'Tunisia 🇹🇳',           digits: 8,  example: '2012 3456'    },
+  { code: '+213', name: 'Algeria 🇩🇿',           digits: 9,  example: '551 23 45 67' },
+  { code: '+212', name: 'Morocco 🇲🇦',           digits: 9,  example: '612 345 678'  },
+  { code: '+249', name: 'Sudan 🇸🇩',             digits: 9,  example: '912 345 678'  },
+  { code: '+970', name: 'Palestine 🇵🇸',         digits: 9,  example: '59 234 5678'  },
+  { code: '+1',   name: 'USA 🇺🇸',               digits: 10, example: '212 456 7890' },
+  { code: '+1',   name: 'Canada 🇨🇦',            digits: 10, example: '416 456 7890' },
+  { code: '+44',  name: 'UK 🇬🇧',                digits: 10, example: '7911 123456'  },
+  { code: '+33',  name: 'France 🇫🇷',            digits: 9,  example: '6 12 34 56 78'},
+  { code: '+49',  name: 'Germany 🇩🇪',           digits: 11, example: '151 2345 6789'},
+  { code: '+39',  name: 'Italy 🇮🇹',             digits: 10, example: '312 345 6789' },
+  { code: '+34',  name: 'Spain 🇪🇸',             digits: 9,  example: '612 345 678'  },
+  { code: '+351', name: 'Portugal 🇵🇹',          digits: 9,  example: '912 345 678'  },
+  { code: '+31',  name: 'Netherlands 🇳🇱',       digits: 9,  example: '6 12345678'   },
+  { code: '+32',  name: 'Belgium 🇧🇪',           digits: 9,  example: '470 12 34 56' },
+  { code: '+41',  name: 'Switzerland 🇨🇭',       digits: 9,  example: '78 123 45 67' },
+  { code: '+43',  name: 'Austria 🇦🇹',           digits: 10, example: '664 123456'   },
+  { code: '+30',  name: 'Greece 🇬🇷',            digits: 10, example: '691 234 5678' },
+  { code: '+90',  name: 'Turkey 🇹🇷',            digits: 10, example: '532 123 4567' },
+  { code: '+7',   name: 'Russia 🇷🇺',            digits: 10, example: '912 345 6789' },
+  { code: '+380', name: 'Ukraine 🇺🇦',           digits: 9,  example: '67 123 4567'  },
+  { code: '+48',  name: 'Poland 🇵🇱',            digits: 9,  example: '512 345 678'  },
+  { code: '+40',  name: 'Romania 🇷🇴',           digits: 9,  example: '721 234 567'  },
+  { code: '+36',  name: 'Hungary 🇭🇺',           digits: 9,  example: '20 123 4567'  },
+  { code: '+420', name: 'Czech Republic 🇨🇿',    digits: 9,  example: '601 234 567'  },
+  { code: '+46',  name: 'Sweden 🇸🇪',            digits: 9,  example: '70 123 45 67' },
+  { code: '+47',  name: 'Norway 🇳🇴',            digits: 8,  example: '406 12 345'   },
+  { code: '+45',  name: 'Denmark 🇩🇰',           digits: 8,  example: '2012 3456'    },
+  { code: '+358', name: 'Finland 🇫🇮',           digits: 9,  example: '40 123 4567'  },
+  { code: '+61',  name: 'Australia 🇦🇺',         digits: 9,  example: '412 345 678'  },
+  { code: '+64',  name: 'New Zealand 🇳🇿',       digits: 9,  example: '21 123 4567'  },
+  { code: '+81',  name: 'Japan 🇯🇵',             digits: 10, example: '90 1234 5678' },
+  { code: '+82',  name: 'South Korea 🇰🇷',       digits: 10, example: '10 1234 5678' },
+  { code: '+86',  name: 'China 🇨🇳',             digits: 11, example: '131 2345 6789'},
+  { code: '+91',  name: 'India 🇮🇳',             digits: 10, example: '98765 43210'  },
+  { code: '+92',  name: 'Pakistan 🇵🇰',          digits: 10, example: '301 234 5678' },
+  { code: '+880', name: 'Bangladesh 🇧🇩',        digits: 10, example: '171 234 5678' },
+  { code: '+94',  name: 'Sri Lanka 🇱🇰',         digits: 9,  example: '71 234 5678'  },
+  { code: '+62',  name: 'Indonesia 🇮🇩',         digits: 11, example: '812 3456 7890'},
+  { code: '+63',  name: 'Philippines 🇵🇭',       digits: 10, example: '917 123 4567' },
+  { code: '+60',  name: 'Malaysia 🇲🇾',          digits: 9,  example: '12 345 6789'  },
+  { code: '+65',  name: 'Singapore 🇸🇬',         digits: 8,  example: '8123 4567'    },
+  { code: '+66',  name: 'Thailand 🇹🇭',          digits: 9,  example: '81 234 5678'  },
+  { code: '+84',  name: 'Vietnam 🇻🇳',           digits: 9,  example: '91 234 5678'  },
+  { code: '+55',  name: 'Brazil 🇧🇷',            digits: 11, example: '11 9 1234 5678'},
+  { code: '+54',  name: 'Argentina 🇦🇷',         digits: 10, example: '11 1234 5678' },
+  { code: '+52',  name: 'Mexico 🇲🇽',            digits: 10, example: '55 1234 5678' },
+  { code: '+56',  name: 'Chile 🇨🇱',             digits: 9,  example: '9 1234 5678'  },
+  { code: '+57',  name: 'Colombia 🇨🇴',          digits: 10, example: '310 123 4567' },
+  { code: '+51',  name: 'Peru 🇵🇪',              digits: 9,  example: '912 345 678'  },
+  { code: '+27',  name: 'South Africa 🇿🇦',      digits: 9,  example: '71 234 5678'  },
+  { code: '+234', name: 'Nigeria 🇳🇬',           digits: 10, example: '802 345 6789' },
+  { code: '+254', name: 'Kenya 🇰🇪',             digits: 9,  example: '712 345 678'  },
+  { code: '+233', name: 'Ghana 🇬🇭',             digits: 9,  example: '24 123 4567'  },
+  { code: '+251', name: 'Ethiopia 🇪🇹',          digits: 9,  example: '91 234 5678'  },
+  { code: '+237', name: 'Cameroon 🇨🇲',          digits: 9,  example: '677 123 456'  },
 ];
+
+function applyPhoneConstraints(sel, inp) {
+  if (!sel || !inp) return;
+  const parts  = (sel.value || '+961|8').split('|');
+  const digits = parseInt(parts[1], 10) || 8;
+  const idx    = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
+  const entry  = PHONE_CODES[idx] || PHONE_CODES[0];
+  inp.maxLength   = digits;
+  inp.placeholder = entry.example;
+  // Trim any existing value that's already too long
+  const clean = inp.value.replace(/\D/g, '');
+  if (clean.length > digits) inp.value = clean.slice(0, digits);
+}
 
 (function populatePhonePrefix() {
   const sel = document.getElementById('emergencyPhonePrefix');
+  const inp = document.getElementById('emergencyPhone');
   if (!sel) return;
   PHONE_CODES.forEach((c, i) => {
     const opt = document.createElement('option');
@@ -122,6 +135,28 @@ const PHONE_CODES = [
     if (i === 0) opt.selected = true; // Default: Lebanon
     sel.appendChild(opt);
   });
+  // Apply constraints for default selection
+  applyPhoneConstraints(sel, inp);
+  // Update hint text + constraints on change
+  sel.addEventListener('change', function () {
+    applyPhoneConstraints(sel, inp);
+    const idx   = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
+    const entry = PHONE_CODES[idx] || PHONE_CODES[0];
+    const hint  = document.getElementById('phoneHint');
+    if (hint) hint.textContent = `Enter ${entry.digits} digits — e.g. ${entry.example}`;
+    inp.focus();
+  });
+  // Set initial hint
+  const hint0 = document.getElementById('phoneHint');
+  if (hint0) hint0.textContent = `Enter ${PHONE_CODES[0].digits} digits — e.g. ${PHONE_CODES[0].example}`;
+  // Strip non-digits and enforce maxlength on every keystroke
+  if (inp) {
+    inp.addEventListener('input', function () {
+      const digits  = parseInt((sel.value || '|8').split('|')[1], 10) || 8;
+      const clean   = inp.value.replace(/\D/g, '').slice(0, digits);
+      if (inp.value !== clean) inp.value = clean;
+    });
+  }
 })();
 
 const COUNTRIES = [
