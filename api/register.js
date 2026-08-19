@@ -11,11 +11,11 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
   const siteUrl     = process.env.SITE_URL || 'https://bikfayarace.com';
 
   const omtBlock = `
-    <div style="background:#fff8e1;border:2px solid #2BAD6E;border-radius:12px;padding:24px;margin:24px 0;text-align:center;">
-      <p style="margin:0 0 8px;font-size:13px;color:#666;">OMT Payment Code / رمز الدفع</p>
-      <p style="margin:0;font-size:32px;font-weight:800;letter-spacing:4px;color:#0D2B5A;">${omtCode}</p>
-      <p style="margin:12px 0 0;font-size:13px;color:#666;">Pay online at <a href="https://www.omt.com.lb" style="color:#1B5EA8;">omt.com.lb</a> or visit any OMT branch</p>
-      <p style="margin:4px 0 0;font-size:13px;color:#666;">أو توجّه لأقرب فرع OMT</p>
+    <div style="background:#e8f4fd;border:2px solid #1B5EA8;border-radius:12px;padding:24px;margin:24px 0;">
+      <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#0D2B5A;">💳 How to Pay / كيفية الدفع</p>
+      <p style="margin:0 0 8px;font-size:14px;color:#2d3748;">Visit any <strong>OMT office</strong> and pay using your full name as shown on your registration.</p>
+      <p style="margin:0;font-size:14px;color:#2d3748;">توجّه لأي مكتب <strong>OMT</strong> وادفع باستخدام اسمك الكامل كما هو مسجّل.</p>
+      <p style="margin:12px 0 0;font-size:13px;color:#718096;">Online payment via OMT coming soon / الدفع الإلكتروني عبر OMT قريباً</p>
     </div>`;
 
   return `<!DOCTYPE html>
@@ -82,8 +82,8 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
             <!-- OMT Payment -->
             <div style="background:#fff3f3;border-left:4px solid #1B5EA8;padding:16px 20px;border-radius:0 8px 8px 0;margin:0 0 8px;">
               <p style="margin:0;font-size:14px;font-weight:700;color:#1B5EA8;">⚠️ Payment Required — الدفع مطلوب</p>
-              <p style="margin:6px 0 0;font-size:13px;color:#666;">Your spot is reserved for <strong>72 hours</strong>. Please complete your OMT payment using the code below.</p>
-              <p style="margin:4px 0 0;font-size:13px;color:#666;">مكانك محجوز لمدة <strong>72 ساعة</strong>. أكمل الدفع عبر OMT باستخدام الرمز أدناه.</p>
+              <p style="margin:6px 0 0;font-size:13px;color:#666;">Please complete your OMT payment to confirm your spot.</p>
+              <p style="margin:4px 0 0;font-size:13px;color:#666;">يرجى إتمام الدفع عبر OMT لتأكيد مكانك.</p>
             </div>
 
             ${omtBlock}
@@ -286,7 +286,7 @@ module.exports = async function handler(req, res) {
         subject: `✅ Registration Confirmed — Bikfaya Race 2026 | ${inserted.registration_code}`,
         html,
       });
-      if (emailErr) console.error('Email send error:', emailErr.message);
+      if (emailErr) console.error('Email send error:', JSON.stringify(emailErr));
       else console.log('Confirmation email sent to', record.email);
     } catch (e) {
       console.error('Email exception:', e.message);
@@ -301,6 +301,6 @@ module.exports = async function handler(req, res) {
     registrationCode: inserted.registration_code,
     omtPaymentCode:   inserted.omt_payment_code,
     ageCategory:      inserted.age_category,
-    message:          'Registration successful. Check your email for your OMT payment code.',
+    message:          'Registration successful. Check your email for your confirmation.',
   });
 };

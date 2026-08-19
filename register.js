@@ -241,13 +241,9 @@ function updateRaceFields() {
   const is5k = race === '5k';
 
   document.querySelectorAll('.field-5k-only').forEach((el) => {
-    el.classList.toggle('hidden', !is5k);
-    // Toggle required on children
+    el.style.display = is5k ? '' : 'none';
     el.querySelectorAll('input, select').forEach((field) => {
-      if (el.dataset.optionalFor5k) return;
-      if (is5k) {
-        field.dataset.wasRequired = 'true';
-      } else {
+      if (!is5k) {
         field.required = false;
         field.value = '';
         clearFieldError(field);
@@ -405,7 +401,6 @@ function validateStep2() {
     { id: 'gender',    msg: 'Please select a gender.' },
     { id: 'email',     msg: 'A valid email address is required.', type: 'email' },
     { id: 'country',   msg: 'Please select your country.' },
-    { id: 'firstRace', msg: 'Please answer this question.' },
     { id: 'emergencyName',  msg: 'Emergency contact name is required.' },
   ];
 
@@ -430,6 +425,7 @@ function validateStep2() {
       { id: 'bloodType',    msg: 'Blood type is required for the 5K.' },
       { id: 'eliteStatus',  msg: 'Please select your status.' },
       { id: 'expectedTime', msg: 'Expected finish time is required for the 5K.', type: 'time' },
+      { id: 'firstRace',    msg: 'Please answer this question.' },
     );
   }
 
@@ -680,7 +676,6 @@ function showConfirmation(formData, apiResponse) {
     ['Race',              RACE_LABELS[formData.race]],
     ['Amount',           amountStr],
     ['Registration Code', apiResponse.registrationCode || '—'],
-    ['OMT Payment Code',  apiResponse.omtPaymentCode   || '—'],
     ['Name',             `${escHtml(formData.firstName)} ${escHtml(formData.lastName)}`],
     ['Email',             escHtml(formData.email)],
     ['Payment',          'OMT Branch'],
