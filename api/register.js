@@ -178,16 +178,18 @@ module.exports = async function handler(req, res) {
   }
   if (count >= MAX_CAP) return send(res, 409, { error: 'Sorry, the event is now full. You have been added to the waitlist.', waitlist: true });
 
-  // ── Duplicate email check ─────────────────────────────
+  // ── Duplicate check: same email + same name (true duplicate, not a family) ──
   const { data: existing } = await supabase
     .from('registrations')
     .select('id')
-    .eq('email', b.email.toLowerCase().trim())
+    .eq('email',      b.email.toLowerCase().trim())
+    .eq('first_name', sanitise(b.firstName))
+    .eq('last_name',  sanitise(b.lastName))
     .neq('payment_status', 'cancelled')
     .limit(1);
 
   if (existing && existing.length > 0) {
-    return send(res, 409, { error: 'This email is already registered. Check your inbox for your registration code.' });
+    return send(res, 409, { error: 'This name and email combination is already registered. Check your inbox for your registration code.' });
   }
 
   // ── Generate codes ────────────────────────────────────
