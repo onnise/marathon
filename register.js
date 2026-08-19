@@ -6,7 +6,8 @@
 const REG_OPEN  = new Date('2026-08-20T00:00:00+03:00'); // TESTING — change back to Aug 20
 const REG_CLOSE = new Date('2026-09-15T23:59:59+03:00');
 const MAX_CAPACITY = 500;
-const PRICES = { '5k': 25, '2k': 10 };
+const PRICES     = { '5k': 17, '2k': 10 };
+const LAF_FEE    = { '5k': 3,  '2k': 0  };  // LAF federation fee added at checkout
 const RACE_LABELS = { '5k': '5K Competitive Race', '2k': '2K Fun Run' };
 
 /* ===========================
@@ -513,13 +514,21 @@ document.getElementById('declarationAgree').addEventListener('change', function 
    STEP 4 — populate summary
 =========================== */
 function populateStep4() {
-  const race = getSelectedRace();
-  const price = PRICES[race] || 0;
-  const label = RACE_LABELS[race] || '';
+  const race      = getSelectedRace();
+  const price     = PRICES[race] || 0;
+  const lafFee    = LAF_FEE[race] || 0;
+  const total     = price + lafFee;
+  const label     = RACE_LABELS[race] || '';
 
   document.getElementById('summaryRaceName').textContent = label;
   document.getElementById('summaryPrice').textContent    = `$${price}`;
-  document.getElementById('summaryTotal').textContent    = `$${price}`;
+
+  const totalEl = document.getElementById('summaryTotal');
+  if (lafFee > 0) {
+    totalEl.innerHTML = `$${price} <span style="font-size:.8em;color:#718096;">+ $${lafFee} LAF fee</span> = <strong style="color:var(--red);">$${total}</strong>`;
+  } else {
+    totalEl.textContent = `$${total}`;
+  }
 
   const firstName = document.getElementById('firstName').value.trim();
   const lastName  = document.getElementById('lastName').value.trim();
@@ -661,9 +670,15 @@ function showConfirmation(formData, apiResponse) {
     `${formData.firstName} ${formData.lastName} — ${RACE_LABELS[formData.race]}`;
 
   const detailsEl = document.getElementById('confDetails');
+  const basePrice = PRICES[formData.race];
+  const lafFee    = LAF_FEE[formData.race];
+  const total     = basePrice + lafFee;
+  const amountStr = lafFee > 0
+    ? `$${basePrice} + $${lafFee} LAF fee = <strong>$${total}</strong>`
+    : `$${basePrice}`;
   const rows = [
     ['Race',              RACE_LABELS[formData.race]],
-    ['Amount',           `$${PRICES[formData.race]}`],
+    ['Amount',           amountStr],
     ['Registration Code', apiResponse.registrationCode || '—'],
     ['OMT Payment Code',  apiResponse.omtPaymentCode   || '—'],
     ['Name',             `${escHtml(formData.firstName)} ${escHtml(formData.lastName)}`],

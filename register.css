@@ -195,6 +195,14 @@
   font-size: 1.5rem;
   color: var(--red);
 }
+.rsc-price-note {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--green);
+  display: block;
+  letter-spacing: 0;
+}
 .rsc-perks {
   flex: 1;
   list-style: none;

@@ -7,7 +7,7 @@ const { Resend } = require('resend');
 function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, payMethod }) {
   const raceName    = race === '5k' ? '5K Competitive' : '2K Fun Run';
   const raceNameAr  = race === '5k' ? '5K تنافسي' : '2K مرح';
-  const price       = race === '5k' ? '$25' : '$10';
+  const price       = race === '5k' ? '$17 + $3 LAF fee = $20 total' : '$10';
   const siteUrl     = process.env.SITE_URL || 'https://bikfayarace.com';
 
   const omtBlock = `
@@ -117,7 +117,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
 </html>`;
 }
 
-const PRICES     = { '5k': 25, '2k': 10 };
+const PRICES     = { '5k': 20, '2k': 10 }; // 5K: $17 race fee + $3 LAF fee = $20 total
 const MAX_CAP    = 500;
 const REG_OPEN   = new Date('2026-08-20T00:00:00+03:00'); // TESTING — change back to Aug 20
 const REG_CLOSE  = new Date('2026-09-15T23:59:59+03:00');
