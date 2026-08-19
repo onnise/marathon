@@ -215,7 +215,7 @@ module.exports = async function handler(req, res) {
     age_category:       ageCategory,
     email:              b.email.toLowerCase().trim(),
     country:            sanitise(b.country),
-    first_race:         b.firstRace ? b.firstRace === 'yes' : null,
+    first_race:         b.firstRace === 'yes',
     emergency_name:     sanitise(b.emergencyName),
     emergency_phone:    sanitise(b.emergencyPhone),
     pay_method:         b.payMethod || 'omt',
