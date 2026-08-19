@@ -224,7 +224,14 @@ const raceInputs = document.querySelectorAll('input[name="race"]');
 const urlRace = new URLSearchParams(window.location.search).get('race');
 if (urlRace === '5k' || urlRace === '2k') {
   const input = document.querySelector(`input[name="race"][value="${urlRace}"]`);
-  if (input) input.checked = true;
+  if (input) {
+    input.checked = true;
+    // Update title immediately so it reflects the pre-selected race
+    const regTitle = document.querySelector('.reg-header h1');
+    if (regTitle) {
+      regTitle.textContent = urlRace === '5k' ? 'Bikfaya 5K Eco Race 2026' : 'Bikfaya 2K Fun Run 2026';
+    }
+  }
 }
 
 raceInputs.forEach((input) => {
@@ -239,6 +246,12 @@ function getSelectedRace() {
 function updateRaceFields() {
   const race = getSelectedRace();
   const is5k = race === '5k';
+
+  // Update page header title to match selected race
+  const regTitle = document.querySelector('.reg-header h1');
+  if (regTitle) {
+    regTitle.textContent = is5k ? 'Bikfaya 5K Eco Race 2026' : 'Bikfaya 2K Fun Run 2026';
+  }
 
   document.querySelectorAll('.field-5k-only').forEach((el) => {
     el.style.display = is5k ? '' : 'none';
@@ -543,7 +556,8 @@ function populateStep4() {
     `<span><strong>Race</strong>${label}</span>`,
   ].join('');
 
-  document.getElementById('confEmail').textContent = email;
+  const confEmailEl = document.getElementById('confEmail');
+  if (confEmailEl) confEmailEl.textContent = email;
 }
 
 /* ===========================
