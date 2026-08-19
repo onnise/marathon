@@ -702,7 +702,8 @@ function showConfirmation(formData, apiResponse) {
     .map(([k, v]) => `<span><strong>${k}</strong>${v}</span>`)
     .join('');
 
-  document.getElementById('confEmail').textContent = formData.email;
+  const confEmailEl2 = document.getElementById('confEmail');
+  if (confEmailEl2) confEmailEl2.textContent = formData.email;
   conf.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
