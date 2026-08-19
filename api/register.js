@@ -139,7 +139,7 @@ module.exports = async function handler(req, res) {
   if (!b) return send(res, 400, { error: 'Empty request body.' });
 
   // ── Validate required fields ──────────────────────────
-  const required = ['race','firstName','lastName','dob','gender','email','country','firstRace','emergencyName','emergencyPhone','payMethod'];
+  const required = ['race','firstName','lastName','dob','gender','email','country','emergencyName','emergencyPhone','payMethod'];
   for (const f of required) {
     if (!b[f] || String(b[f]).trim() === '') {
       return send(res, 400, { error: `Missing required field: ${f}` });
@@ -215,7 +215,7 @@ module.exports = async function handler(req, res) {
     age_category:       ageCategory,
     email:              b.email.toLowerCase().trim(),
     country:            sanitise(b.country),
-    first_race:         b.firstRace === 'yes',
+    first_race:         b.firstRace ? b.firstRace === 'yes' : null,
     emergency_name:     sanitise(b.emergencyName),
     emergency_phone:    sanitise(b.emergencyPhone),
     pay_method:         b.payMethod || 'omt',
