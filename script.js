@@ -149,7 +149,7 @@ countdownTimer = setInterval(updateCountdown, 1000);
    Opens:  Aug 20, 2026
    Closes: Sep 15, 2026
 =========================== */
-const REG_OPEN  = new Date('2026-08-19T00:00:00+03:00'); // TESTING — change back to Aug 20
+const REG_OPEN  = new Date('2026-08-20T00:00:00+03:00');
 const REG_CLOSE = new Date('2026-09-15T23:59:59+03:00');
 
 // TODO: replace with real OMT registration URLs (must be on allowlist)
