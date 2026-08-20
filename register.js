@@ -364,9 +364,12 @@ function handleFile() {
 
   if (!file) return;
 
-  const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-  if (!allowedTypes.includes(file.type)) {
-    errEl.textContent = 'Only JPG, PNG, or PDF files are accepted.';
+  // Accept any image/* (covers jpg, png, heic, heif, webp from phone cameras)
+  // plus PDF, plus an empty type (some mobile browsers don't set MIME on camera shots)
+  const isImage = file.type.startsWith('image/') || file.type === '';
+  const isPdf   = file.type === 'application/pdf';
+  if (!isImage && !isPdf) {
+    errEl.textContent = 'Only photos (JPG, PNG, HEIC) or PDF files are accepted.';
     fileInput.value = '';
     return;
   }

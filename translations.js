@@ -18,7 +18,7 @@ const TRANSLATIONS = {
     /* HERO */
     'hero.eyebrow':   'بكفيا · لبنان · معتمد من الاتحاد اللبناني ✓ · سباق بيئي ♻️',
     'hero.title':     'سباق بكفيا 5K<br /><span class="highlight">الإيكو 2026</span>',
-    'hero.subtitle':  'الأحد، 20 سبتمبر 2026 · محلّ ألفا بكفيا',
+    'hero.subtitle':  'الأحد، 20 سبتمبر 2026 · ساحة بكفيا',
     'hero.badge1':    '5K تنافسي',
     'hero.badge2':    '2K مرح',
     'hero.cta1':      'سجّل الآن',
