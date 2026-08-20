@@ -136,6 +136,7 @@ const TRANSLATIONS = {
     'sponsors.tier1': 'الراعي الذهبي الكبير',
     'sponsors.tier2': 'ذهبي',
     'sponsors.tier3': 'فضّي',
+    'sponsors.tba':   'إعلانات الرعاة قريباً — ترقّبوا!',
     'sponsors.cta':   'هل أنت مهتم برعاية سباق بكفيا 2026؟',
     'sponsors.ctabtn':'احصل على ملف الرعاية',
 
