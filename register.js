@@ -335,10 +335,15 @@ document.getElementById('club').addEventListener('change', function () {
 const fileInput   = document.getElementById('idUpload');
 const fileArea    = document.getElementById('fileUploadArea');
 const filePreview = document.getElementById('filePreview');
-const MAX_FILE_MB = 2;
+const MAX_FILE_MB = 15; // camera shots can be 5-10 MB
 
 if (fileInput) {
   fileInput.addEventListener('change', handleFile);
+
+  // Tap on the area also triggers the input (belt-and-suspenders for iOS)
+  fileArea.addEventListener('click', (e) => {
+    if (e.target !== fileInput) fileInput.click();
+  });
 
   // Drag and drop
   fileArea.addEventListener('dragover', (e) => { e.preventDefault(); fileArea.classList.add('dragging'); });
@@ -347,7 +352,6 @@ if (fileInput) {
     e.preventDefault();
     fileArea.classList.remove('dragging');
     if (e.dataTransfer.files.length) {
-      // Create a DataTransfer to assign to input
       const dt = new DataTransfer();
       dt.items.add(e.dataTransfer.files[0]);
       fileInput.files = dt.files;
@@ -357,15 +361,15 @@ if (fileInput) {
 }
 
 function handleFile() {
-  const file = fileInput.files[0];
+  const file  = fileInput.files[0];
   const errEl = document.getElementById('idUploadErr');
-  filePreview.style.display = 'none';
+  const ui    = document.getElementById('fileUploadUI');
   errEl.textContent = '';
 
   if (!file) return;
 
-  // Accept any image/* (covers jpg, png, heic, heif, webp from phone cameras)
-  // plus PDF, plus an empty type (some mobile browsers don't set MIME on camera shots)
+  // Accept any image/* (covers HEIC/HEIF from iPhone, WebP, etc.)
+  // Empty type = some Android camera apps don't set MIME
   const isImage = file.type.startsWith('image/') || file.type === '';
   const isPdf   = file.type === 'application/pdf';
   if (!isImage && !isPdf) {
@@ -374,14 +378,56 @@ function handleFile() {
     return;
   }
   if (file.size > MAX_FILE_MB * 1024 * 1024) {
-    errEl.textContent = `File too large. Maximum size is ${MAX_FILE_MB} MB.`;
+    errEl.textContent = `File too large. Maximum is ${MAX_FILE_MB} MB.`;
     fileInput.value = '';
     return;
   }
 
+  // Show thumbnail for images, filename for PDFs
+  if (ui) ui.style.display = 'none';
   filePreview.style.display = 'flex';
-  filePreview.textContent = `✓ ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
-  document.querySelector('.file-upload-ui').style.display = 'none';
+
+  if (isImage && file.type !== 'application/pdf') {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      filePreview.innerHTML = `
+        <img src="${e.target.result}" alt="ID preview"
+             style="max-height:120px;max-width:100%;border-radius:8px;object-fit:contain;border:2px solid #38a169;" />
+        <div style="margin-top:8px;font-size:.85rem;color:#38a169;font-weight:600;">
+          ✓ Photo selected — ${(file.size / 1024).toFixed(0)} KB
+        </div>
+        <button type="button" id="changeFileBtn"
+                style="margin-top:6px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:4px 12px;font-size:.8rem;cursor:pointer;color:#718096;">
+          Change photo
+        </button>`;
+      document.getElementById('changeFileBtn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.value = '';
+        filePreview.style.display = 'none';
+        filePreview.innerHTML = '';
+        if (ui) ui.style.display = '';
+        fileInput.click();
+      });
+    };
+    reader.readAsDataURL(file);
+  } else {
+    filePreview.innerHTML = `
+      <div style="font-size:2rem;">📄</div>
+      <div style="font-size:.88rem;color:#38a169;font-weight:600;">✓ ${file.name}</div>
+      <div style="font-size:.78rem;color:#718096;">${(file.size / 1024).toFixed(0)} KB</div>
+      <button type="button" id="changeFileBtn"
+              style="margin-top:6px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:4px 12px;font-size:.8rem;cursor:pointer;color:#718096;">
+        Change file
+      </button>`;
+    document.getElementById('changeFileBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      fileInput.value = '';
+      filePreview.style.display = 'none';
+      filePreview.innerHTML = '';
+      if (ui) ui.style.display = '';
+      fileInput.click();
+    });
+  }
 }
 
 /* ===========================
