@@ -24,6 +24,10 @@ function safeUrl(raw) {
     // Same-page anchors only
     return /^#[A-Za-z][\w:-]*$/.test(trimmed) ? trimmed : null;
   }
+  // Allow relative same-site paths like register.html?race=5k
+  if (/^[a-zA-Z0-9._/-]+\.html(\?[a-zA-Z0-9=&_-]*)?$/.test(trimmed)) {
+    return trimmed;
+  }
   let url;
   try {
     url = new URL(trimmed, window.location.href);
@@ -153,8 +157,8 @@ const REG_OPEN  = new Date('2026-08-20T00:00:00+03:00');
 const REG_CLOSE = new Date('2026-09-15T23:59:59+03:00');
 
 // TODO: replace with real OMT registration URLs (must be on allowlist)
-const REG_URL_5K = '';
-const REG_URL_2K = '';
+const REG_URL_5K = 'register.html?race=5k';
+const REG_URL_2K = 'register.html?race=2k';
 
 function setButtonState(btn, { disabled, text }) {
   if (!btn) return;
