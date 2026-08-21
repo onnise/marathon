@@ -685,6 +685,12 @@ form.addEventListener('submit', async (e) => {
   submitBtn.querySelector('.btn-text').textContent = 'Submitting…';
   submitBtn.querySelector('.btn-spinner').style.display = 'inline';
 
+  function resetBtn() {
+    submitBtn.disabled = false;
+    submitBtn.querySelector('.btn-text').textContent = 'Complete Registration';
+    submitBtn.querySelector('.btn-spinner').style.display = 'none';
+  }
+
   // Collect form data (sanitised)
   const payload = {
     race,
@@ -731,16 +737,25 @@ form.addEventListener('submit', async (e) => {
   if (best5k) payload.best5k = best5k;
 
   try {
-    const res  = await fetch('/api/register', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload),
-    });
+    // 45-second timeout — resets spinner if server is slow or connection drops
+    const controller = new AbortController();
+    const timeoutId  = setTimeout(() => controller.abort(), 45000);
+
+    let res;
+    try {
+      res = await fetch('/api/register', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+        signal:  controller.signal,
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      // Waitlist case
       if (res.status === 409 && data.waitlist) {
         showWaitlist(payload.email);
         return;
@@ -749,11 +764,13 @@ form.addEventListener('submit', async (e) => {
     }
 
     showConfirmation(payload, data);
+
   } catch (err) {
-    submitBtn.disabled = false;
-    submitBtn.querySelector('.btn-text').textContent = 'Complete Registration';
-    submitBtn.querySelector('.btn-spinner').style.display = 'none';
-    showToast(err.message || 'Something went wrong. Please try again or contact bickfaya5krun@gmail.com');
+    resetBtn();
+    const msg = err.name === 'AbortError'
+      ? 'Request timed out. Please check your connection and try again.'
+      : (err.message || 'Something went wrong. Please try again or contact bickfaya5krun@gmail.com');
+    showToast(msg);
   }
 });
 
