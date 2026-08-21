@@ -11,11 +11,16 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
   const siteUrl     = process.env.SITE_URL || 'https://bikfayarace.com';
 
   const omtBlock = `
-    <div style="background:#e8f4fd;border:2px solid #1B5EA8;border-radius:12px;padding:24px;margin:24px 0;">
+    <div style="background:#fff8e1;border:2px solid #e53e3e;border-radius:12px;padding:16px 24px;margin:24px 0 8px;">
+      <p style="margin:0;font-size:15px;font-weight:700;color:#c53030;">⏳ You have <u>3 days</u> to complete payment to secure your spot.</p>
+      <p style="margin:6px 0 0;font-size:13px;color:#744210;">لديك <u>3 أيام</u> لإتمام الدفع وتأكيد مكانك.</p>
+    </div>
+    <div style="background:#e8f4fd;border:2px solid #1B5EA8;border-radius:12px;padding:24px;margin:8px 0 24px;">
       <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#0D2B5A;">💳 How to Pay / كيفية الدفع</p>
-      <p style="margin:0 0 8px;font-size:14px;color:#2d3748;">Visit any <strong>OMT office</strong> and pay using your full name as shown on your registration.</p>
-      <p style="margin:0;font-size:14px;color:#2d3748;">توجّه لأي مكتب <strong>OMT</strong> وادفع باستخدام اسمك الكامل كما هو مسجّل.</p>
-      <p style="margin:12px 0 0;font-size:13px;color:#718096;">Online payment via OMT coming soon / الدفع الإلكتروني عبر OMT قريباً</p>
+      <p style="margin:0 0 6px;font-size:14px;color:#2d3748;">Visit any <strong>OMT office</strong> and pay using your full name as shown on your registration.</p>
+      <p style="margin:0 0 10px;font-size:14px;color:#2d3748;">توجّه لأي مكتب <strong>OMT</strong> وادفع باستخدام اسمك الكامل كما هو مسجّل.</p>
+      <p style="margin:0 0 4px;font-size:13px;color:#2d3748;"><strong>OMT Wallet Holder:</strong> JOSEPH BOU KARAM &nbsp;·&nbsp; Tel. +961 76 892 927</p>
+      <p style="margin:0;font-size:13px;color:#718096;">Online payment via OMT coming soon / الدفع الإلكتروني عبر OMT قريباً</p>
     </div>`;
 
   return `<!DOCTYPE html>

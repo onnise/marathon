@@ -559,6 +559,18 @@
 .conf-next h3 { font-size: 1rem; color: var(--dark); margin-bottom: 16px; }
 .conf-next ol { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
 .conf-next li { font-size: .9rem; color: var(--mid); line-height: 1.6; }
+.conf-omt-name { font-size: .85rem; color: var(--grey); display: block; margin-top: 4px; }
+.conf-omt-name a { color: var(--red); }
+.conf-deadline-banner {
+  background: #fff8e1;
+  border: 2px solid #e53e3e;
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  font-size: .95rem;
+  color: #c53030;
+  text-align: center;
+  margin-bottom: 16px;
+}
 
 /* ===========================
    PHONE INPUT
