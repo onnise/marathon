@@ -72,7 +72,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod 
               </tr>
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#718096;">Location / الموقع</td>
-                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#2d3748;">Alfa Store, Bikfaya</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#2d3748;">Bikfaya Square</td>
               </tr>
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:13px;color:#718096;">Assembly / التجمّع</td>
