@@ -741,7 +741,7 @@ function showConfirmation(formData, apiResponse) {
     ['Registration Code', apiResponse.registrationCode || '—'],
     ['Name',             `${escHtml(formData.firstName)} ${escHtml(formData.lastName)}`],
     ['Email',             escHtml(formData.email)],
-    ['Payment',          'OMT Branch'],
+    ['Pay to',           'JOSEPH BOU KARAM · <a href="tel:+96176892927" style="color:var(--red);">+961 76 892 927</a>'],
     ['Status',           'Pending payment'],
   ];
   if (apiResponse.ageCategory) {
