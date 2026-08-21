@@ -53,12 +53,6 @@ function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod 
               <span style="font-size:14px;color:#718096;">مرحباً بك في سباق بكفيا 2026!</span>
             </p>
 
-            <!-- Registration code -->
-            <div style="background:#f7f9fc;border-radius:12px;padding:20px;margin:0 0 24px;text-align:center;border:1.5px solid #e2e8f0;">
-              <p style="margin:0 0 6px;font-size:13px;color:#718096;">Your Registration Code / رقم تسجيلك</p>
-              <p style="margin:0;font-size:28px;font-weight:800;letter-spacing:3px;color:#1B5EA8;">${regCode}</p>
-              <p style="margin:8px 0 0;font-size:12px;color:#a0aec0;">Keep this code — you'll need it on race day</p>
-            </div>
 
             <!-- Race details -->
             <table width="100%" style="border-collapse:collapse;margin:0 0 24px;">
@@ -90,7 +84,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod 
             <div style="background:#f0fff4;border-radius:12px;padding:20px;margin:24px 0 0;">
               <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#276749;">📋 Race Day Checklist / ما تحضره يوم السباق</p>
               <ul style="margin:0;padding:0 0 0 20px;font-size:13px;color:#2d3748;line-height:1.8;">
-                <li>This email or your registration code <span style="color:#718096">/ هذا الإيميل أو رقم تسجيلك</span></li>
+                <li>This confirmation email <span style="color:#718096">/ هذا الإيميل التأكيدي</span></li>
                 <li>Valid ID / هوية سارية</li>
                 <li>Comfortable running gear / ملابس رياضية مريحة</li>
                 <li>Arrive by <strong>7:00 AM</strong> for kit collection / احضر قبل الساعة 7</li>
@@ -301,7 +295,7 @@ module.exports = async function handler(req, res) {
       const { error: emailErr } = await resend.emails.send({
         from:    fromAddr,
         to:      record.email,
-        subject: `✅ Registration Confirmed — Bikfaya Race 2026 | ${inserted.registration_code}`,
+            subject: `✅ Registration Confirmed — Bikfaya Race 2026`,
         html,
       });
       if (emailErr) console.error('Email send error:', JSON.stringify(emailErr));

@@ -777,7 +777,6 @@ function showConfirmation(formData, apiResponse) {
   const rows = [
     ['Race',              RACE_LABELS[formData.race]],
     ['Amount',           amountStr],
-    ['Registration Code', apiResponse.registrationCode || '—'],
     ['Name',             `${escHtml(formData.firstName)} ${escHtml(formData.lastName)}`],
     ['Email',             escHtml(formData.email)],
     ['Pay to',           'JOSEPH BOU KARAM · <a href="tel:+96176892927" style="color:var(--red);">+961 76 892 927</a>'],
