@@ -317,15 +317,54 @@ function updateDobHint() {
 /* ===========================
    CLUB "Other" text field
 =========================== */
-document.getElementById('club').addEventListener('change', function () {
+// ── Team autocomplete ─────────────────────────────────
+let _teamsCache = null;
+
+async function loadTeams() {
+  if (_teamsCache) return _teamsCache;
+  try {
+    const res = await fetch('/api/teams');
+    if (!res.ok) return [];
+    const { teams } = await res.json();
+    _teamsCache = teams || [];
+  } catch { _teamsCache = []; }
+  return _teamsCache;
+}
+
+function renderTeamChips(teams, inputEl) {
+  const wrap = document.getElementById('teamChips');
+  if (!wrap) return;
+  if (!teams.length) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = '<span class="team-chips-label">Existing teams — tap to select:</span>' +
+    teams.map(t =>
+      `<button type="button" class="team-chip" data-name="${escHtml(t)}">${escHtml(t)}</button>`
+    ).join('');
+  wrap.querySelectorAll('.team-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      inputEl.value = btn.dataset.name;
+      wrap.querySelectorAll('.team-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      clearFieldError(inputEl);
+    });
+  });
+}
+
+document.getElementById('club').addEventListener('change', async function () {
+  const wrap      = document.getElementById('clubNameWrap');
   const nameField = document.getElementById('clubName');
+  const datalist  = document.getElementById('teamSuggestions');
   if (this.value === 'other') {
-    nameField.style.display = 'block';
+    wrap.style.display = 'block';
     nameField.required = true;
+    const teams = await loadTeams();
+    // Populate datalist for native autocomplete
+    datalist.innerHTML = teams.map(t => `<option value="${escHtml(t)}">`).join('');
+    renderTeamChips(teams, nameField);
   } else {
-    nameField.style.display = 'none';
+    wrap.style.display = 'none';
     nameField.required = false;
     nameField.value = '';
+    document.getElementById('teamChips').innerHTML = '';
   }
 });
 

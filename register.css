@@ -573,6 +573,35 @@
 }
 
 /* ===========================
+   TEAM CHIPS
+=========================== */
+.team-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.team-chips-label {
+  width: 100%;
+  font-size: .78rem;
+  color: var(--grey);
+  margin-bottom: 2px;
+}
+.team-chip {
+  background: #f0f4ff;
+  border: 1.5px solid #c3d0f7;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.team-chip:hover  { background: #dde6ff; border-color: var(--red); }
+.team-chip.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ===========================
    PHONE INPUT
 =========================== */
 .phone-input-wrap {
