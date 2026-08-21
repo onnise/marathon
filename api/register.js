@@ -1,10 +1,10 @@
 // POST /api/register
 // Validates form data, stores in Supabase, sends confirmation email via Resend.
 
-const { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, sanitise, send } = require('./_lib');
+const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send } = require('./_lib');
 const { Resend } = require('resend');
 
-function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, payMethod }) {
+function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod }) {
   const raceName    = race === '5k' ? '5K Competitive' : '2K Fun Run';
   const raceNameAr  = race === '5k' ? '5K تنافسي' : '2K مرح';
   const price       = race === '5k' ? '$17 + $3 LAF fee = $20 total' : '$10';
@@ -83,13 +83,6 @@ function buildConfirmationEmail({ firstName, lastName, regCode, omtCode, race, p
                 <td style="padding:10px 0;font-size:14px;font-weight:600;color:#2d3748;">${price}</td>
               </tr>
             </table>
-
-            <!-- OMT Payment -->
-            <div style="background:#fff3f3;border-left:4px solid #1B5EA8;padding:16px 20px;border-radius:0 8px 8px 0;margin:0 0 8px;">
-              <p style="margin:0;font-size:14px;font-weight:700;color:#1B5EA8;">⚠️ Payment Required — الدفع مطلوب</p>
-              <p style="margin:6px 0 0;font-size:13px;color:#666;">Please complete your OMT payment to confirm your spot.</p>
-              <p style="margin:4px 0 0;font-size:13px;color:#666;">يرجى إتمام الدفع عبر OMT لتأكيد مكانك.</p>
-            </div>
 
             ${omtBlock}
 
@@ -198,7 +191,7 @@ module.exports = async function handler(req, res) {
   }
 
   // ── Generate codes ────────────────────────────────────
-  let regCode, omtCode;
+  let regCode;
   let attempts = 0;
   while (attempts < 10) {
     regCode = generateRegCode();
@@ -206,7 +199,6 @@ module.exports = async function handler(req, res) {
     if (!clash || clash.length === 0) break;
     attempts++;
   }
-  omtCode = generateOmtCode();
 
   // ── Age category (5K only) ────────────────────────────
   const ageCategory = race === '5k' ? assignAgeCategory(b.dob) : null;
@@ -227,7 +219,7 @@ module.exports = async function handler(req, res) {
     emergency_phone:    sanitise(b.emergencyPhone),
     pay_method:         b.payMethod || 'omt',
     payment_status:     'pending',
-    omt_payment_code:   omtCode,
+    omt_payment_code:   null,
   };
 
   if (race === '5k') {
@@ -266,7 +258,7 @@ module.exports = async function handler(req, res) {
   const { data: inserted, error: insertErr } = await supabase
     .from('registrations')
     .insert([record])
-    .select('id, registration_code, omt_payment_code, age_category')
+    .select('id, registration_code, age_category')
     .single();
 
   if (insertErr) {
@@ -283,7 +275,6 @@ module.exports = async function handler(req, res) {
         firstName: record.first_name,
         lastName:  record.last_name,
         regCode:   inserted.registration_code,
-        omtCode:   inserted.omt_payment_code,
         race:      record.race,
         payMethod: record.pay_method,
       });
@@ -306,7 +297,6 @@ module.exports = async function handler(req, res) {
   return send(res, 201, {
     success:          true,
     registrationCode: inserted.registration_code,
-    omtPaymentCode:   inserted.omt_payment_code,
     ageCategory:      inserted.age_category,
     message:          'Registration successful. Check your email for your confirmation.',
   });
