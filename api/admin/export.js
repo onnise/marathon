@@ -50,7 +50,9 @@ function formatValue(key, v) {
 function toCsv(rows) {
   const escape = (v) => {
     if (v === '') return '';
-    if (v.includes(',') || v.includes('"') || v.includes('\n')) {
+    // Neutralise CSV formula injection (Excel/Sheets execute cells starting with = + - @ |)
+    if (/^[=+\-@|]/.test(v)) v = `'${v}`;
+    if (v.includes(',') || v.includes('"') || v.includes('\n') || v.includes("'")) {
       return `"${v.replace(/"/g, '""')}"`;
     }
     return v;

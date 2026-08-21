@@ -1,7 +1,7 @@
 // POST /api/register
 // Validates form data, stores in Supabase, sends confirmation email via Resend.
 
-const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send } = require('./_lib');
+const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send, rateLimitCheck } = require('./_lib');
 const { Resend } = require('resend');
 
 function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod }) {
@@ -128,6 +128,12 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed.' });
 
+  // Rate limit: 10 registrations per IP per 5 minutes
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  if (rateLimitCheck(`register:${ip}`, 10, 5 * 60 * 1000)) {
+    return send(res, 429, { error: 'Too many requests. Please wait a few minutes before trying again.' });
+  }
+
   // Registration window check
   const now = Date.now();
   if (now < REG_OPEN.getTime())  return send(res, 400, { error: 'Registration is not open yet.' });
@@ -232,9 +238,23 @@ module.exports = async function handler(req, res) {
 
     // Upload ID file to Supabase Storage
     if (b.idFile && b.idFile.data && b.idFile.name) {
-      console.log('ID file received:', b.idFile.name, 'size ~', Math.round(b.idFile.data.length * 0.75 / 1024), 'KB');
+      const ALLOWED_MIME = ['image/jpeg','image/jpg','image/png','image/heic','image/heif','image/webp','application/pdf'];
+      const ALLOWED_EXT  = ['jpg','jpeg','png','heic','heif','webp','pdf'];
+      const serverExt    = b.idFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '');
+      const serverMime   = (b.idFile.type || '').toLowerCase();
+      const sizeBytes    = Math.round(b.idFile.data.length * 0.75); // base64 → bytes
+      if (!ALLOWED_EXT.includes(serverExt)) {
+        return send(res, 400, { error: 'Invalid file type. Only JPG, PNG, HEIC or PDF allowed.' });
+      }
+      if (serverMime && !ALLOWED_MIME.includes(serverMime) && !serverMime.startsWith('image/')) {
+        return send(res, 400, { error: 'Invalid file type.' });
+      }
+      if (sizeBytes > 20 * 1024 * 1024) { // 20 MB hard cap server-side
+        return send(res, 400, { error: 'File too large. Maximum 20 MB.' });
+      }
+      console.log('ID file received:', b.idFile.name, 'size ~', Math.round(sizeBytes / 1024), 'KB');
       try {
-        const ext      = b.idFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '');
+        const ext      = serverExt;
         const path     = `${regCode}.${ext}`;
         const buffer   = Buffer.from(b.idFile.data, 'base64');
         const { error: uploadErr } = await supabase.storage

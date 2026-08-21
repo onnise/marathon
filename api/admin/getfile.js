@@ -14,6 +14,10 @@ module.exports = async function handler(req, res) {
 
   const filePath = req.query.path;
   if (!filePath) return send(res, 400, { error: 'Missing path parameter.' });
+  // Reject path traversal attempts — only allow safe filename characters
+  if (!/^[A-Za-z0-9_\-]+\.[a-z0-9]{2,5}$/.test(filePath)) {
+    return send(res, 400, { error: 'Invalid file path.' });
+  }
 
   const supabase = getSupabase();
   const { data, error } = await supabase.storage

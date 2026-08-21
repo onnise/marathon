@@ -1,6 +1,21 @@
 // Shared utilities for all API functions
 const { createClient } = require('@supabase/supabase-js');
 
+// ── In-memory rate limiter ────────────────────────────────────────────────────
+// Serverless: each instance has its own map; this limits per-instance burst.
+// Good enough to stop scripted attacks — full distributed limiting needs Redis.
+const _rateBuckets = new Map();
+
+function rateLimitCheck(key, maxHits, windowMs) {
+  const now    = Date.now();
+  const bucket = _rateBuckets.get(key) || { hits: 0, resetAt: now + windowMs };
+  if (now > bucket.resetAt) { bucket.hits = 0; bucket.resetAt = now + windowMs; }
+  bucket.hits++;
+  _rateBuckets.set(key, bucket);
+  return bucket.hits > maxHits; // true = blocked
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 /**
  * Returns a Supabase client using the service role key (bypasses RLS).
  * Only ever used server-side in Vercel functions — never exposed to the browser.
@@ -77,4 +92,4 @@ function send(res, status, body) {
   res.status(status).json(body);
 }
 
-module.exports = { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, verifyAdmin, sanitise, send };
+module.exports = { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, verifyAdmin, sanitise, send, rateLimitCheck };
