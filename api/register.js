@@ -1,7 +1,7 @@
 // POST /api/register
 // Validates form data, stores in Supabase, sends confirmation email via Resend.
 
-const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send, rateLimitCheck } = require('./_lib');
+const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send } = require('./_lib');
 const { Resend } = require('resend');
 
 function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod }) {
@@ -121,12 +121,6 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed.' });
-
-  // Rate limit: 10 registrations per IP per 5 minutes
-  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
-  if (rateLimitCheck(`register:${ip}`, 10, 5 * 60 * 1000)) {
-    return send(res, 429, { error: 'Too many requests. Please wait a few minutes before trying again.' });
-  }
 
   // Registration window check
   const now = Date.now();
