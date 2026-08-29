@@ -717,18 +717,55 @@ form.addEventListener('submit', async (e) => {
     payload.eliteStatus  = document.getElementById('eliteStatus').value;
     payload.expectedTime = document.getElementById('expectedTime').value;
 
-    // Encode ID file as base64 for upload
+    // Encode ID file as base64 — compress images to stay under Vercel's 4.5MB body limit
     const idFile = document.getElementById('idUpload').files[0];
     if (idFile) {
-      payload.idFile = {
-        name: idFile.name,
-        type: idFile.type,
-        data: await new Promise((resolve, reject) => {
+      const MAX_IMG_PX  = 1600; // max width or height
+      const JPEG_Q      = 0.82; // JPEG quality
+      const TARGET_BYTES = 3 * 1024 * 1024; // 3 MB base64-decoded target
+
+      const compressImage = (file) => new Promise((resolve, reject) => {
+        // PDFs and non-images: just read as-is
+        if (file.type === 'application/pdf' || !file.type.startsWith('image/')) {
           const reader = new FileReader();
-          reader.onload  = (e) => resolve(e.target.result.split(',')[1]); // strip data: prefix
+          reader.onload  = (e) => resolve({ data: e.target.result.split(',')[1], type: file.type });
           reader.onerror = reject;
-          reader.readAsDataURL(idFile);
-        }),
+          reader.readAsDataURL(file);
+          return;
+        }
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          let { width, height } = img;
+          // Downscale if too large
+          if (width > MAX_IMG_PX || height > MAX_IMG_PX) {
+            const ratio = Math.min(MAX_IMG_PX / width, MAX_IMG_PX / height);
+            width  = Math.round(width  * ratio);
+            height = Math.round(height * ratio);
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width  = width;
+          canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          // Try progressively lower quality until under target size
+          let quality = JPEG_Q;
+          let dataUrl;
+          do {
+            dataUrl = canvas.toDataURL('image/jpeg', quality);
+            quality -= 0.1;
+          } while (dataUrl.length * 0.75 > TARGET_BYTES && quality > 0.3);
+          resolve({ data: dataUrl.split(',')[1], type: 'image/jpeg' });
+        };
+        img.onerror = reject;
+        img.src = url;
+      });
+
+      const { data: imgData, type: imgType } = await compressImage(idFile);
+      payload.idFile = {
+        name: idFile.name.replace(/\.[^.]+$/, '.jpg'),
+        type: imgType,
+        data: imgData,
       };
     }
   }
