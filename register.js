@@ -674,13 +674,87 @@ form.addEventListener('keydown', function (e) {
   e.preventDefault();
 });
 
+// ── Image compression helper ─────────────────────────────────────────────────
+function compressImage(file) {
+  return new Promise((resolve) => {
+    const MAX_PX   = 1600;
+    const QUALITY  = 0.82;
+    const MAX_BYTES = 3 * 1024 * 1024;
+    // Timeout: if image never loads (HEIC on Android etc.), resolve with original after 8s
+    let settled = false;
+    const fallback = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      const reader = new FileReader();
+      reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: file.type || 'image/jpeg' });
+      reader.onerror = () => resolve(null); // skip file on read error
+      reader.readAsDataURL(file);
+    }, 8000);
+
+    if (file.type === 'application/pdf') {
+      clearTimeout(fallback);
+      settled = true;
+      const reader = new FileReader();
+      reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: 'application/pdf' });
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(fallback);
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      if (width > MAX_PX || height > MAX_PX) {
+        const ratio = Math.min(MAX_PX / width, MAX_PX / height);
+        width  = Math.round(width  * ratio);
+        height = Math.round(height * ratio);
+      }
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width  = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        let q = QUALITY, dataUrl;
+        do {
+          dataUrl = canvas.toDataURL('image/jpeg', q);
+          q -= 0.1;
+        } while (dataUrl.length * 0.75 > MAX_BYTES && q > 0.3);
+        resolve({ data: dataUrl.split(',')[1], type: 'image/jpeg' });
+      } catch (_) {
+        // Canvas tainted or unavailable — fall back to raw file
+        const reader = new FileReader();
+        reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: file.type });
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      }
+    };
+    img.onerror = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(fallback);
+      URL.revokeObjectURL(url);
+      // Can't decode image (e.g. HEIC on Android) — send raw
+      const reader = new FileReader();
+      reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: file.type });
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    };
+    img.src = url;
+  });
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const race = getSelectedRace();
   if (!race) return;
 
-  // Disable button, show spinner
   submitBtn.disabled = true;
   submitBtn.querySelector('.btn-text').textContent = 'Submitting…';
   submitBtn.querySelector('.btn-spinner').style.display = 'inline';
@@ -691,93 +765,51 @@ form.addEventListener('submit', async (e) => {
     submitBtn.querySelector('.btn-spinner').style.display = 'none';
   }
 
-  // Collect form data (sanitised)
-  const payload = {
-    race,
-    firstName:      sanitise(document.getElementById('firstName').value),
-    lastName:       sanitise(document.getElementById('lastName').value),
-    dob:            document.getElementById('dob').value,
-    gender:         document.getElementById('gender').value,
-    email:          sanitise(document.getElementById('email').value),
-    country:        document.getElementById('country').value,
-    firstRace:      document.getElementById('firstRace').value,
-    emergencyName:  sanitise(document.getElementById('emergencyName').value),
-    emergencyPhone: (function() {
-      const prefix = (document.getElementById('emergencyPhonePrefix')?.value || '+961|8').split('|')[0];
-      const digits = document.getElementById('emergencyPhone').value.replace(/\D/g, '');
-      return prefix + ' ' + digits;
-    })(),
-    payMethod:      document.querySelector('input[name="payMethod"]:checked')?.value || 'omt',
-  };
-
-  if (race === '5k') {
-    payload.bloodType    = document.getElementById('bloodType').value;
-    payload.club         = document.getElementById('club').value;
-    payload.clubName     = sanitise(document.getElementById('clubName').value);
-    payload.eliteStatus  = document.getElementById('eliteStatus').value;
-    payload.expectedTime = document.getElementById('expectedTime').value;
-
-    // Encode ID file as base64 — compress images to stay under Vercel's 4.5MB body limit
-    const idFile = document.getElementById('idUpload').files[0];
-    if (idFile) {
-      const MAX_IMG_PX  = 1600; // max width or height
-      const JPEG_Q      = 0.82; // JPEG quality
-      const TARGET_BYTES = 3 * 1024 * 1024; // 3 MB base64-decoded target
-
-      const compressImage = (file) => new Promise((resolve, reject) => {
-        // PDFs and non-images: just read as-is
-        if (file.type === 'application/pdf' || !file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload  = (e) => resolve({ data: e.target.result.split(',')[1], type: file.type });
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-          return;
-        }
-        const img = new Image();
-        const url = URL.createObjectURL(file);
-        img.onload = () => {
-          URL.revokeObjectURL(url);
-          let { width, height } = img;
-          // Downscale if too large
-          if (width > MAX_IMG_PX || height > MAX_IMG_PX) {
-            const ratio = Math.min(MAX_IMG_PX / width, MAX_IMG_PX / height);
-            width  = Math.round(width  * ratio);
-            height = Math.round(height * ratio);
-          }
-          const canvas = document.createElement('canvas');
-          canvas.width  = width;
-          canvas.height = height;
-          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-          // Try progressively lower quality until under target size
-          let quality = JPEG_Q;
-          let dataUrl;
-          do {
-            dataUrl = canvas.toDataURL('image/jpeg', quality);
-            quality -= 0.1;
-          } while (dataUrl.length * 0.75 > TARGET_BYTES && quality > 0.3);
-          resolve({ data: dataUrl.split(',')[1], type: 'image/jpeg' });
-        };
-        img.onerror = reject;
-        img.src = url;
-      });
-
-      const { data: imgData, type: imgType } = await compressImage(idFile);
-      payload.idFile = {
-        name: idFile.name.replace(/\.[^.]+$/, '.jpg'),
-        type: imgType,
-        data: imgData,
-      };
-    }
-  }
-
-  const best5k = document.getElementById('best5k').value;
-  if (best5k) payload.best5k = best5k;
-
+  // ── Everything is inside one try/catch so the button ALWAYS resets on error ──
   try {
-    // 45-second timeout — resets spinner if server is slow or connection drops
+    const payload = {
+      race,
+      firstName:      sanitise(document.getElementById('firstName').value),
+      lastName:       sanitise(document.getElementById('lastName').value),
+      dob:            document.getElementById('dob').value,
+      gender:         document.getElementById('gender').value,
+      email:          sanitise(document.getElementById('email').value),
+      country:        document.getElementById('country').value,
+      firstRace:      (document.getElementById('firstRace') || {}).value || '',
+      emergencyName:  sanitise(document.getElementById('emergencyName').value),
+      emergencyPhone: (function() {
+        const prefix = (document.getElementById('emergencyPhonePrefix')?.value || '+961|8').split('|')[0];
+        const digits = document.getElementById('emergencyPhone').value.replace(/\D/g, '');
+        return prefix + ' ' + digits;
+      })(),
+      payMethod: document.querySelector('input[name="payMethod"]:checked')?.value || 'omt',
+    };
+
+    if (race === '5k') {
+      payload.bloodType    = document.getElementById('bloodType').value;
+      payload.club         = document.getElementById('club').value;
+      payload.clubName     = sanitise((document.getElementById('clubName') || {}).value || '');
+      payload.eliteStatus  = document.getElementById('eliteStatus').value;
+      payload.expectedTime = document.getElementById('expectedTime').value;
+      payload.best5k       = (document.getElementById('best5k') || {}).value || '';
+
+      const idFileEl = document.getElementById('idUpload');
+      const idFile   = idFileEl && idFileEl.files && idFileEl.files[0];
+      if (idFile) {
+        const compressed = await compressImage(idFile);
+        if (compressed) {
+          payload.idFile = {
+            name: idFile.name.replace(/\.[^.]+$/, '.jpg'),
+            type: compressed.type,
+            data: compressed.data,
+          };
+        }
+      }
+    }
+
+    // 45-second fetch timeout
     const controller = new AbortController();
     const timeoutId  = setTimeout(() => controller.abort(), 45000);
-
     let res;
     try {
       res = await fetch('/api/register', {
@@ -793,10 +825,7 @@ form.addEventListener('submit', async (e) => {
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      if (res.status === 409 && data.waitlist) {
-        showWaitlist(payload.email);
-        return;
-      }
+      if (res.status === 409 && data.waitlist) { showWaitlist(payload.email); return; }
       throw new Error(data.error || `Server error (${res.status})`);
     }
 
@@ -806,7 +835,7 @@ form.addEventListener('submit', async (e) => {
     resetBtn();
     const msg = err.name === 'AbortError'
       ? 'Request timed out. Please check your connection and try again.'
-      : (err.message || 'Something went wrong. Please try again or contact bickfaya5krun@gmail.com');
+      : (err.message || 'Something went wrong. Please try again.');
     showToast(msg);
   }
 });
