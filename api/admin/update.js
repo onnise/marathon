@@ -2,7 +2,8 @@
 // Updates payment status or adds notes on a registration.
 // Protected: requires Authorization: Bearer <ADMIN_TOKEN>
 
-const { getSupabase, verifyAdmin, sanitise, send } = require('../_lib');
+const { getSupabase, verifyAdmin, sanitise, send, log, getIp } = require('../_lib');
+const TAG = 'ADMIN_UPDATE';
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', process.env.SITE_URL || '*');
@@ -11,7 +12,8 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'PATCH') return send(res, 405, { error: 'Method not allowed.' });
 
-  if (!verifyAdmin(req)) return send(res, 401, { error: 'Unauthorised.' });
+  const ip = getIp(req);
+  if (!verifyAdmin(req)) { log(TAG,'WARN','Unauthorised access attempt',{ip}); return send(res, 401, { error: 'Unauthorised.' }); }
 
   const { id, payment_status, bib_number, notes } = req.body || {};
 
@@ -43,9 +45,10 @@ module.exports = async function handler(req, res) {
     .single();
 
   if (error) {
-    console.error('Update error:', error);
+    log(TAG,'ERROR','Update failed',{ip,id,err:error.message,code:error.code});
     return send(res, 500, { error: 'Database error.' });
   }
 
+  log(TAG,'INFO','Registration updated',{ip,id,status:payment_status,bib:bib_number});
   return send(res, 200, { success: true, registration: data });
 };

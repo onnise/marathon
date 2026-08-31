@@ -1,7 +1,8 @@
 // POST /api/register
 // Validates form data, stores in Supabase, sends confirmation email via Resend.
 
-const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send } = require('./_lib');
+const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send, log, maskEmail, getIp } = require('./_lib');
+const TAG = 'REGISTER';
 const { Resend } = require('resend');
 
 function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod }) {
@@ -122,35 +123,45 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed.' });
 
-  // Registration window check
+  const ip  = getIp(req);
   const now = Date.now();
-  if (now < REG_OPEN.getTime())  return send(res, 400, { error: 'Registration is not open yet.' });
-  if (now > REG_CLOSE.getTime()) return send(res, 400, { error: 'Registration has closed.' });
+
+  // Registration window check
+  if (now < REG_OPEN.getTime())  { log(TAG,'WARN','Registration not open yet',{ip}); return send(res, 400, { error: 'Registration is not open yet.' }); }
+  if (now > REG_CLOSE.getTime()) { log(TAG,'WARN','Registration closed',{ip}); return send(res, 400, { error: 'Registration has closed.' }); }
 
   const b = req.body;
-  if (!b) return send(res, 400, { error: 'Empty request body.' });
+  if (!b) { log(TAG,'WARN','Empty request body',{ip}); return send(res, 400, { error: 'Empty request body.' }); }
 
   // ── Validate required fields ──────────────────────────
   const required = ['race','firstName','lastName','dob','gender','email','country','emergencyName','emergencyPhone','payMethod'];
   for (const f of required) {
     if (!b[f] || String(b[f]).trim() === '') {
+      log(TAG,'WARN',`Missing required field: ${f}`,{ip,email:maskEmail(b.email),race:b.race});
       return send(res, 400, { error: `Missing required field: ${f}` });
     }
   }
 
   const race = b.race;
-  if (!['5k', '2k'].includes(race)) return send(res, 400, { error: 'Invalid race selection.' });
+  if (!['5k', '2k'].includes(race)) {
+    log(TAG,'WARN','Invalid race value',{ip,race:b.race,email:maskEmail(b.email)});
+    return send(res, 400, { error: 'Invalid race selection.' });
+  }
 
   // Email format
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.email)) {
+    log(TAG,'WARN','Invalid email format',{ip,race});
     return send(res, 400, { error: 'Invalid email address.' });
   }
+
+  log(TAG,'INFO','Request received',{ip,race,email:maskEmail(b.email),country:b.country,gender:b.gender,hasFile:!!b.idFilePath});
 
   // 5K-specific required fields
   if (race === '5k') {
     const r5k = ['bloodType','eliteStatus','expectedTime'];
     for (const f of r5k) {
       if (!b[f] || String(b[f]).trim() === '') {
+        log(TAG,'WARN',`Missing 5K field: ${f}`,{ip,email:maskEmail(b.email)});
         return send(res, 400, { error: `Missing required 5K field: ${f}` });
       }
     }
@@ -165,10 +176,13 @@ module.exports = async function handler(req, res) {
     .neq('payment_status', 'cancelled');
 
   if (countErr) {
-    console.error('Capacity check error:', countErr.message);
+    log(TAG,'ERROR','Capacity check failed',{ip,email:maskEmail(b.email),err:countErr.message,code:countErr.code});
     return send(res, 500, { error: 'Database error. Please try again.' });
   }
-  if (count >= MAX_CAP) return send(res, 409, { error: 'Sorry, the event is now full. You have been added to the waitlist.', waitlist: true });
+  if (count >= MAX_CAP) {
+    log(TAG,'WARN','Event full — waitlist',{ip,email:maskEmail(b.email),count});
+    return send(res, 409, { error: 'Sorry, the event is now full. You have been added to the waitlist.', waitlist: true });
+  }
 
   // ── Duplicate check: same email + same name (true duplicate, not a family) ──
   const { data: existing } = await supabase
@@ -181,6 +195,7 @@ module.exports = async function handler(req, res) {
     .limit(1);
 
   if (existing && existing.length > 0) {
+    log(TAG,'WARN','Duplicate registration blocked',{ip,email:maskEmail(b.email),race});
     return send(res, 409, { error: 'This name and email combination is already registered. Check your inbox for your registration code.' });
   }
 
@@ -229,12 +244,13 @@ module.exports = async function handler(req, res) {
     if (b.idFilePath) {
       const ALLOWED_PATH = /^[0-9a-f]{32}\.(jpg|jpeg|png|heic|heif|webp|pdf)$/i;
       if (!ALLOWED_PATH.test(b.idFilePath)) {
+        log(TAG,'WARN','Invalid idFilePath rejected',{ip,email:maskEmail(b.email),path:b.idFilePath});
         return send(res, 400, { error: 'Invalid ID file path.' });
       }
       record.id_upload_url = b.idFilePath;
-      console.log('ID path stored:', b.idFilePath);
+      log(TAG,'INFO','ID file path stored',{path:b.idFilePath});
     } else {
-      console.log('No ID file path in payload.');
+      log(TAG,'INFO','No ID file path in payload',{race,email:maskEmail(b.email)});
     }
   }
 
@@ -246,7 +262,7 @@ module.exports = async function handler(req, res) {
     .single();
 
   if (insertErr) {
-    console.error('Insert error:', insertErr);
+    log(TAG,'ERROR','DB insert failed',{ip,email:maskEmail(b.email),race,err:insertErr.message,code:insertErr.code,detail:insertErr.details});
     return send(res, 500, { error: 'Could not save registration. Please try again.' });
   }
 
@@ -268,16 +284,16 @@ module.exports = async function handler(req, res) {
             subject: `✅ Registration Confirmed — Bikfaya Race 2026`,
         html,
       });
-      if (emailErr) console.error('Email send error:', JSON.stringify(emailErr));
-      else console.log('Confirmation email sent to', record.email);
+      if (emailErr) log(TAG,'ERROR','Email send failed',{reg:inserted.registration_code,email:maskEmail(record.email),err:JSON.stringify(emailErr)});
+      else          log(TAG,'INFO','Confirmation email sent',{reg:inserted.registration_code,email:maskEmail(record.email)});
     } catch (e) {
-      console.error('Email exception:', e.message);
-      // Non-fatal — registration already saved, just log and continue
+      log(TAG,'ERROR','Email exception (non-fatal)',{reg:inserted.registration_code,email:maskEmail(record.email),err:e.message});
     }
   } else {
-    console.warn('RESEND_API_KEY not set — skipping confirmation email');
+    log(TAG,'WARN','RESEND_API_KEY not set — email skipped',{reg:inserted.registration_code});
   }
 
+  log(TAG,'INFO','Registration complete',{reg:inserted.registration_code,race,age:inserted.age_category,email:maskEmail(record.email)});
   return send(res, 201, {
     success:          true,
     registrationCode: inserted.registration_code,

@@ -3,7 +3,8 @@
 // directly to Supabase Storage — bypassing Vercel's 4.5 MB body limit entirely.
 
 const { randomBytes } = require('crypto');
-const { getSupabase, send } = require('./_lib');
+const { getSupabase, send, log, getIp } = require('./_lib');
+const TAG = 'UPLOAD_URL';
 
 const CORS = {
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -18,13 +19,19 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'GET')    return send(res, 405, { error: 'Method not allowed.' });
 
+  const ip     = getIp(req);
   const rawExt = (req.query.ext || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '');
-  if (!ALLOWED_EXT.includes(rawExt)) return send(res, 400, { error: 'Invalid file type.' });
+
+  if (!ALLOWED_EXT.includes(rawExt)) {
+    log(TAG,'WARN','Invalid ext rejected',{ip,ext:rawExt});
+    return send(res, 400, { error: 'Invalid file type.' });
+  }
 
   const path = `${randomBytes(16).toString('hex')}.${rawExt}`;
 
   let supabase;
   try { supabase = getSupabase(); } catch (e) {
+    log(TAG,'ERROR','Supabase init failed',{ip,err:e.message});
     return send(res, 500, { error: 'Server configuration error.' });
   }
 
@@ -33,9 +40,10 @@ module.exports = async (req, res) => {
     .createSignedUploadUrl(path);
 
   if (error) {
-    console.error('createSignedUploadUrl error:', error);
+    log(TAG,'ERROR','createSignedUploadUrl failed',{ip,ext:rawExt,err:error.message,code:error.statusCode});
     return send(res, 500, { error: 'Could not prepare upload. Please try again.' });
   }
 
+  log(TAG,'INFO','Signed URL issued',{ip,ext:rawExt,path});
   return send(res, 200, { signedUrl: data.signedUrl, path });
 };

@@ -2,7 +2,8 @@
 // Returns all registrations (with optional filters).
 // Protected: requires Authorization: Bearer <ADMIN_TOKEN>
 
-const { getSupabase, verifyAdmin, send } = require('../_lib');
+const { getSupabase, verifyAdmin, send, log, getIp } = require('../_lib');
+const TAG = 'ADMIN_REGS';
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', process.env.SITE_URL || '*');
@@ -11,7 +12,8 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'GET') return send(res, 405, { error: 'Method not allowed.' });
 
-  if (!verifyAdmin(req)) return send(res, 401, { error: 'Unauthorised.' });
+  const ip = getIp(req);
+  if (!verifyAdmin(req)) { log(TAG,'WARN','Unauthorised access attempt',{ip}); return send(res, 401, { error: 'Unauthorised.' }); }
 
   const { race, gender, payment_status, country, search, page = 1, per_page = 100 } = req.query;
 
@@ -36,7 +38,7 @@ module.exports = async function handler(req, res) {
   const { data, count, error } = await query;
 
   if (error) {
-    console.error('Query error:', error);
+    log(TAG,'ERROR','Query failed',{ip,err:error.message,code:error.code});
     return send(res, 500, { error: 'Database error.' });
   }
 

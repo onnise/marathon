@@ -1,6 +1,35 @@
 // Shared utilities for all API functions
 const { createClient } = require('@supabase/supabase-js');
 
+// ── Structured logger ─────────────────────────────────────────────────────────
+// All output goes to Vercel's log viewer (vercel.com → project → logs).
+// Format: [TAG] LEVEL | key=value key=value …
+// Levels: INFO (normal flow), WARN (unexpected but handled), ERROR (failure)
+function log(tag, level, message, ctx = {}) {
+  const pairs = Object.entries(ctx)
+    .filter(([, v]) => v !== undefined && v !== null && v !== '')
+    .map(([k, v]) => `${k}=${v}`)
+    .join(' | ');
+  const line = pairs ? `[${tag}] ${level} | ${message} | ${pairs}` : `[${tag}] ${level} | ${message}`;
+  if (level === 'ERROR') console.error(line);
+  else                   console.log(line);
+}
+
+// Partially mask email for privacy in logs: foo@bar.com → f**@bar.com
+function maskEmail(email) {
+  if (!email || !email.includes('@')) return email || '?';
+  const [local, domain] = email.split('@');
+  return `${local[0]}**@${domain}`;
+}
+
+// Extract caller IP from Vercel request
+function getIp(req) {
+  return (req.headers['x-forwarded-for'] || '').split(',')[0].trim()
+    || req.socket?.remoteAddress
+    || 'unknown';
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── In-memory rate limiter ────────────────────────────────────────────────────
 // Serverless: each instance has its own map; this limits per-instance burst.
 // Good enough to stop scripted attacks — full distributed limiting needs Redis.
@@ -92,4 +121,4 @@ function send(res, status, body) {
   res.status(status).json(body);
 }
 
-module.exports = { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, verifyAdmin, sanitise, send, rateLimitCheck };
+module.exports = { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, verifyAdmin, sanitise, send, rateLimitCheck, log, maskEmail, getIp };
