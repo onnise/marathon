@@ -224,41 +224,17 @@ module.exports = async function handler(req, res) {
     record.best_5k_time  = b.best5k       || null;
     record.expected_time = b.expectedTime || null;
 
-    // Upload ID file to Supabase Storage
-    if (b.idFile && b.idFile.data && b.idFile.name) {
-      const ALLOWED_MIME = ['image/jpeg','image/jpg','image/png','image/heic','image/heif','image/webp','application/pdf'];
-      const ALLOWED_EXT  = ['jpg','jpeg','png','heic','heif','webp','pdf'];
-      const serverExt    = b.idFile.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '');
-      const serverMime   = (b.idFile.type || '').toLowerCase();
-      const sizeBytes    = Math.round(b.idFile.data.length * 0.75); // base64 → bytes
-      if (!ALLOWED_EXT.includes(serverExt)) {
-        return send(res, 400, { error: 'Invalid file type. Only JPG, PNG, HEIC or PDF allowed.' });
+    // ID file is now uploaded directly browser→Supabase via signed URL (/api/get-upload-url).
+    // The payload contains only the resulting storage path (a short string).
+    if (b.idFilePath) {
+      const ALLOWED_PATH = /^[0-9a-f]{32}\.(jpg|jpeg|png|heic|heif|webp|pdf)$/i;
+      if (!ALLOWED_PATH.test(b.idFilePath)) {
+        return send(res, 400, { error: 'Invalid ID file path.' });
       }
-      if (serverMime && !ALLOWED_MIME.includes(serverMime) && !serverMime.startsWith('image/')) {
-        return send(res, 400, { error: 'Invalid file type.' });
-      }
-      if (sizeBytes > 20 * 1024 * 1024) { // 20 MB hard cap server-side
-        return send(res, 400, { error: 'File too large. Maximum 20 MB.' });
-      }
-      console.log('ID file received:', b.idFile.name, 'size ~', Math.round(sizeBytes / 1024), 'KB');
-      try {
-        const ext      = serverExt;
-        const path     = `${regCode}.${ext}`;
-        const buffer   = Buffer.from(b.idFile.data, 'base64');
-        const { error: uploadErr } = await supabase.storage
-          .from('id-documents')
-          .upload(path, buffer, { contentType: b.idFile.type, upsert: false });
-        if (!uploadErr) {
-          record.id_upload_url = path;
-          console.log('ID uploaded to storage:', path);
-        } else {
-          console.error('Storage upload error:', uploadErr.message, '| code:', uploadErr.statusCode);
-        }
-      } catch (fileErr) {
-        console.error('File processing error:', fileErr.message);
-      }
+      record.id_upload_url = b.idFilePath;
+      console.log('ID path stored:', b.idFilePath);
     } else {
-      console.log('No ID file in payload. idFile present:', !!b.idFile);
+      console.log('No ID file path in payload.');
     }
   }
 

@@ -374,7 +374,7 @@ document.getElementById('club').addEventListener('change', async function () {
 const fileInput   = document.getElementById('idUpload');
 const fileArea    = document.getElementById('fileUploadArea');
 const filePreview = document.getElementById('filePreview');
-const MAX_FILE_MB = 15; // camera shots can be 5-10 MB
+const MAX_FILE_MB = 50; // direct-to-Supabase upload — no Vercel body limit
 
 if (fileInput) {
   fileInput.addEventListener('change', handleFile);
@@ -674,78 +674,34 @@ form.addEventListener('keydown', function (e) {
   e.preventDefault();
 });
 
-// ── Image compression helper ─────────────────────────────────────────────────
-function compressImage(file) {
-  return new Promise((resolve) => {
-    const MAX_PX   = 1600;
-    const QUALITY  = 0.82;
-    const MAX_BYTES = 3 * 1024 * 1024;
-    // Timeout: if image never loads (HEIC on Android etc.), resolve with original after 8s
-    let settled = false;
-    const fallback = setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      const reader = new FileReader();
-      reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: file.type || 'image/jpeg' });
-      reader.onerror = () => resolve(null); // skip file on read error
-      reader.readAsDataURL(file);
-    }, 8000);
+// ── Direct upload: browser → Supabase Storage (no Vercel body limit) ─────────
+// 1. Ask our API for a short-lived signed upload URL.
+// 2. PUT the raw file straight to Supabase — any size, any format.
+// 3. Return the storage path so it can be saved with the registration.
+async function uploadIdFile(file, onProgress) {
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
 
-    if (file.type === 'application/pdf') {
-      clearTimeout(fallback);
-      settled = true;
-      const reader = new FileReader();
-      reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: 'application/pdf' });
-      reader.onerror = () => resolve(null);
-      reader.readAsDataURL(file);
-      return;
-    }
+  // Step 1 — get signed URL from our API
+  const urlRes = await fetch(`/api/get-upload-url?ext=${encodeURIComponent(ext)}`);
+  if (!urlRes.ok) {
+    const err = await urlRes.json().catch(() => ({}));
+    throw new Error(err.error || 'Could not prepare upload. Please try again.');
+  }
+  const { signedUrl, path } = await urlRes.json();
 
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(fallback);
-      URL.revokeObjectURL(url);
-      let { width, height } = img;
-      if (width > MAX_PX || height > MAX_PX) {
-        const ratio = Math.min(MAX_PX / width, MAX_PX / height);
-        width  = Math.round(width  * ratio);
-        height = Math.round(height * ratio);
-      }
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width  = width;
-        canvas.height = height;
-        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-        let q = QUALITY, dataUrl;
-        do {
-          dataUrl = canvas.toDataURL('image/jpeg', q);
-          q -= 0.1;
-        } while (dataUrl.length * 0.75 > MAX_BYTES && q > 0.3);
-        resolve({ data: dataUrl.split(',')[1], type: 'image/jpeg' });
-      } catch (_) {
-        // Canvas tainted or unavailable — fall back to raw file
-        const reader = new FileReader();
-        reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: file.type });
-        reader.onerror = () => resolve(null);
-        reader.readAsDataURL(file);
-      }
-    };
-    img.onerror = () => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(fallback);
-      URL.revokeObjectURL(url);
-      // Can't decode image (e.g. HEIC on Android) — send raw
-      const reader = new FileReader();
-      reader.onload  = (ev) => resolve({ data: ev.target.result.split(',')[1], type: file.type });
-      reader.onerror = () => resolve(null);
-      reader.readAsDataURL(file);
-    };
-    img.src = url;
+  // Step 2 — PUT file directly to Supabase (bypasses Vercel entirely)
+  if (onProgress) onProgress(0);
+  const uploadRes = await fetch(signedUrl, {
+    method:  'PUT',
+    headers: { 'Content-Type': file.type || 'application/octet-stream' },
+    body:    file,
   });
+  if (!uploadRes.ok) {
+    throw new Error(`File upload failed (${uploadRes.status}). Please try again.`);
+  }
+  if (onProgress) onProgress(100);
+
+  return path; // e.g. "a3f7...d2.jpg"
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -796,14 +752,11 @@ form.addEventListener('submit', async (e) => {
       const idFileEl = document.getElementById('idUpload');
       const idFile   = idFileEl && idFileEl.files && idFileEl.files[0];
       if (idFile) {
-        const compressed = await compressImage(idFile);
-        if (compressed) {
-          payload.idFile = {
-            name: idFile.name.replace(/\.[^.]+$/, '.jpg'),
-            type: compressed.type,
-            data: compressed.data,
-          };
-        }
+        // Upload directly to Supabase — no size limit, no base64 overhead
+        submitBtn.querySelector('.btn-text').textContent = 'Uploading ID…';
+        const idFilePath = await uploadIdFile(idFile);
+        payload.idFilePath = idFilePath;
+        submitBtn.querySelector('.btn-text').textContent = 'Saving registration…';
       }
     }
 
