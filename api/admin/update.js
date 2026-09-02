@@ -71,19 +71,8 @@ function buildPaymentConfirmedEmail({ firstName, lastName, race, bibNumber, site
             <!-- Welcome message -->
             <div style="background:#f0fff4;border:2px solid #2BAD6E;border-radius:12px;padding:20px 24px;margin:0 0 24px;">
               <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#276749;">🏃 You're officially in!</p>
-              <p style="margin:0 0 6px;font-size:14px;color:#2d3748;">Arrive at Bikfaya Square by <strong>7:00 AM</strong> on September 20 to collect your race kit and warm up.</p>
-              <p style="margin:0;font-size:13px;color:#718096;">احضر إلى ساحة بكفيا قبل الساعة 7 صباحاً لاستلام حقيبة السباق والإحماء.</p>
-            </div>
-
-            <!-- Checklist -->
-            <div style="background:#f7f9fc;border-radius:12px;padding:20px;margin:0 0 8px;">
-              <p style="margin:0 0 12px;font-size:14px;font-weight:700;color:#2d3748;">📋 Race Day Checklist / ما تحضره يوم السباق</p>
-              <ul style="margin:0;padding:0 0 0 20px;font-size:13px;color:#2d3748;line-height:2;">
-                <li>This email <span style="color:#718096">/ هذا الإيميل</span></li>
-                <li>Valid ID / هوية سارية</li>
-                <li>Comfortable running gear / ملابس رياضية مريحة</li>
-                <li>Arrive by <strong>7:00 AM</strong> / قبل الساعة السابعة صباحاً</li>
-              </ul>
+              <p style="margin:0 0 6px;font-size:14px;color:#2d3748;">Arrive at <strong>Bikfaya Square</strong> on September 20 — you will be able to collect your bib number on race day.</p>
+              <p style="margin:0;font-size:13px;color:#718096;">احضر إلى ساحة بكفيا يوم 20 سبتمبر — ستتمكن من استلام رقم بطاقتك يوم السباق.</p>
             </div>
 
           </td>
