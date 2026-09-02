@@ -15,14 +15,25 @@ module.exports = async function handler(req, res) {
   const ip = getIp(req);
   if (!verifyAdmin(req)) { log(TAG,'WARN','Unauthorised access attempt',{ip}); return send(res, 401, { error: 'Unauthorised.' }); }
 
-  const { race, gender, payment_status, country, search, page = 1, per_page = 100 } = req.query;
+  const { race, gender, payment_status, country, search, page = 1, per_page = 100, sort_by, sort_dir } = req.query;
+
+  const ALLOWED_SORT = { 
+    'date_desc':    ['created_at', false],
+    'date_asc':     ['created_at', true],
+    'last_name':    ['last_name',  true],
+    'last_name_z':  ['last_name',  false],
+    'first_name':   ['first_name', true],
+    'bib':          ['bib_number', true],
+    'status':       ['payment_status', true],
+  };
+  const [sortCol, sortAsc] = ALLOWED_SORT[sort_by] || ['created_at', false];
 
   const supabase = getSupabase();
 
   let query = supabase
     .from('registrations')
     .select('*', { count: 'exact' })
-    .order('created_at', { ascending: false })
+    .order(sortCol, { ascending: sortAsc })
     .range((page - 1) * per_page, page * per_page - 1);
 
   if (race           && race !== 'all')           query = query.eq('race', race);

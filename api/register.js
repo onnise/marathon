@@ -111,7 +111,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod 
 }
 
 const PRICES     = { '5k': 20, '2k': 10 }; // 5K: $17 race fee + $3 LAF fee = $20 total
-const MAX_CAP    = 500;
+const RACE_CAPS  = { '5k': 400, '2k': 500 }; // 5K cap confirmed; 2K cap TBD (using 500 as placeholder)
 const REG_OPEN   = new Date('2026-08-20T00:00:00+03:00');
 const REG_CLOSE  = new Date('2026-09-15T23:59:59+03:00');
 
@@ -169,19 +169,21 @@ module.exports = async function handler(req, res) {
 
   const supabase = getSupabase();
 
-  // ── Capacity check ────────────────────────────────────
+  // ── Capacity check (per race) ────────────────────────────────────────────
+  const raceCap = RACE_CAPS[race] || 500;
   const { count, error: countErr } = await supabase
     .from('registrations')
     .select('id', { count: 'exact', head: true })
+    .eq('race', race)
     .neq('payment_status', 'cancelled');
 
   if (countErr) {
     log(TAG,'ERROR','Capacity check failed',{ip,email:maskEmail(b.email),err:countErr.message,code:countErr.code});
     return send(res, 500, { error: 'Database error. Please try again.' });
   }
-  if (count >= MAX_CAP) {
-    log(TAG,'WARN','Event full — waitlist',{ip,email:maskEmail(b.email),count});
-    return send(res, 409, { error: 'Sorry, the event is now full. You have been added to the waitlist.', waitlist: true });
+  if (count >= raceCap) {
+    log(TAG,'WARN','Race full — waitlist',{ip,email:maskEmail(b.email),race,count,cap:raceCap});
+    return send(res, 409, { error: 'Sorry, this race is now full. You have been added to the waitlist.', waitlist: true });
   }
 
   // ── Duplicate check: same email + same name (true duplicate, not a family) ──
