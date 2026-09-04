@@ -18,8 +18,9 @@ function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod 
     </div>
     <div style="background:#e8f4fd;border:2px solid #1B5EA8;border-radius:12px;padding:24px;margin:8px 0 24px;">
       <p style="margin:0 0 8px;font-size:15px;font-weight:700;color:#0D2B5A;">💳 How to Pay / كيفية الدفع</p>
-      <p style="margin:0 0 6px;font-size:14px;color:#2d3748;">Visit any <strong>OMT office</strong> and pay using your full name as shown on your registration.</p>
-      <p style="margin:0 0 10px;font-size:14px;color:#2d3748;">توجّه لأي مكتب <strong>OMT</strong> وادفع باستخدام اسمك الكامل كما هو مسجّل.</p>
+      <p style="margin:0 0 6px;font-size:14px;color:#2d3748;">Visit any <strong>OMT office</strong> and pay using the registered runner's full name.</p>
+      <p style="margin:0 0 6px;font-size:14px;font-weight:700;color:#c53030;">⚠️ You must clearly state the registered runner's name: <strong>${firstName} ${lastName}</strong></p>
+      <p style="margin:0 0 10px;font-size:14px;color:#2d3748;">توجّه لأي مكتب <strong>OMT</strong> وعند الدفع يجب ذكر اسم المتسابق المسجّل بوضوح: <strong>${firstName} ${lastName}</strong></p>
       <p style="margin:0 0 4px;font-size:13px;color:#2d3748;"><strong>OMT Wallet Holder:</strong> JOSEPH BOU KARAM &nbsp;·&nbsp; Tel. +961 76 892 927</p>
       <p style="margin:0;font-size:13px;color:#718096;">Online payment via OMT coming soon / الدفع الإلكتروني عبر OMT قريباً</p>
     </div>`;
