@@ -86,13 +86,18 @@ function assignAgeCategory(dobString) {
   const age = raceDay.getFullYear() - dob.getFullYear() -
     (raceDay < new Date(raceDay.getFullYear(), dob.getMonth(), dob.getDate()) ? 1 : 0);
 
-  if (age < 16) return 'Under 16';
-  if (age <= 19) return '16–19';
-  if (age <= 29) return '20–29';
-  if (age <= 39) return '30–39';
-  if (age <= 49) return '40–49';
-  if (age <= 59) return '50–59';
-  return '60+';
+  if (age < 18)  return 'Under 18';
+  if (age <= 19) return '18–19';
+  if (age <= 34) return '20–34';
+  if (age <= 39) return '35–39';
+  if (age <= 44) return '40–44';
+  if (age <= 49) return '45–49';
+  if (age <= 54) return '50–54';
+  if (age <= 59) return '55–59';
+  if (age <= 64) return '60–64';
+  if (age <= 69) return '65–69';
+  if (age <= 74) return '70–74';
+  return '75+';
 }
 
 /**
