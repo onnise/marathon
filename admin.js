@@ -267,6 +267,24 @@ function openModal(id) {
 
   document.getElementById('bibInput').value = r.bib_number || '';
 
+  // Resend email buttons
+  const resendDiv = document.getElementById('modalResendActions');
+  resendDiv.innerHTML = '';
+
+  const btnReg = document.createElement('button');
+  btnReg.className = 'btn-resend-reg';
+  btnReg.textContent = '📧 Resend Registration Email';
+  btnReg.addEventListener('click', () => resendEmail(id, 'registration', btnReg));
+  resendDiv.appendChild(btnReg);
+
+  if (r.payment_status === 'confirmed') {
+    const btnPay = document.createElement('button');
+    btnPay.className = 'btn-resend-pay';
+    btnPay.textContent = '💳 Resend Payment Email';
+    btnPay.addEventListener('click', () => resendEmail(id, 'payment', btnPay));
+    resendDiv.appendChild(btnPay);
+  }
+
   document.getElementById('modalBackdrop').style.display = 'flex';
   document.getElementById('modalClose').focus();
 }
@@ -280,6 +298,25 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
 function closeModal() {
   document.getElementById('modalBackdrop').style.display = 'none';
   selectedId = null;
+}
+
+/* ===========================
+   RESEND EMAIL
+=========================== */
+async function resendEmail(id, type, btn) {
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '⏳ Sending…';
+  try {
+    await apiFetch('/api/admin/resend-email', { method: 'POST', body: { id, type } });
+    btn.textContent = '✅ Sent!';
+    toast(type === 'registration' ? 'Registration email resent.' : 'Payment email resent.', 'success');
+    setTimeout(() => { btn.disabled = false; btn.textContent = original; }, 3000);
+  } catch (ex) {
+    btn.disabled = false;
+    btn.textContent = original;
+    toast(ex.message || 'Failed to send email.', 'error');
+  }
 }
 
 /* ===========================

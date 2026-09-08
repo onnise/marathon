@@ -356,6 +356,12 @@ button, input, select { font-family: var(--font); }
 .btn-cancel-r { background: #e53e3e; color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-size: .88rem; font-weight: 600; cursor: pointer; transition: background .2s; }
 .btn-cancel-r:hover { background: #9b2c2c; }
 .btn-pending  { background: #ecc94b; color: #744210; border: none; border-radius: 8px; padding: 8px 16px; font-size: .88rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+.modal-resend-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.btn-resend-reg { background: #1B5EA8; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: .83rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+.btn-resend-reg:hover:not(:disabled) { background: #0D2B5A; }
+.btn-resend-pay { background: #2BAD6E; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: .83rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+.btn-resend-pay:hover:not(:disabled) { background: #1e8a54; }
+.btn-resend-reg:disabled, .btn-resend-pay:disabled { opacity: .65; cursor: default; }
 .modal-bib { display: flex; align-items: center; gap: 8px; }
 .modal-bib label { font-size: .82rem; color: var(--grey); white-space: nowrap; }
 .modal-bib input  { border: 1.5px solid var(--border); border-radius: 6px; padding: 7px 10px; width: 90px; font-size: .88rem; outline: none; }
