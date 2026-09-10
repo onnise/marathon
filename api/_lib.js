@@ -83,8 +83,9 @@ function assignAgeCategory(dobString) {
   if (!dobString) return null;
   const dob     = new Date(dobString);
   const raceDay = new Date('2026-09-20');
-  const age = raceDay.getFullYear() - dob.getFullYear() -
-    (raceDay < new Date(raceDay.getFullYear(), dob.getMonth(), dob.getDate()) ? 1 : 0);
+  // Age is calculated by birth YEAR only — month/day don't affect the category.
+  // e.g. Jan 1989 and Dec 1989 are both treated as age 37.
+  const age = raceDay.getFullYear() - dob.getFullYear();
 
   if (age < 18)  return 'Under 18';
   if (age <= 19) return '18–19';
