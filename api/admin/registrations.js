@@ -40,8 +40,8 @@ module.exports = async function handler(req, res) {
   if (gender         && gender !== 'all')         query = query.eq('gender', gender);
   if (payment_status && payment_status !== 'all') query = query.eq('payment_status', payment_status);
   if (country        && country !== 'all')        query = query.eq('country', country);
-  if (reminder === 'sent')     query = query.not('reminder_sent_at', 'is', null);
-  if (reminder === 'not_sent') query = query.is('reminder_sent_at', null);
+  if (reminder === 'sent')     { query = query.not('reminder_sent_at', 'is', null).eq('payment_status', 'pending'); }
+  if (reminder === 'not_sent') { query = query.is('reminder_sent_at', null).eq('payment_status', 'pending'); }
 
   if (search && search.trim()) {
     const s = search.trim();
