@@ -15,7 +15,7 @@ module.exports = async function handler(req, res) {
   const ip = getIp(req);
   if (!verifyAdmin(req)) { log(TAG,'WARN','Unauthorised access attempt',{ip}); return send(res, 401, { error: 'Unauthorised.' }); }
 
-  const { race, gender, payment_status, country, search, page = 1, per_page = 100, sort_by, sort_dir } = req.query;
+  const { race, gender, payment_status, country, reminder, search, page = 1, per_page = 100, sort_by, sort_dir } = req.query;
 
   const ALLOWED_SORT = { 
     'date_desc':    ['created_at', false],
@@ -40,6 +40,8 @@ module.exports = async function handler(req, res) {
   if (gender         && gender !== 'all')         query = query.eq('gender', gender);
   if (payment_status && payment_status !== 'all') query = query.eq('payment_status', payment_status);
   if (country        && country !== 'all')        query = query.eq('country', country);
+  if (reminder === 'sent')     query = query.not('reminder_sent_at', 'is', null);
+  if (reminder === 'not_sent') query = query.is('reminder_sent_at', null);
 
   if (search && search.trim()) {
     const s = search.trim();

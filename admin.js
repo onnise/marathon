@@ -71,17 +71,19 @@ async function loadData() {
 }
 
 function buildFilterParams() {
-  const params  = new URLSearchParams();
-  const race    = document.getElementById('filterRace').value;
-  const status  = document.getElementById('filterStatus').value;
-  const gender  = document.getElementById('filterGender').value;
-  const search  = document.getElementById('searchInput').value.trim();
-  const sortBy  = document.getElementById('sortBy').value;
-  if (race   !== 'all') params.set('race', race);
-  if (status !== 'all') params.set('payment_status', status);
-  if (gender !== 'all') params.set('gender', gender);
-  if (search)           params.set('search', search);
-  if (sortBy)           params.set('sort_by', sortBy);
+  const params    = new URLSearchParams();
+  const race      = document.getElementById('filterRace').value;
+  const status    = document.getElementById('filterStatus').value;
+  const gender    = document.getElementById('filterGender').value;
+  const reminder  = document.getElementById('filterReminder').value;
+  const search    = document.getElementById('searchInput').value.trim();
+  const sortBy    = document.getElementById('sortBy').value;
+  if (race     !== 'all') params.set('race', race);
+  if (status   !== 'all') params.set('payment_status', status);
+  if (gender   !== 'all') params.set('gender', gender);
+  if (reminder !== 'all') params.set('reminder', reminder);
+  if (search)             params.set('search', search);
+  if (sortBy)             params.set('sort_by', sortBy);
   return params.toString();
 }
 
@@ -89,7 +91,7 @@ document.getElementById('refreshBtn').addEventListener('click', loadData);
 
 // Debounced filter change
 let filterTimer;
-['filterRace','filterStatus','filterGender','searchInput','sortBy'].forEach((id) => {
+['filterRace','filterStatus','filterGender','filterReminder','searchInput','sortBy'].forEach((id) => {
   document.getElementById(id).addEventListener('input', () => {
     clearTimeout(filterTimer);
     filterTimer = setTimeout(loadData, 350);
@@ -139,6 +141,7 @@ function renderTable(rows) {
       <td>${escHtml(r.email)}</td>
       <td>${formatDate(r.created_at)}</td>
       <td><span class="badge-status badge-${r.payment_status}">${capitalize(r.payment_status)}</span></td>
+      <td title="${r.reminder_sent_at ? 'Sent ' + formatDate(r.reminder_sent_at) : 'Not sent yet'}">${r.reminder_sent_at ? '📧 ' + formatDate(r.reminder_sent_at) : '⏳ —'}</td>
       <td>${r.bib_number || '—'}</td>
       <td>
         <button class="btn-icon" data-action="view" data-id="${escHtml(r.id)}" title="View details">👁</button>
