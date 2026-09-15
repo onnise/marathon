@@ -2,8 +2,7 @@
 // Updates payment status or adds notes on a registration.
 // Protected: requires Authorization: Bearer <ADMIN_TOKEN>
 
-const { getSupabase, verifyAdmin, sanitise, send, log, getIp } = require('../_lib');
-const { Resend } = require('resend');
+const { getSupabase, verifyAdmin, sanitise, send, log, getIp, sendEmail } = require('../_lib');
 const TAG = 'ADMIN_UPDATE';
 
 function buildPaymentConfirmedEmail({ firstName, lastName, race, bibNumber, siteUrl }) {
@@ -140,27 +139,19 @@ module.exports = async function handler(req, res) {
   log(TAG,'INFO','Registration updated',{ip,id,status:payment_status,bib:bib_number});
 
   // ── Send payment confirmed email ──────────────────────────────────────────
-  if (payment_status === 'confirmed' && process.env.RESEND_API_KEY) {
+  if (payment_status === 'confirmed') {
     try {
-      const resend   = new Resend(process.env.RESEND_API_KEY);
-      const fromAddr = process.env.EMAIL_FROM || 'Bikfaya Race <noreply@bikfayarace.com>';
-      const html     = buildPaymentConfirmedEmail({
+      const html = buildPaymentConfirmedEmail({
         firstName: data.first_name,
         lastName:  data.last_name,
         race:      data.race,
         bibNumber: data.bib_number,
         siteUrl:   process.env.SITE_URL || 'https://bikfayarace.com',
       });
-      const { error: emailErr } = await resend.emails.send({
-        from:    fromAddr,
-        to:      data.email,
-        subject: '🎉 Payment Confirmed — See You at Bikfaya Race 2026!',
-        html,
-      });
-      if (emailErr) log(TAG,'ERROR','Confirmation email failed',{reg:data.registration_code,err:JSON.stringify(emailErr)});
-      else          log(TAG,'INFO','Confirmation email sent',{reg:data.registration_code,email:data.email});
+      await sendEmail({ to: data.email, subject: '🎉 Payment Confirmed — See You at Bikfaya Race 2026!', html });
+      log(TAG,'INFO','Payment confirmed email sent',{reg:data.registration_code,email:data.email});
     } catch (e) {
-      log(TAG,'ERROR','Confirmation email exception',{reg:data.registration_code,err:e.message});
+      log(TAG,'ERROR','Payment confirmed email failed',{reg:data.registration_code,err:e.message});
     }
   }
 

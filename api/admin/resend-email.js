@@ -2,8 +2,7 @@
 // Resends either the registration confirmation or the payment confirmed email.
 // Protected: requires Authorization: Bearer <ADMIN_TOKEN>
 
-const { getSupabase, verifyAdmin, send, log, getIp } = require('../_lib');
-const { Resend } = require('resend');
+const { getSupabase, verifyAdmin, send, log, getIp, sendEmail } = require('../_lib');
 const TAG = 'ADMIN_RESEND';
 
 // ── Registration confirmation email (same template as api/register.js) ────────
@@ -208,40 +207,17 @@ module.exports = async function handler(req, res) {
     return send(res, 400, { error: 'Payment email can only be sent for confirmed registrations.' });
   }
 
-  const resend   = new Resend(process.env.RESEND_API_KEY);
-  const fromAddr = process.env.EMAIL_FROM || 'Bikfaya Race <noreply@bikfayarace.com>';
-
   let subject, html;
   if (type === 'registration') {
     subject = '✅ Registration Confirmed — Bikfaya Race 2026';
-    html    = buildRegistrationEmail({
-      firstName: r.first_name,
-      lastName:  r.last_name,
-      race:      r.race,
-    });
+    html    = buildRegistrationEmail({ firstName: r.first_name, lastName: r.last_name, race: r.race });
   } else {
     subject = '🎉 Payment Confirmed — See You at Bikfaya Race 2026!';
-    html    = buildPaymentEmail({
-      firstName: r.first_name,
-      lastName:  r.last_name,
-      race:      r.race,
-      bibNumber: r.bib_number,
-    });
+    html    = buildPaymentEmail({ firstName: r.first_name, lastName: r.last_name, race: r.race, bibNumber: r.bib_number });
   }
 
   try {
-    const { error: emailErr } = await resend.emails.send({
-      from: fromAddr,
-      to:   r.email,
-      subject,
-      html,
-    });
-
-    if (emailErr) {
-      log(TAG, 'ERROR', 'Resend failed', { ip, id, type, err: JSON.stringify(emailErr) });
-      return send(res, 502, { error: 'Failed to send email. Please try again.' });
-    }
-
+    await sendEmail({ to: r.email, subject, html });
     log(TAG, 'INFO', 'Email resent', { ip, id, type, email: r.email, reg: r.registration_code });
     return send(res, 200, { success: true });
   } catch (e) {

@@ -16,7 +16,6 @@ const CSV_COLUMNS = [
   { key: 'gender',            label: 'Gender' },
   { key: 'age_category',      label: 'Age Category' },
   { key: 'email',             label: 'Email' },
-  { key: 'phone',             label: 'Phone' },
   { key: 'country',           label: 'Country' },
   { key: 'blood_type',        label: 'Blood Type' },
   { key: 'club',              label: 'Club/Team' },

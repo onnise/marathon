@@ -127,4 +127,47 @@ function send(res, status, body) {
   res.status(status).json(body);
 }
 
-module.exports = { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, verifyAdmin, sanitise, send, rateLimitCheck, log, maskEmail, getIp };
+/**
+ * Send an email via Brevo (primary) or Resend (fallback).
+ * Brevo key: BREVO_API_KEY env var
+ * Resend key: RESEND_API_KEY env var
+ */
+async function sendEmail({ to, subject, html }) {
+  const fromName  = 'Bikfaya Race';
+  const fromEmail = 'noreply@bikfayarace.com';
+
+  if (process.env.BREVO_API_KEY) {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method:  'POST',
+      headers: {
+        'api-key':      process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+        'Accept':       'application/json',
+      },
+      body: JSON.stringify({
+        sender:      { name: fromName, email: 'markylook123@gmail.com' },
+        to:          [{ email: to }],
+        subject,
+        htmlContent: html,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Brevo error ${res.status}: ${err}`);
+    }
+    return;
+  }
+
+  if (process.env.RESEND_API_KEY) {
+    const { Resend } = require('resend');
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const fromAddr = process.env.EMAIL_FROM || `${fromName} <${fromEmail}>`;
+    const { error } = await resend.emails.send({ from: fromAddr, to, subject, html });
+    if (error) throw new Error(JSON.stringify(error));
+    return;
+  }
+
+  throw new Error('No email provider configured (BREVO_API_KEY or RESEND_API_KEY required).');
+}
+
+module.exports = { getSupabase, generateRegCode, generateOmtCode, assignAgeCategory, verifyAdmin, sanitise, send, rateLimitCheck, log, maskEmail, getIp, sendEmail };

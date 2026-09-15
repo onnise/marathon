@@ -1,9 +1,8 @@
 // POST /api/register
 // Validates form data, stores in Supabase, sends confirmation email via Resend.
 
-const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send, log, maskEmail, getIp } = require('./_lib');
+const { getSupabase, generateRegCode, assignAgeCategory, sanitise, send, log, maskEmail, getIp, sendEmail } = require('./_lib');
 const TAG = 'REGISTER';
-const { Resend } = require('resend');
 
 function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod }) {
   const raceName    = race === '5k' ? '5K Competitive' : '2K Fun Run';
@@ -270,28 +269,19 @@ module.exports = async function handler(req, res) {
   }
 
   // ── Send confirmation email ───────────────────────────
-  if (process.env.RESEND_API_KEY) {
-    try {
-      const resend    = new Resend(process.env.RESEND_API_KEY);
-      const fromAddr  = process.env.EMAIL_FROM || 'Bikfaya Race <noreply@bikfayarace.com>';
-      const html      = buildConfirmationEmail({
-        firstName: record.first_name,
-        lastName:  record.last_name,
-        regCode:   inserted.registration_code,
-        race:      record.race,
-        payMethod: record.pay_method,
-      });
-      const { error: emailErr } = await resend.emails.send({
-        from:    fromAddr,
-        to:      record.email,
-            subject: `✅ Registration Confirmed — Bikfaya Race 2026`,
-        html,
-      });
-      if (emailErr) log(TAG,'ERROR','Email send failed',{reg:inserted.registration_code,email:maskEmail(record.email),err:JSON.stringify(emailErr)});
-      else          log(TAG,'INFO','Confirmation email sent',{reg:inserted.registration_code,email:maskEmail(record.email)});
-    } catch (e) {
-      log(TAG,'ERROR','Email exception (non-fatal)',{reg:inserted.registration_code,email:maskEmail(record.email),err:e.message});
-    }
+  try {
+    const html = buildConfirmationEmail({
+      firstName: record.first_name,
+      lastName:  record.last_name,
+      regCode:   inserted.registration_code,
+      race:      record.race,
+      payMethod: record.pay_method,
+    });
+    await sendEmail({ to: record.email, subject: '✅ Registration Confirmed — Bikfaya Race 2026', html });
+    log(TAG,'INFO','Confirmation email sent',{reg:inserted.registration_code,email:maskEmail(record.email)});
+  } catch (e) {
+    log(TAG,'ERROR','Email exception (non-fatal)',{reg:inserted.registration_code,email:maskEmail(record.email),err:e.message});
+  }
   } else {
     log(TAG,'WARN','RESEND_API_KEY not set — email skipped',{reg:inserted.registration_code});
   }
