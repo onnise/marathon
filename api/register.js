@@ -282,9 +282,6 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     log(TAG,'ERROR','Email exception (non-fatal)',{reg:inserted.registration_code,email:maskEmail(record.email),err:e.message});
   }
-  } else {
-    log(TAG,'WARN','RESEND_API_KEY not set — email skipped',{reg:inserted.registration_code});
-  }
 
   log(TAG,'INFO','Registration complete',{reg:inserted.registration_code,race,age:inserted.age_category,email:maskEmail(record.email)});
   return send(res, 201, {
