@@ -111,7 +111,7 @@ function buildConfirmationEmail({ firstName, lastName, regCode, race, payMethod 
 }
 
 const PRICES     = { '5k': 20, '2k': 10 }; // 5K: $17 race fee + $3 LAF fee = $20 total
-const RACE_CAPS  = { '5k': 0, '2k': 200 }; // 5K fully booked — closed
+const RACE_CAPS  = { '5k': 400, '2k': 200 };
 const REG_OPEN   = new Date('2026-08-20T00:00:00+03:00');
 const REG_CLOSE  = new Date('2026-09-15T23:59:59+03:00');
 
