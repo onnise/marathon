@@ -102,18 +102,19 @@ let filterTimer;
    STATS
 =========================== */
 function renderStats(s) {
-  document.getElementById('statTotal').textContent     = s.total_registered ?? '—';
-  document.getElementById('statConfirmed').textContent = s.confirmed ?? '—';
-  document.getElementById('statPending').textContent   = s.pending   ?? '—';
-  document.getElementById('statCancelled').textContent = s.cancelled ?? '—';
-  document.getElementById('stat5k').textContent        = s.total_5k  ?? '—';
-  document.getElementById('stat2k').textContent        = s.total_2k  ?? '—';
+  document.getElementById('statTotal').textContent     = s.total_registered  ?? '—';
+  document.getElementById('statConfirmed').textContent = s.total_confirmed   ?? '—';
+  document.getElementById('statPending').textContent   = s.total_pending     ?? '—';
+  document.getElementById('statCancelled').textContent = s.total_cancelled   ?? '—';
+  document.getElementById('stat5k').textContent        = s.registered_5k    ?? '—';
+  document.getElementById('stat2k').textContent        = s.registered_2k    ?? '—';
 
-  const total = s.total_registered || 0;
-  const pct   = Math.min((total / 500) * 100, 100).toFixed(1);
+  const total    = s.total_registered || 0;
+  const totalCap = s.total_cap || 600;
+  const pct      = Math.min((total / totalCap) * 100, 100).toFixed(1);
   document.getElementById('capFill').style.width = pct + '%';
-  document.getElementById('capLabel').textContent = `${total} / 500`;
-  document.getElementById('statCap').textContent  = `${s.spots_remaining ?? 500} spots left`;
+  document.getElementById('capLabel').textContent = `${total} / ${totalCap}`;
+  document.getElementById('statCap').textContent  = `${s.spots_left ?? totalCap} spots left`;
 }
 
 /* ===========================
