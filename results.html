@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Official Results — Bikfaya 5K Eco Race 2026</title>
+  <meta name="description" content="Official results for the Bikfaya 5K Eco Race 2026. View finish times, category rankings, and individual runner results." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0D2B5A;
+      --green: #2BAD6E;
+      --red: #e53e3e;
+      --gold: #f6c90e;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #1a202c;
+      --muted: #718096;
+      --border: #e2e8f0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,.3);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-back {
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .nav-back:hover { background: rgba(255,255,255,.2); }
+    @media(max-width:640px) { .nav-links { display: none; } }
+
+    /* ── HERO ── */
+    .results-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
+      padding: 56px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .results-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('hero.jpg') center/cover no-repeat;
+      opacity: .08;
+    }
+    .results-hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+    .results-eyebrow {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .results-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .results-subtitle { color: rgba(255,255,255,.7); font-size: 15px; margin-bottom: 28px; }
+    .results-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .stat-lbl { font-size: 11px; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    /* ── FILTERS ── */
+    .filters-bar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 64px;
+      z-index: 90;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .filters-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-search {
+      flex: 1;
+      min-width: 180px;
+      padding: 9px 14px 9px 36px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s;
+      background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;
+    }
+    .filter-search:focus { border-color: var(--navy); }
+    .filter-select {
+      padding: 9px 32px 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      background: var(--bg);
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+    .filter-select:focus { border-color: var(--navy); }
+    .filter-count {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* ── TABLE ── */
+    .results-wrapper {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px 48px;
+    }
+    .results-table-wrap {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead th {
+      background: var(--navy);
+      color: rgba(255,255,255,.85);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 13px 14px;
+      text-align: left;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: background .2s;
+    }
+    thead th:hover { background: #1a3a6e; }
+    thead th.sorted { background: #1a3a6e; color: #fff; }
+    thead th .sort-arrow { opacity: .4; margin-left: 4px; }
+    thead th.sorted .sort-arrow { opacity: 1; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f7f9fc; }
+    td { padding: 12px 14px; color: var(--text); }
+
+    .td-place { font-weight: 700; font-size: 15px; width: 56px; text-align: center; }
+    .td-place.p1 { color: #b7791f; }
+    .td-place.p2 { color: #718096; }
+    .td-place.p3 { color: #c05621; }
+    .medal { font-size: 18px; }
+
+    .td-bib { color: var(--muted); font-size: 12px; width: 54px; text-align: center; }
+    .bib-badge {
+      display: inline-block;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 7px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .td-name { font-weight: 600; min-width: 160px; }
+    .td-gender { width: 72px; }
+    .gender-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .gender-m { background: #ebf8ff; color: #2b6cb0; }
+    .gender-f { background: #fff5f7; color: #c53030; }
+    .td-cat { font-size: 12px; color: var(--muted); max-width: 180px; }
+    .td-catrank { width: 70px; text-align: center; font-weight: 600; font-size: 13px; }
+    .catrank-winner { color: #b7791f; font-size: 16px; }
+    .td-team { font-size: 12px; color: var(--muted); max-width: 140px; }
+    .td-time { font-family: 'Courier New', monospace; font-weight: 600; font-size: 14px; color: var(--navy); white-space: nowrap; }
+    .td-pace { font-family: 'Courier New', monospace; font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--muted);
+    }
+    .empty-state p { margin-top: 8px; font-size: 14px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .results-hero { padding: 40px 16px 36px; }
+      .results-stats { gap: 20px; }
+      .filters-inner { gap: 8px; }
+      .filter-select { font-size: 12px; }
+      .col-team, .col-catrank, .col-bib { display: none; }
+      td, th { padding: 10px 10px; }
+      .td-cat { max-width: 120px; font-size: 11px; }
+    }
+    @media (max-width: 480px) {
+      .col-pace { display: none; }
+      .td-name { min-width: 120px; }
+    }
+
+    /* ── FOOTER ── */
+    .results-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 12px;
+    }
+    .results-footer a { color: rgba(255,255,255,.6); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="runlogo (1).png" alt="Bikfaya Race" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#prizes">Prizes</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="results-hero">
+    <div class="results-hero-inner">
+      <span class="results-eyebrow">🏁 Official Results</span>
+      <h1 class="results-title">Bikfaya 5K Eco Race 2026</h1>
+      <p class="results-subtitle">Sunday, September 20, 2026 &nbsp;·&nbsp; Bikfaya Square, Lebanon</p>
+      <div class="results-stats">
+        <div class="stat-item">
+          <div class="stat-num" id="stat-finishers">311</div>
+          <div class="stat-lbl">Finishers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-male">—</div>
+          <div class="stat-lbl">Men</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-female">—</div>
+          <div class="stat-lbl">Women</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-cats">—</div>
+          <div class="stat-lbl">Categories</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-top">—</div>
+          <div class="stat-lbl">Winner Time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <div class="filters-inner">
+      <input type="search" class="filter-search" id="searchInput" placeholder="Search runner name or team…" />
+      <select class="filter-select" id="genderFilter">
+        <option value="">All Genders</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <select class="filter-select" id="categoryFilter">
+        <option value="">All Categories</option>
+      </select>
+      <span class="filter-count" id="filterCount"></span>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="results-wrapper">
+    <div class="results-table-wrap">
+      <table id="resultsTable" role="grid">
+        <thead>
+          <tr>
+            <th class="col-place sorted" data-col="place" onclick="sortBy('place')">Place <span class="sort-arrow">▲</span></th>
+            <th class="col-bib" data-col="bib" onclick="sortBy('bib')">Bib <span class="sort-arrow">▲</span></th>
+            <th class="col-name" data-col="name" onclick="sortBy('name')">Runner <span class="sort-arrow">▲</span></th>
+            <th class="col-gender" data-col="gender" onclick="sortBy('gender')">Gender <span class="sort-arrow">▲</span></th>
+            <th class="col-cat" data-col="category" onclick="sortBy('category')">Category <span class="sort-arrow">▲</span></th>
+            <th class="col-catrank" data-col="catRank" onclick="sortBy('catRank')">Cat. # <span class="sort-arrow">▲</span></th>
+            <th class="col-team" data-col="team" onclick="sortBy('team')">Team <span class="sort-arrow">▲</span></th>
+            <th class="col-gun" data-col="gunTime" onclick="sortBy('gunTime')">Gun Time <span class="sort-arrow">▲</span></th>
+            <th class="col-chip" data-col="chipTime" onclick="sortBy('chipTime')">Chip Time <span class="sort-arrow">▲</span></th>
+            <th class="col-pace" data-col="pace" onclick="sortBy('pace')">Pace/km <span class="sort-arrow">▲</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="10" class="empty-state">Loading results…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="results-footer">
+    <p>© 2026 Bikfaya 5K Eco Race &nbsp;·&nbsp; <a href="index.html">bikfayarace.com</a> &nbsp;·&nbsp; Results are official and chip-timed by LAF</p>
+  </div>
+
+  <script>
+    let ALL_DATA = [];
+    let filtered = [];
+    let sortCol = 'place';
+    let sortAsc = true;
+
+    // Load data
+    fetch('results-data.json')
+      .then(r => r.json())
+      .then(data => {
+        ALL_DATA = data;
+        init();
+      })
+      .catch(() => {
+        document.getElementById('tbody').innerHTML =
+          '<tr><td colspan="10" class="empty-state">⚠️ Could not load results. Please try again.<p>If the problem persists, contact bickfaya5krun@gmail.com</p></td></tr>';
+      });
+
+    function init() {
+      // Stats
+      const males   = ALL_DATA.filter(r => r.gender === 'Male').length;
+      const females = ALL_DATA.filter(r => r.gender === 'Female').length;
+      const cats    = new Set(ALL_DATA.map(r => r.category).filter(Boolean)).size;
+      const topTime = ALL_DATA[0]?.chipTime || '—';
+
+      document.getElementById('stat-finishers').textContent = ALL_DATA.length;
+      document.getElementById('stat-male').textContent      = males;
+      document.getElementById('stat-female').textContent    = females;
+      document.getElementById('stat-cats').textContent      = cats;
+      document.getElementById('stat-top').textContent       = topTime;
+
+      // Populate category dropdown
+      const catSel = document.getElementById('categoryFilter');
+      const cats2  = [...new Set(ALL_DATA.map(r => r.category).filter(Boolean))].sort();
+      cats2.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c;
+        o.textContent = c;
+        catSel.appendChild(o);
+      });
+
+      applyFilters();
+
+      // Event listeners
+      document.getElementById('searchInput').addEventListener('input', applyFilters);
+      document.getElementById('genderFilter').addEventListener('change', applyFilters);
+      document.getElementById('categoryFilter').addEventListener('change', applyFilters);
+    }
+
+    function applyFilters() {
+      const q   = document.getElementById('searchInput').value.toLowerCase().trim();
+      const gen = document.getElementById('genderFilter').value;
+      const cat = document.getElementById('categoryFilter').value;
+
+      filtered = ALL_DATA.filter(r => {
+        if (gen && r.gender !== gen) return false;
+        if (cat && r.category !== cat) return false;
+        if (q && !r.name.toLowerCase().includes(q) && !r.team.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      document.getElementById('filterCount').textContent =
+        filtered.length === ALL_DATA.length
+          ? ALL_DATA.length + ' finishers'
+          : filtered.length + ' of ' + ALL_DATA.length + ' shown';
+
+      render();
+    }
+
+    function sortBy(col) {
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = true;
+      }
+      // Update header UI
+      document.querySelectorAll('thead th').forEach(th => {
+        th.classList.remove('sorted');
+        th.querySelector('.sort-arrow').textContent = '▲';
+      });
+      const active = document.querySelector(`[data-col="${col}"]`);
+      if (active) {
+        active.classList.add('sorted');
+        active.querySelector('.sort-arrow').textContent = sortAsc ? '▲' : '▼';
+      }
+      render();
+    }
+
+    function cmpVal(a, b) {
+      const va = a[sortCol];
+      const vb = b[sortCol];
+      if (typeof va === 'number' && typeof vb === 'number') return va - vb;
+      return String(va || '').localeCompare(String(vb || ''));
+    }
+
+    function placeIcon(p) {
+      if (p === 1) return '<span class="medal">🥇</span>';
+      if (p === 2) return '<span class="medal">🥈</span>';
+      if (p === 3) return '<span class="medal">🥉</span>';
+      return p;
+    }
+
+    function catRankDisplay(r) {
+      if (r.catRank === '🏆') return '<span class="catrank-winner">🏆</span>';
+      return r.catRank || '';
+    }
+
+    function render() {
+      const sorted = [...filtered].sort((a, b) => sortAsc ? cmpVal(a, b) : cmpVal(b, a));
+      const tbody  = document.getElementById('tbody');
+
+      if (sorted.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" class="empty-state">
+          <strong>No results found</strong>
+          <p>Try adjusting your search or filters.</p>
+        </td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = sorted.map(r => {
+        const placeClass = r.place === 1 ? 'p1' : r.place === 2 ? 'p2' : r.place === 3 ? 'p3' : '';
+        const gBadge     = r.gender === 'Male'
+          ? '<span class="gender-badge gender-m">M</span>'
+          : '<span class="gender-badge gender-f">F</span>';
+        return `<tr>
+          <td class="td-place ${placeClass}">${placeIcon(r.place)}</td>
+          <td class="td-bib col-bib"><span class="bib-badge">${r.bib}</span></td>
+          <td class="td-name">${escHtml(r.name)}</td>
+          <td class="td-gender col-gender">${gBadge}</td>
+          <td class="td-cat col-cat">${escHtml(r.category)}</td>
+          <td class="td-catrank col-catrank">${catRankDisplay(r)}</td>
+          <td class="td-team col-team">${escHtml(r.team)}</td>
+          <td class="td-time col-gun">${r.gunTime}</td>
+          <td class="td-time col-chip">${r.chipTime}</td>
+          <td class="td-pace col-pace">${r.pace}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function escHtml(s) {
+      return String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
